@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversation Replay · Glassbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2212%22 fill=%22none%22 stroke=%22%234F46E5%22 stroke-width=%227%22/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="feedback-tab">Feedback</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark"></span><span class="wordmark">GLASSBOX</span><span class="collapse">⇤</span></div>
+    <nav class="nav">
+      <a href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
+      <a class="active" href="conversation.html"><span class="ico">▶</span>Recorded Sessions</a>
+      <button class="inert" tabindex="-1"><span class="ico">⁘</span>Interaction Maps</button>
+      <button class="inert" tabindex="-1"><span class="ico">▯</span>Mobile Analytics</button>
+      <button class="inert" tabindex="-1"><span class="ico">◔</span>Monitoring<span class="chev">›</span></button>
+      <a href="funnel.html"><span class="ico">≣</span>Conversions<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">◑</span>Product Intelligence<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">◬</span>Alerts &amp; Anomalies<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">▤</span>Reports</button>
+      <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
+    </nav>
+    <div class="foot">
+      <b>Concept prototype.</b> Three screens: Meshboards, Recorded Sessions, Conversions. Illustrative data.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb"><span class="muted">Recorded Sessions</span><span class="sep">›</span>Conversation replay<span class="caret">▾</span></div>
+      <div class="top-right">
+        <div class="help">Help <span class="b">?</span><span class="b">⋮</span></div>
+        <div class="avatar">GB</div>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="illus">Illustrative data for concept review — transcript is synthetic.</div>
+      <div class="replay">
+
+        <div class="rhead">
+          <div>
+            <div class="meta"><span>🇬🇧</span><span class="date">Mar 12 2026</span><span style="color:var(--faint)">|</span>
+              <span>10:24:06 AM</span><span style="color:var(--dim)">🖥 ⊞ ⬤</span><span style="color:var(--faint)">ⓘ 🏷</span></div>
+            <div class="uid">**********</div>
+          </div>
+          <div class="stat"><div class="n">😖 <span data-bind="replay.struggleScore">0.71</span></div><div class="c">Struggles</div></div>
+          <div class="stat"><div class="n" style="color:var(--red)">↓ <span data-bind="replay.avoidableContact">$38</span></div><div class="c">Avoidable contact</div></div>
+          <div class="acts">
+            <button class="iconbtn" aria-label="Pin">📌</button><button class="iconbtn" aria-label="Favourite">☆</button><button class="iconbtn" aria-label="List">▤</button>
+            <span class="pill">🔗 Share Session ▾</span>
+            <span class="pill">◇ Create ▾</span>
+            <span class="gia">✦ GIA Insights</span>
+            <button class="iconbtn" aria-label="Settings">⚙</button>
+          </div>
+        </div>
+
+        <div class="rbody">
+
+          <div class="events">
+            <div class="evsearch"><span style="color:var(--faint)">🔍</span><input placeholder="Search events" aria-label="Search events"><span style="color:var(--faint)">⌃⌄</span></div>
+
+            <div class="pagerow"><div><div class="t">GlassBank — Home</div><div class="u">glassbk.digital/</div></div>
+              <div class="strugbar"></div><div class="time">00:00</div></div>
+            <div class="pagerow"><div><div class="t">GlassBank — Transactions</div><div class="u">glassbk.digital/user/transactions</div></div>
+              <div class="strugbar"></div><div class="time">00:14</div></div>
+
+            <div class="ev"><span class="ei">▣</span><div><div class="en">Assistant opened</div><div class="ed">Servicing Assistant · v4.2</div></div><span class="et">00:41</span></div>
+            <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Intent: dispute_transaction · 0.91</div></div><span class="et">00:47</span></div>
+            <div class="ev"><span class="ei">✦</span><div><div class="en">Assistant turn</div><div class="ed">2.1s · no backend call</div></div><span class="et">00:52</span></div>
+            <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Rephrase of same intent</div></div><span class="et">01:06</span></div>
+            <div class="ev flag"><span class="ei">↻</span><div><div class="en">Rephrase loop</div><div class="ed">2nd attempt, same intent</div></div><span class="et">01:06</span></div>
+            <div class="ev"><span class="ei">✦</span><div><div class="en">Assistant turn</div><div class="ed">1.9s · no backend call</div></div><span class="et">01:11</span></div>
+            <div class="ev flag"><span class="ei">⊘</span><div><div class="en">Deflection language</div><div class="ed">"you'll need to contact us"</div></div><span class="et">01:11</span></div>
+            <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Rephrase of same intent</div></div><span class="et">01:31</span></div>
+            <div class="ev flag"><span class="ei">↻</span><div><div class="en">Rephrase loop</div><div class="ed">3rd attempt, same intent</div></div><span class="et">01:31</span></div>
+            <div class="ev bad"><span class="ei">⚠</span><div><div class="en">Repeated intent failure</div><div class="ed">dispute_transaction · 3 turns</div></div><span class="et">01:36</span></div>
+            <div class="ev bad"><span class="ei">✕</span><div><div class="en">Conversation abandoned</div><div class="ed">Closed without escalating</div></div><span class="et">01:52</span></div>
+            <div class="ev"><span class="ei">↩</span><div><div class="en">Page exit</div><div class="ed">No task completed</div></div><span class="et">02:04</span></div>
+          </div>
+
+          <div class="stage">
+            <div class="browser">
+              <div class="url">https://www.glassbk.digital/user/transactions</div>
+              <div class="chatwrap">
+                <div class="chat-h"><span class="avat">✦</span><span class="nm">GlassBank Assistant</span></div>
+
+                <div class="msg bot">Hello — how can I help you today?</div>
+                <div class="msg user">There's a payment on my card from 8 March that I didn't make. I want to dispute it.
+                  <span class="lat">00:47</span></div>
+                <div class="msg bot">I understand you have a concern about a transaction. You can find information about
+                  disputes and chargebacks in our Help Centre under "Card security".
+                  <span class="lat">00:52 · replied in 2.1s · no account lookup</span></div>
+                <div class="msg user">I don't want an article. I need to actually report this specific payment.
+                  <span class="lat">01:06</span></div>
+                <div class="flagline">↻ Rephrase loop — same intent, 2nd attempt</div>
+                <div class="msg bot">I'm not able to raise a dispute for you here. You'll need to contact us so a member
+                  of the team can look into it.
+                  <span class="lat">01:11 · replied in 1.9s · no account lookup</span></div>
+                <div class="flagline">⊘ Deflection language detected</div>
+                <div class="msg user">Can you at least tell me what the payment was?
+                  <span class="lat">01:31</span></div>
+                <div class="msg bot">I'm not able to raise a dispute for you here. You'll need to contact us so a member
+                  of the team can look into it.
+                  <span class="lat">01:36 · identical response</span></div>
+                <div class="flagline bad">⚠ Repeated intent failure — conversation abandoned at 01:52</div>
+              </div>
+
+              <div class="scrub">
+                <div class="track">
+                  <div class="band" style="left:32%;width:14%"></div>
+                  <div class="band" style="left:52%;width:22%"></div>
+                  <div class="band" style="left:78%;width:16%"></div>
+                  <div class="mk" style="left:36%">↻</div>
+                  <div class="mk" style="left:54%">⊘</div>
+                  <div class="mk" style="left:70%">↻</div>
+                  <div class="mk r" style="left:80%">⚠</div>
+                  <div class="mk r" style="left:90%">✕</div>
+                </div>
+                <div class="ticks"><span>00:00</span><span>00:41</span><span>01:06</span><span>01:31</span><span>02:04</span></div>
+                <div class="controls">
+                  <span>⏮</span><span>◀</span><span class="play">▶</span><span>▶</span><span>⏭</span>
+                </div>
+                <div class="dur" style="text-align:center;margin-top:6px">Duration: <span data-bind="replay.duration">02:04</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insights ins">
+            <div class="ins-h"><span style="color:#8B3FD1">✦</span>GIA Conversation Insights</div>
+            <div class="tabs">
+              <button class="on">All</button><button>Technical</button><button>Behavioral</button>
+            </div>
+
+            <h4>Conversation Summary</h4>
+            <p>The customer aimed to <b>dispute a card transaction</b>. They <b>failed to complete the task</b>.
+               The assistant recognised the intent correctly on all three turns but produced
+               <b>deflection language</b> and made <b>no account lookup</b>, repeating an identical response
+               before the customer abandoned the conversation.</p>
+
+            <h4>Key Takeaways</h4>
+            <ul>
+              <li>Give the assistant a tool to raise a dispute on <u>dispute_transaction</u>, or hand off directly instead of deflecting.</li>
+              <li>Suppress identical consecutive responses — the repeat at 01:36 preceded abandonment.</li>
+              <li>Review the deflection wording on <u>Card security</u>; it offers no route forward.</li>
+            </ul>
+
+            <div class="verdict">
+              <div class="top"><span style="color:var(--red)">⚑</span><span class="name">Missing tooling</span><span class="conf">87% confidence</span></div>
+              <div class="why">
+                Consistent with a missing capability: <em>intent recognised</em> at 0.91 on all turns ·
+                <em>no backend call</em> during the conversation ·
+                <em>deflection phrasing</em> matched on 2 turns · <em>no state change</em> on the account.<br>
+                Seen in <u>4,212 conversations</u> with this signature this month.
+              </div>
+            </div>
+
+            <div class="askbox">Ask a question about this conversation<span class="go">→</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

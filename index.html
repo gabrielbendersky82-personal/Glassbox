@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Interaction Analysis · Glassbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2212%22 fill=%22none%22 stroke=%22%234F46E5%22 stroke-width=%227%22/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="feedback-tab">Feedback</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark"></span><span class="wordmark">GLASSBOX</span><span class="collapse">⇤</span></div>
+    <nav class="nav">
+      <a class="active" href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
+      <a href="conversation.html"><span class="ico">▶</span>Recorded Sessions</a>
+      <button class="inert" tabindex="-1"><span class="ico">⁘</span>Interaction Maps</button>
+      <button class="inert" tabindex="-1"><span class="ico">▯</span>Mobile Analytics</button>
+      <button class="inert" tabindex="-1"><span class="ico">◔</span>Monitoring<span class="chev">›</span></button>
+      <a href="funnel.html"><span class="ico">≣</span>Conversions<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">◑</span>Product Intelligence<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">◬</span>Alerts &amp; Anomalies<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">▤</span>Reports</button>
+      <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
+    </nav>
+    <div class="foot">
+      <b>Concept prototype.</b> Three screens: Meshboards, Recorded Sessions, Conversions. Illustrative data.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb"><span class="muted">Meshboards</span><span class="sep">›</span>AI Interaction Analysis<span class="caret">▾</span></div>
+      <div class="top-right">
+        <div class="help">Help <span class="b">?</span><span class="b">⋮</span></div>
+        <div class="avatar">GB</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="pill green"><span class="dots"></span>GlassBank-Web</span>
+      <span class="pill">▤ Servicing Assistant</span>
+      <button class="iconbtn" aria-label="Filters">⧩</button>
+      <div class="top-right">
+        <button class="iconbtn" aria-label="Refresh">⟳</button>
+        <span class="pill">▤ Past Month (UTC+03:00)</span>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="illus">Illustrative data for concept review — not real GlassBank figures.</div>
+
+      <div class="grid row4">
+        <div class="card">
+          <div class="hd"><h3>Conversation Struggle Score</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <div class="scorewrap"><div class="face">😖</div><div class="bigscore" data-bind="dashboard.struggleScore">0.62</div></div>
+            <span class="rank poor" data-bind="dashboard.struggleRank">Poor</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3>Struggle Score Over Time</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <svg viewBox="0 0 300 92" width="100%" height="92" preserveAspectRatio="none" role="img" aria-label="Struggle score rising over the month">
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#E04141" stop-opacity=".22"/><stop offset="1" stop-color="#E04141" stop-opacity="0"/>
+              </linearGradient></defs>
+              <text x="0" y="9" font-size="8" fill="var(--faint)">1.0</text>
+              <path d="M8,62 L46,60 L84,57 L122,52 L160,44 L198,38 L236,30 L274,26 L292,24" fill="none" stroke="#E04141" stroke-width="2"/>
+              <path d="M8,62 L46,60 L84,57 L122,52 L160,44 L198,38 L236,30 L274,26 L292,24 L292,92 L8,92 Z" fill="url(#g1)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3>Conversations</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <div class="k" style="font-size:11.5px;color:var(--dim)">Total Conversations</div>
+            <div class="total" data-bind="dashboard.totalConversations">48.2 K</div>
+            <div class="kv" style="margin-top:12px">
+              <div><div class="k">Struggled ⓘ</div><div class="v"><span data-bind="dashboard.struggledPct">34%</span> <small data-bind="dashboard.struggledCount">(16.4K)</small></div></div>
+              <div><div class="k">Abandoned ⓘ</div><div class="v" data-bind="dashboard.abandonedPct">21%</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3>Conversations Over Time</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <svg viewBox="0 0 300 92" width="100%" height="92" preserveAspectRatio="none" role="img" aria-label="Conversation volume by day">
+              <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4F46E5" stop-opacity=".26"/><stop offset="1" stop-color="#4F46E5" stop-opacity="0"/>
+              </linearGradient></defs>
+              <text x="0" y="9" font-size="8" fill="var(--faint)">2.4K</text>
+              <path d="M8,58 L38,50 L68,62 L98,44 L128,55 L158,36 L188,48 L218,30 L248,42 L278,26 L292,34" fill="none" stroke="#4F46E5" stroke-width="2"/>
+              <path d="M8,58 L38,50 L68,62 L98,44 L128,55 L158,36 L188,48 L218,30 L248,42 L278,26 L292,34 L292,92 L8,92 Z" fill="url(#g2)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div class="hd"><h3>Failing intents</h3><span class="info">ⓘ</span><span class="gear">⚙</span></div>
+          <div class="sub">Ranked by average conversation struggle score</div>
+          <div class="bd" style="padding-left:4px;padding-right:4px">
+            <table class="tbl">
+              <thead><tr>
+                <th style="padding-left:12px">Intent</th><th>Conversations affected</th><th></th>
+                <th class="r">Avg. Conversation Score ▾</th><th>Leading cause</th><th></th>
+              </tr></thead>
+              <tbody id="intents">
+                <!-- rows rendered from data.js by app.js; static fallback below -->
+                <tr class="sel"><td><div class="intent"><span class="tick">⚑</span>Dispute a transaction</div></td>
+                  <td class="affected">4,212 <span>(9%)</span></td><td style="width:70px"><div class="minibar" style="width:60px"></div></td>
+                  <td class="r"><span class="chip hi">0.71</span></td><td class="cause"><b>Missing tooling</b></td><td class="arrow">›</td></tr>
+                <tr><td><div class="intent"><span class="tick">⚑</span>Refund status</div></td>
+                  <td class="affected">3,180 <span>(7%)</span></td><td><div class="minibar" style="width:46px"></div></td>
+                  <td class="r"><span class="chip hi">0.64</span></td><td class="cause"><b>Missing tooling</b></td><td class="arrow">›</td></tr>
+                <tr><td><div class="intent"><span class="tick">⚑</span>Card declined — why?</div></td>
+                  <td class="affected">2,940 <span>(6%)</span></td><td><div class="minibar" style="width:42px"></div></td>
+                  <td class="r"><span class="chip hi">0.58</span></td><td class="cause"><b>Context / retrieval</b></td><td class="arrow">›</td></tr>
+                <tr><td><div class="intent"><span class="tick grey">⚑</span>Change address</div></td>
+                  <td class="affected">1,120 <span>(2%)</span></td><td><div class="minibar" style="width:18px"></div></td>
+                  <td class="r"><span class="chip lo">0.44</span></td><td class="cause"><b>Prompt / policy</b></td><td class="arrow">›</td></tr>
+                <tr><td><div class="intent"><span class="tick grey">⚑</span>Payment failed</div></td>
+                  <td class="affected">980 <span>(2%)</span></td><td><div class="minibar" style="width:15px"></div></td>
+                  <td class="r"><span class="chip lo">0.41</span></td><td class="cause"><b>Assistant latency</b></td><td class="arrow">›</td></tr>
+                <tr><td><div class="intent"><span class="tick grey">⚑</span>Statement request</div></td>
+                  <td class="affected">610 <span>(1%)</span></td><td><div class="minibar" style="width:9px"></div></td>
+                  <td class="r"><span class="chip lo">0.28</span></td><td class="cause">Unclassified</td><td class="arrow">›</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3 id="panelTitle">Dispute a transaction</h3></div>
+          <div class="bd">
+            <div class="donut">
+              <svg width="86" height="86" viewBox="0 0 42 42" role="img" aria-label="Share of conversations affected">
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--grey-chip)" stroke-width="5"/>
+                <circle id="ring" cx="21" cy="21" r="15.9" fill="none" stroke="#4F46E5" stroke-width="5"
+                        stroke-dasharray="9 91" stroke-dashoffset="25" stroke-linecap="round"/>
+                <text id="ringPc" x="21" y="23" text-anchor="middle" font-size="7" font-family="Poppins" fill="var(--text)">9%</text>
+              </svg>
+              <div>
+                <div class="lbl">Conversations affected</div>
+                <div class="n" id="panelN">4,212</div>
+                <div class="lbl" style="margin-top:6px">Escalated or abandoned</div>
+                <div class="n" id="panelEsc">61%</div>
+              </div>
+            </div>
+
+            <h4 style="margin:16px 0 2px;font-size:11.5px;color:var(--dim);font-weight:600">Cause breakdown</h4>
+            <div class="causelist" id="causelist">
+              <div class="causerow"><span style="width:112px">Missing tooling</span><span class="bar"><i style="width:74%;background:#E04141"></i></span><span class="pc">74%</span></div>
+              <div class="causerow"><span style="width:112px">Context / retrieval</span><span class="bar"><i style="width:14%;background:#F0A93B"></i></span><span class="pc">14%</span></div>
+              <div class="causerow"><span style="width:112px">Prompt / policy</span><span class="bar"><i style="width:5%;background:#4F46E5"></i></span><span class="pc">5%</span></div>
+              <div class="causerow"><span style="width:112px">Unclassified</span><span class="bar"><i style="width:7%;background:#9A9AB0"></i></span><span class="pc">7%</span></div>
+            </div>
+
+            <div class="seealso">
+              <h4>See Also</h4>
+              <a href="conversation.html">Affected Conversation Replays</a>
+              <a href="funnel.html">Quantify in a Conversational Funnel</a>
+              <a href="#" onclick="return false">Affected Page Journey</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

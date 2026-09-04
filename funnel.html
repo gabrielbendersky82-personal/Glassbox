@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversational Funnel · Glassbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2212%22 fill=%22none%22 stroke=%22%234F46E5%22 stroke-width=%227%22/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="feedback-tab">Feedback</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark"></span><span class="wordmark">GLASSBOX</span><span class="collapse">⇤</span></div>
+    <nav class="nav">
+      <a href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
+      <a href="conversation.html"><span class="ico">▶</span>Recorded Sessions</a>
+      <button class="inert" tabindex="-1"><span class="ico">⁘</span>Interaction Maps</button>
+      <button class="inert" tabindex="-1"><span class="ico">▯</span>Mobile Analytics</button>
+      <button class="inert" tabindex="-1"><span class="ico">◔</span>Monitoring<span class="chev">›</span></button>
+      <a class="active" href="funnel.html"><span class="ico">≣</span>Conversions<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">◑</span>Product Intelligence<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">◬</span>Alerts &amp; Anomalies<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">▤</span>Reports</button>
+      <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
+    </nav>
+    <div class="foot">
+      <b>Concept prototype.</b> Three screens: Meshboards, Recorded Sessions, Conversions. Illustrative data.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb"><span class="muted">Conversions</span><span class="sep">›</span><span class="muted">Funnels</span><span class="sep">›</span>Dispute — no tool available<span class="caret">▾</span></div>
+      <div class="top-right">
+        <div class="help">Help <span class="b">?</span><span class="b">⋮</span></div>
+        <div class="avatar">GB</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="pill green"><span class="dots"></span>GlassBank-Web</span>
+      <span class="pill plain">Report type <b style="color:var(--text);margin-left:4px">Conversational Funnel</b></span>
+      <span class="pill plain">Perspective <b style="color:var(--text);margin-left:4px">Web + Mobile</b></span>
+      <div class="top-right"><span class="pill">▤ Past Month (UTC+03:00)</span></div>
+    </div>
+
+    <div class="canvas">
+      <div class="illus">Illustrative data for concept review — figures are modelled, not measured.</div>
+
+      <div class="fun">
+        <div class="card">
+          <div class="hd"><h3>Funnel steps</h3><span class="info">ⓘ</span></div>
+          <div class="sub">Built from events observed in the conversation replay</div>
+          <div class="bd" id="funsteps">
+            <!-- steps rendered from data.js by app.js; static fallback below -->
+            <div class="step"><div class="lab"><span class="n">12.4K</span><span class="nm">Assistant opened</span></div>
+              <div class="bar" style="width:100%"></div></div>
+            <div class="drop">↓ 50.8% did not raise this intent</div>
+
+            <div class="step"><div class="lab"><span class="n">6.1K</span><span class="nm">Intent: dispute_transaction</span></div>
+              <div class="bar" style="width:49%"></div></div>
+            <div class="drop">↓ 31.1% received a usable answer</div>
+
+            <div class="step"><div class="lab"><span class="n">4.2K</span><span class="nm">Assistant deflected — no backend call</span></div>
+              <div class="bar" style="width:34%;background:var(--amber)"></div></div>
+            <div class="drop">↓ 21.4% resolved another way</div>
+
+            <div class="step"><div class="lab"><span class="n">3.3K</span><span class="nm">Escalated or abandoned</span></div>
+              <div class="bar" style="width:27%;background:var(--red)"></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="hd"><h3>Failure ratio</h3><span class="info">ⓘ</span></div>
+            <div class="bd" style="text-align:center;padding:20px 16px 22px">
+              <div class="num" style="font-size:40px;font-weight:600;color:var(--red)" data-bind="funnel.failureRatio">26.6%</div>
+              <div style="font-size:12px;color:var(--dim);margin-top:4px">of assistant conversations end here</div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:14px">
+            <div class="hd"><h3>Avg. Conversation Struggle Score</h3><span class="info">ⓘ</span></div>
+            <div class="bd" style="display:flex;align-items:center;gap:14px">
+              <div class="face">😖</div><div class="bigscore" data-bind="funnel.struggleScore">0.71</div>
+              <span class="rank poor" style="margin:0 0 0 auto" data-bind="funnel.struggleRank">Poor</span>
+            </div>
+          </div>
+          <div class="card" style="margin-top:14px">
+            <div class="hd"><h3>Trend since prompt v4.2</h3><span class="info">ⓘ</span></div>
+            <div class="bd">
+              <svg viewBox="0 0 300 70" width="100%" height="70" preserveAspectRatio="none" role="img" aria-label="Failure rate step change after version 4.2">
+                <line x1="150" y1="4" x2="150" y2="66" stroke="var(--border)" stroke-dasharray="3 3"/>
+                <text x="154" y="12" font-size="8" fill="var(--faint)">v4.2 released</text>
+                <path d="M6,52 L40,54 L74,50 L108,53 L142,51 L150,51 L158,28 L192,26 L226,24 L260,22 L294,20"
+                      fill="none" stroke="#E04141" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card impact">
+            <div class="hd"><h3>Business impact</h3><span class="info">ⓘ</span></div>
+            <div class="sub">Modelled from observed outcomes</div>
+            <div class="bd">
+              <div id="impactlines">
+                <!-- lines rendered from data.js by app.js; static fallback below -->
+                <div class="line"><span>Conversations affected</span><b>4,212</b></div>
+                <div class="line"><span>Escalated to a human</span><b>1,880</b></div>
+                <div class="line"><span>Abandoned, then contacted us</span><b>1,420</b></div>
+                <div class="line"><span>Abandoned, no further contact</span><b>912</b></div>
+                <div class="line"><span>Cost per handled contact</span><b>$11.50</b></div>
+              </div>
+              <div class="tot"><span style="font-size:12.5px;color:var(--dim)">Avoidable contact cost</span><span class="v" data-bind="funnel.avoidableCost">$37,950</span></div>
+            </div>
+          </div>
+
+          <div class="ticket">
+            <h4>Backlog item this produces</h4>
+            <p><b>Add a dispute-initiation tool to the servicing assistant.</b><br>
+               Intent recognised, no tool available, 4,212 conversations, 61% escalate or abandon,
+               $37,950 avoidable contact cost this month. Evidence: 4,212 conversation replays attached.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
