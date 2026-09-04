@@ -59,7 +59,7 @@
             <button class="iconbtn" aria-label="Pin">📌</button><button class="iconbtn" aria-label="Favourite">☆</button><button class="iconbtn" aria-label="List">▤</button>
             <span class="pill">🔗 Share Session ▾</span>
             <span class="pill">◇ Create ▾</span>
-            <span class="gia">✦ GIA Insights</span>
+            <button class="gia" id="giaBtn" aria-expanded="true" aria-controls="giaPanel">✦ GIA Insights</button>
             <button class="iconbtn" aria-label="Settings">⚙</button>
           </div>
         </div>
@@ -135,8 +135,10 @@
             </div>
           </div>
 
-          <div class="insights ins">
-            <div class="ins-h"><span style="color:#8B3FD1">✦</span>GIA Conversation Insights</div>
+          <div class="insights ins" id="giaPanel">
+            <div class="ins-h"><span style="color:#8B3FD1">✦</span>GIA Conversation Insights
+              <span class="ins-acts"><button class="iconbtn" aria-label="Share insights">⤴</button><button class="iconbtn" id="giaClose" aria-label="Close insights">✕</button></span>
+            </div>
             <div class="tabs">
               <button class="on">All</button><button>Technical</button><button>Behavioral</button>
             </div>

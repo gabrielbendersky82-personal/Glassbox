@@ -49,7 +49,40 @@
       <div class="top-right">
         <button class="iconbtn" aria-label="Refresh">⟳</button>
         <span class="pill">▤ Past Month (UTC+03:00)</span>
+        <button class="gia" id="giaBtn" aria-expanded="false" aria-controls="giaPanel">✦ GIA Insights</button>
       </div>
+    </div>
+
+    <div class="gia-panel ins" id="giaPanel" hidden>
+      <div class="ins-h"><span style="color:#8B3FD1">✦</span>GIA Cause Insights
+        <span class="ins-acts"><button class="iconbtn" aria-label="Share insights">⤴</button><button class="iconbtn" id="giaClose" aria-label="Close insights">✕</button></span>
+      </div>
+      <div class="tabs">
+        <button class="on">All</button><button>Technical</button><button>Behavioral</button>
+      </div>
+
+      <h4 style="margin-top:0">Analysis — <span id="giaIntent">Dispute a transaction</span></h4>
+      <p id="giaSummary">Customers raising <b>Dispute a transaction</b> and similar intents are
+        <b>recognised correctly</b> but the assistant has <b>no tool to act</b>. It points to a
+        help article, then falls back to deflection language with <b>no backend call</b> and
+        <b>no state change</b> on the account, and most conversations end escalated or abandoned.</p>
+
+      <h4>Key Takeaways</h4>
+      <ul id="giaTakeaways">
+        <li>Give the assistant a dispute-initiation tool on <u>dispute_transaction</u>, or hand off directly instead of deflecting.</li>
+        <li>Suppress identical consecutive responses — repeats immediately precede abandonment in this cohort.</li>
+        <li>Attach the affected replays to the backlog item so the fix carries its own evidence.</li>
+      </ul>
+
+      <div class="verdict">
+        <div class="top"><span style="color:var(--red)">⚑</span><span class="name" id="giaCause">Missing tooling</span><span class="conf" id="giaConf">87% confidence</span></div>
+        <div class="why" id="giaEvidence">Consistent with a missing capability: <em>intent recognised</em> at high confidence ·
+          <em>no backend call</em> during the conversation · <em>deflection phrasing</em> matched ·
+          <em>no state change</em> on the account.</div>
+        <div class="cohort" id="giaSeen">Seen in <u>4,212 conversations</u> with this signature this month.</div>
+      </div>
+
+      <div class="askbox">Ask a question about this cause<span class="go">→</span></div>
     </div>
 
     <div class="canvas">

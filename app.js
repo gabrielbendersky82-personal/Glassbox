@@ -15,6 +15,40 @@
     if (v != null) el.textContent = v;
   });
 
+  /* ---- GIA Insights panel toggle (dashboard + replay) ---- */
+  var giaBtn = document.getElementById("giaBtn");
+  var giaPanel = document.getElementById("giaPanel");
+  if (giaBtn && giaPanel) {
+    var rbody = document.querySelector(".rbody");
+    function setGia(open) {
+      giaPanel.hidden = !open;
+      giaBtn.setAttribute("aria-expanded", String(open));
+      if (rbody) rbody.classList.toggle("gia-hidden", !open);
+    }
+    giaBtn.addEventListener("click", function () { setGia(giaPanel.hidden); });
+    var giaClose = document.getElementById("giaClose");
+    if (giaClose) giaClose.addEventListener("click", function () { setGia(false); giaBtn.focus(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !giaPanel.hidden) { setGia(false); giaBtn.focus(); }
+    });
+  }
+
+  /* Fill the dashboard GIA panel with the analysis for one cause. */
+  function renderGiaCause(intentName, causeName) {
+    var g = D.giaByCause && D.giaByCause[causeName];
+    var el = document.getElementById("giaIntent");
+    if (!g || !el) return;
+    el.textContent = intentName;
+    document.getElementById("giaSummary").innerHTML = g.summary;
+    document.getElementById("giaTakeaways").innerHTML = g.takeaways.map(function (t) {
+      return "<li>" + t + "</li>";
+    }).join("");
+    document.getElementById("giaCause").textContent = causeName;
+    document.getElementById("giaConf").textContent = g.verdict.confidence;
+    document.getElementById("giaEvidence").innerHTML = g.verdict.evidence;
+    document.getElementById("giaSeen").innerHTML = g.verdict.seen;
+  }
+
   /* ---- Screen 1 · failing intents table + detail panel ---- */
   var tbody = document.getElementById("intents");
   if (tbody && D.intents) {
@@ -44,6 +78,7 @@
           '<span class="bar"><i style="width:' + c[1] + "%;background:" + c[2] + '"></i></span>' +
           '<span class="pc">' + c[1] + "%</span></div>";
       }).join("");
+      renderGiaCause(d.name, d.lead);
     }
 
     rows.forEach(function (r) {
