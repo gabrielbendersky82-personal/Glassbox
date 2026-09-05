@@ -124,6 +124,21 @@
     });
   }
 
+  /* Render evidence clauses with their capture-tier chip. Tier 1 is available
+     from the session record on day one; Tier 2 needs the assistant event
+     schema — the split is stated on screen because the deck is probed on it. */
+  function evidenceList(evidence) {
+    return '<ul class="evlist">' + evidence.map(function (e) {
+      return "<li><em>" + e.t + "</em>" +
+        '<span class="tier t' + e.tier + '">Tier ' + e.tier + "</span></li>";
+    }).join("") + "</ul>";
+  }
+
+  function tierKeyHtml() {
+    if (!D.tierKey) return "";
+    return '<div class="tierkey">' + D.tierKey[1] + "<br>" + D.tierKey[2] + "</div>";
+  }
+
   /* Fill the dashboard GIA panel with the analysis for one cause. */
   function renderGiaCause(intentName, causeName) {
     var g = D.giaByCause && D.giaByCause[causeName];
@@ -136,8 +151,8 @@
     }).join("");
     $("giaCause").textContent = causeName;
     $("giaConf").textContent = g.verdict.confidence;
-    $("giaEvidence").innerHTML = g.verdict.evidence;
-    $("giaSeen").innerHTML = g.verdict.seen;
+    $("giaEvidence").innerHTML = g.verdict.lead + evidenceList(g.verdict.evidence) + tierKeyHtml();
+    $("giaSeen").innerHTML = "<b>Cluster classification</b> — " + g.verdict.cluster;
   }
 
   /* ---- Screen 1 · dashboard ---- */
@@ -170,6 +185,8 @@
     $("dashStruggledPct").textContent = r.dashboard.struggledPct;
     $("dashStruggledCount").textContent = r.dashboard.struggledCount;
     $("dashAbandoned").textContent = r.dashboard.abandonedPct;
+    $("dashRepeat").textContent = r.dashboard.repeatContact48h;
+    $("dashUnclassified").textContent = r.dashboard.unclassifiedShare;
     renderChart("chartStruggle", r.charts.struggle);
     renderChart("chartVolume", r.charts.volume);
 

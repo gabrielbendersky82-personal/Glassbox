@@ -48,7 +48,10 @@
       </div>
     </div>
     <div class="filters">
-      <span class="pill green"><span class="dots"></span>GlassBank-Web</span>
+      <span class="pill green"><span class="dots"></span>GlassBank</span>
+      <div class="seg" role="group" aria-label="Platform">
+        <button class="on" aria-pressed="true">Web</button><button aria-pressed="false">Mobile</button>
+      </div>
       <span class="pill">▤ Servicing Assistant</span>
       <button class="iconbtn" aria-label="Filters">⧩</button>
       <div class="top-right">
@@ -118,6 +121,10 @@
             <div class="kv" style="margin-top:12px">
               <div><div class="k">Struggled <span class="info" tabindex="0" data-tip="Share of conversations showing at least one struggle signal, with the affected count.">ⓘ</span></div><div class="v"><span id="dashStruggledPct"></span> <small id="dashStruggledCount"></small></div></div>
               <div><div class="k">Abandoned <span class="info" tabindex="0" data-tip="Share of conversations the customer closed without completing the task or escalating.">ⓘ</span></div><div class="v" id="dashAbandoned"></div></div>
+            </div>
+            <div class="kv" style="margin-top:12px">
+              <div><div class="k">Repeat contact 48h <span class="info" tabindex="0" data-tip="Share of conversations followed by the same customer contacting us again within 48 hours on the same topic. Joined from GlassBank's contact-centre records; digital re-contact is measured natively.">ⓘ</span></div><div class="v" id="dashRepeat"></div></div>
+              <div><div class="k">Unclassified <span class="info tip-left" tabindex="0" data-tip="Share of struggling conversations where no cause hypothesis clears the confidence bar. Published rather than hidden — the detection model reports its own uncertainty.">ⓘ</span></div><div class="v" id="dashUnclassified"></div></div>
             </div>
           </div>
         </div>

@@ -23,7 +23,8 @@ var GLASSBOX_DATA = {
       label: "Past Day (UTC+03:00)",
       prevPeriod: "Feb 24 – Feb 25",
       dashboard: { score: "0.74", rank: "Poor", total: "1.6 K",
-        struggledPct: "39%", struggledCount: "(630)", abandonedPct: "25%" },
+        struggledPct: "39%", struggledCount: "(630)", abandonedPct: "25%",
+        repeatContact48h: "15%", unclassifiedShare: "9%" },
       charts: {
         struggle: { axis: "1.0", points: [0.70, 0.71, 0.73, 0.72, 0.74, 0.75, 0.74, 0.76] },
         volume:   { axis: "90",  points: [48, 71, 64, 83, 77, 68, 59, 52] },
@@ -76,7 +77,8 @@ var GLASSBOX_DATA = {
       label: "Past Week (UTC+03:00)",
       prevPeriod: "Feb 12 – Feb 19",
       dashboard: { score: "0.71", rank: "Poor", total: "11.9 K",
-        struggledPct: "37%", struggledCount: "(4.4K)", abandonedPct: "23%" },
+        struggledPct: "37%", struggledCount: "(4.4K)", abandonedPct: "23%",
+        repeatContact48h: "14%", unclassifiedShare: "9%" },
       charts: {
         struggle: { axis: "1.0",  points: [0.66, 0.68, 0.67, 0.70, 0.71, 0.72, 0.74] },
         volume:   { axis: "2.0K", points: [1.5, 1.8, 1.6, 1.9, 1.7, 1.8, 1.6] },
@@ -129,7 +131,8 @@ var GLASSBOX_DATA = {
       label: "Past Two Weeks (UTC+03:00)",
       prevPeriod: "Jan 29 – Feb 12",
       dashboard: { score: "0.67", rank: "Poor", total: "23.6 K",
-        struggledPct: "36%", struggledCount: "(8.5K)", abandonedPct: "22%" },
+        struggledPct: "36%", struggledCount: "(8.5K)", abandonedPct: "22%",
+        repeatContact48h: "13%", unclassifiedShare: "8%" },
       charts: {
         struggle: { axis: "1.0",  points: [0.48, 0.50, 0.52, 0.58, 0.64, 0.66, 0.68, 0.69, 0.70, 0.71, 0.70, 0.72, 0.71, 0.73] },
         volume:   { axis: "2.0K", points: [1.5, 1.7, 1.6, 1.9, 1.6, 1.8, 1.7, 2.0, 1.8, 1.7, 1.9, 1.6, 1.8, 1.7] },
@@ -183,7 +186,8 @@ var GLASSBOX_DATA = {
       label: "Past Month (UTC+03:00)",
       prevPeriod: "Dec 28 – Jan 27",
       dashboard: { score: "0.62", rank: "Poor", total: "48.2 K",
-        struggledPct: "34%", struggledCount: "(16.4K)", abandonedPct: "21%" },
+        struggledPct: "34%", struggledCount: "(16.4K)", abandonedPct: "21%",
+        repeatContact48h: "12%", unclassifiedShare: "8%" },
       charts: {
         struggle: { axis: "1.0",  points: [0.41, 0.42, 0.44, 0.47, 0.52, 0.56, 0.61, 0.64, 0.66] },
         volume:   { axis: "2.4K", points: [1.7, 1.9, 1.5, 2.1, 1.8, 2.3, 1.9, 2.4, 2.0, 2.4, 2.2] },
@@ -237,7 +241,8 @@ var GLASSBOX_DATA = {
       label: "Feb 1, 7:39 PM - Feb 26 2026, 7:39 PM (UTC+03:00)",
       prevPeriod: "Jan 6 – Jan 31",
       dashboard: { score: "0.63", rank: "Poor", total: "41.8 K",
-        struggledPct: "34%", struggledCount: "(14.2K)", abandonedPct: "21%" },
+        struggledPct: "34%", struggledCount: "(14.2K)", abandonedPct: "21%",
+        repeatContact48h: "12%", unclassifiedShare: "8%" },
       charts: {
         struggle: { axis: "1.0",  points: [0.44, 0.46, 0.49, 0.55, 0.62, 0.65, 0.68, 0.70, 0.71] },
         volume:   { axis: "2.0K", points: [1.4, 1.7, 1.5, 1.9, 1.6, 1.8, 1.7, 1.9, 1.6] },
@@ -322,9 +327,31 @@ var GLASSBOX_DATA = {
     ]
   },
 
+  /* ---- Struggle signal taxonomy (deck slide: nine signals, three families) ----
+     Event labels in the replay and the legend must use exactly these names. */
+  signalFamilies: [
+    { name: "Repetition and repair",
+      signals: ["Rephrase loop", "Circular conversation", "Repeated intent failure"] },
+    { name: "Sentiment and explicit signals",
+      signals: ["Sentiment decline", "Explicit frustration", "Escalation requested"] },
+    { name: "Outcome signals",
+      signals: ["Abandonment after answer", "Failed task completion", "Intent misunderstanding"] }
+  ],
+
+  /* ---- Capture tiers (deck slide 5) ----
+     Tier 1 is available day one from the session record, with no assistant
+     integration. Tier 2 needs the optional assistant event schema. Every
+     evidence clause below is tagged so the claim is auditable on screen. */
+  tierKey: {
+    1: "Tier 1 — from the session record, day one, no assistant integration",
+    2: "Tier 2 — needs the optional assistant event schema"
+  },
+
   /* GIA Cause Insights — one analysis per leading cause. Keyed by the
      `lead` field of the selected intent row. Copy stays hypothesis-level
-     ("consistent with"), with the evidence directly beneath each claim. */
+     ("consistent with"), with the evidence directly beneath each claim.
+     Classification is per cluster, never per conversation: `cluster` states
+     the population the judgement is drawn from. */
   giaByCause: {
     "Missing tooling": {
       summary: "Customers raising <b>Dispute a transaction</b> and similar intents are " +
@@ -338,10 +365,15 @@ var GLASSBOX_DATA = {
       ],
       verdict: {
         confidence: "87% confidence",
-        evidence: "Consistent with a missing capability: <em>intent recognised</em> at high confidence · " +
-          "<em>no backend call</em> during the conversation · <em>deflection phrasing</em> matched · " +
-          "<em>no state change</em> on the account.",
-        seen: "Seen in <u>4,212 conversations</u> with this signature this month."
+        lead: "Consistent with a missing capability:",
+        evidence: [
+          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
+          { t: "No state change on the account after the conversation", tier: 1 },
+          { t: "Identical consecutive response repeated before abandonment", tier: 1 },
+          { t: "Intent recognised at 0.91 on all turns", tier: 2 },
+          { t: "No backend call during the conversation", tier: 2 }
+        ],
+        cluster: "4,212 conversations share this signature this month."
       }
     },
     "Context / retrieval": {
@@ -355,10 +387,14 @@ var GLASSBOX_DATA = {
       ],
       verdict: {
         confidence: "78% confidence",
-        evidence: "Consistent with a retrieval gap: <em>backend call made</em> on affected turns · " +
-          "<em>retrieved passages</em> scored low relevance to the query · <em>generic answer</em> " +
-          "repeated after rephrase · account data <em>available but unused</em>.",
-        seen: "Seen in <u>2,940 conversations</u> with this signature this month."
+        lead: "Consistent with a retrieval gap:",
+        evidence: [
+          { t: "Generic answer repeated after the customer rephrased", tier: 1 },
+          { t: "Customer re-asked with added detail the answer never used", tier: 1 },
+          { t: "Backend call made on the affected turns", tier: 2 },
+          { t: "Retrieved passages scored low relevance to the query", tier: 2 }
+        ],
+        cluster: "2,940 conversations share this signature this month."
       }
     },
     "Prompt / policy": {
@@ -372,10 +408,14 @@ var GLASSBOX_DATA = {
       ],
       verdict: {
         confidence: "72% confidence",
-        evidence: "Consistent with prompt or policy over-restriction: <em>tool available</em> but not invoked · " +
-          "<em>policy phrasing</em> matched on the refusal turns · <em>identical policy text</em> repeated " +
-          "after pushback · no compliance constraint requires refusal here.",
-        seen: "Seen in <u>1,120 conversations</u> with this signature this month."
+        lead: "Consistent with prompt or policy over-restriction:",
+        evidence: [
+          { t: "Policy phrasing matched on the refusal turns", tier: 1 },
+          { t: "Identical policy text repeated after the customer pushed back", tier: 1 },
+          { t: "No compliance constraint requires refusal on this journey", tier: 1 },
+          { t: "Tool available but never invoked", tier: 2 }
+        ],
+        cluster: "1,120 conversations share this signature this month."
       }
     },
     "Assistant latency": {
@@ -384,15 +424,19 @@ var GLASSBOX_DATA = {
         "customers <b>leave mid-wait</b> before the answer renders.",
       takeaways: [
         "Profile the retry-status lookup behind <u>payment_failed</u> — it dominates response time in this cohort.",
-        "Stream a typing/progress state so the wait reads as work, not silence.",
+        "Stream a typing or progress state so the wait reads as work, not silence.",
         "Set a latency budget per turn and alert when p95 breaches it."
       ],
       verdict: {
         confidence: "81% confidence",
-        evidence: "Consistent with a latency problem: <em>response latency</em> p95 of 9.4s on affected turns · " +
-          "<em>abandonment concentrated mid-wait</em>, before the reply rendered · answer content itself " +
-          "<em>rated usable</em> when delivered.",
-        seen: "Seen in <u>980 conversations</u> with this signature this month."
+        lead: "Consistent with a latency problem:",
+        evidence: [
+          { t: "Response latency p95 of 9.4s on the affected turns", tier: 1 },
+          { t: "Abandonment concentrated mid-wait, before the reply rendered", tier: 1 },
+          { t: "Answer content rated usable once delivered", tier: 1 },
+          { t: "Server-side processing time confirms the wait is upstream", tier: 2 }
+        ],
+        cluster: "980 conversations share this signature this month."
       }
     },
     "Unclassified": {
@@ -406,10 +450,13 @@ var GLASSBOX_DATA = {
       ],
       verdict: {
         confidence: "Below threshold",
-        evidence: "No cause hypothesis reached the 60% confidence bar: <em>mixed signals</em> across turns · " +
-          "<em>no repeated signature</em> within the cohort · struggle score elevated but " +
-          "<em>pattern inconclusive</em>. The model reports uncertainty rather than guessing.",
-        seen: "Applies to <u>610 conversations</u> in this cohort this month."
+        lead: "No cause hypothesis reached the 60% confidence bar:",
+        evidence: [
+          { t: "Mixed signals across turns, no repeated signature", tier: 1 },
+          { t: "Struggle score elevated but the pattern is inconclusive", tier: 1 },
+          { t: "Assistant events would narrow this, if the schema were enabled", tier: 2 }
+        ],
+        cluster: "610 conversations sit in this cohort this month, published rather than hidden."
       }
     }
   },
