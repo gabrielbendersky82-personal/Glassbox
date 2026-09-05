@@ -319,6 +319,12 @@ a{color:var(--indigo)}
 }
 .info:hover::after,.info:focus-visible::after{opacity:1;visibility:visible}
 .info.tip-left::after{left:auto;right:-8px;transform:none}
+.info.src{
+  display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;
+  background:var(--grey-chip);color:var(--dim);font-size:9.5px;font-weight:600;
+  letter-spacing:.02em;vertical-align:1px
+}
+.srclegend{font-size:11px;color:var(--faint);padding:0 16px 13px;line-height:1.5}
 
 /* assistant portfolio */
 .row3{grid-template-columns:1fr 1.3fr 1fr}

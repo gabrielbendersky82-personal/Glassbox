@@ -251,7 +251,10 @@
   var impact = $("impactlines");
   if (impact && D.funnel) {
     impact.innerHTML = D.funnel.impact.map(function (l) {
-      return '<div class="line"><span>' + l[0] + "</span><b>" + l[1] + "</b></div>";
+      var badge = l[2] && D.sourceNotes[l[2]]
+        ? ' <span class="info src tip-left" tabindex="0" data-tip="' + D.sourceNotes[l[2]] + '">⇄ CRM</span>'
+        : "";
+      return '<div class="line"><span>' + l[0] + badge + "</span><b>" + l[1] + "</b></div>";
     }).join("");
   }
 })();

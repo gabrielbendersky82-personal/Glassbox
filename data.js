@@ -65,7 +65,7 @@ var GLASSBOX_DATA = {
         drops: ["↓ 48.3% did not raise this intent", "↓ 27.3% received a usable answer", "↓ 17.3% resolved another way"],
         failureRatio: "31.1%", struggleScore: "0.79", struggleRank: "Poor",
         impact: [["Conversations affected", "176"], ["Escalated to a human", "81"],
-                 ["Abandoned, then contacted us within 48h","59"], ["Abandoned, no further contact", "36"],
+                 ["Abandoned, then contacted us within 48h","59", "crmRecontact"], ["Abandoned, no further contact", "36", "crmAbsence"],
                  ["Cost per handled contact", "$11.50"]],
         avoidableCost: "$1,610"
       }
@@ -118,7 +118,7 @@ var GLASSBOX_DATA = {
         drops: ["↓ 48.4% did not raise this intent", "↓ 29.6% received a usable answer", "↓ 20.6% resolved another way"],
         failureRatio: "28.8%", struggleScore: "0.76", struggleRank: "Poor",
         impact: [["Conversations affected", "1,094"], ["Escalated to a human", "489"],
-                 ["Abandoned, then contacted us within 48h","371"], ["Abandoned, no further contact", "234"],
+                 ["Abandoned, then contacted us within 48h","371", "crmRecontact"], ["Abandoned, no further contact", "234", "crmAbsence"],
                  ["Cost per handled contact", "$11.50"]],
         avoidableCost: "$9,890"
       }
@@ -172,7 +172,7 @@ var GLASSBOX_DATA = {
         drops: ["↓ 49.8% did not raise this intent", "↓ 30.6% received a usable answer", "↓ 20.9% resolved another way"],
         failureRatio: "27.4%", struggleScore: "0.74", struggleRank: "Poor",
         impact: [["Conversations affected", "2,167"], ["Escalated to a human", "966"],
-                 ["Abandoned, then contacted us within 48h","730"], ["Abandoned, no further contact", "471"],
+                 ["Abandoned, then contacted us within 48h","730", "crmRecontact"], ["Abandoned, no further contact", "471", "crmAbsence"],
                  ["Cost per handled contact", "$11.50"]],
         avoidableCost: "$19,504"
       }
@@ -226,7 +226,7 @@ var GLASSBOX_DATA = {
         drops: ["↓ 50.8% did not raise this intent", "↓ 31.1% received a usable answer", "↓ 21.4% resolved another way"],
         failureRatio: "26.6%", struggleScore: "0.71", struggleRank: "Poor",
         impact: [["Conversations affected", "4,212"], ["Escalated to a human", "1,880"],
-                 ["Abandoned, then contacted us within 48h","1,420"], ["Abandoned, no further contact", "912"],
+                 ["Abandoned, then contacted us within 48h","1,420", "crmRecontact"], ["Abandoned, no further contact", "912", "crmAbsence"],
                  ["Cost per handled contact", "$11.50"]],
         avoidableCost: "$37,950"
       }
@@ -280,11 +280,22 @@ var GLASSBOX_DATA = {
         drops: ["↓ 50.5% did not raise this intent", "↓ 31.4% received a usable answer", "↓ 20.2% resolved another way"],
         failureRatio: "27.1%", struggleScore: "0.70", struggleRank: "Poor",
         impact: [["Conversations affected", "3,655"], ["Escalated to a human", "1,630"],
-                 ["Abandoned, then contacted us within 48h","1,232"], ["Abandoned, no further contact", "793"],
+                 ["Abandoned, then contacted us within 48h","1,232", "crmRecontact"], ["Abandoned, no further contact", "793", "crmAbsence"],
                  ["Cost per handled contact", "$11.50"]],
         avoidableCost: "$32,913"
       }
     }
+  },
+
+  /* Source notes for integration-dependent metrics. Lines flagged in the
+     business-impact data carry a small "⇄ CRM" badge with this copy —
+     honest about where Glassbox's native visibility ends. */
+  sourceNotes: {
+    crmRecontact: "Phone re-contact is joined from GlassBank's contact-centre / CRM records at customer level. " +
+      "Digital re-contact (click-to-call, secure messaging) is measured natively by Glassbox.",
+    crmAbsence: "An absence claim: asserting no further contact requires visibility of every channel, " +
+      "so this line is computed only when contact-centre records are ingested. Without that feed it " +
+      "narrows to no further digital contact observed."
   },
 
   /* ---- Assistant Portfolio meshboard (portfolio.html) ----
