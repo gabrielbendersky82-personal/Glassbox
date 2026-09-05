@@ -110,18 +110,18 @@
 
         <div>
           <div class="card impact">
-            <div class="hd"><h3>Business impact</h3><span class="info tip-left" tabindex="0" data-tip="Outcomes joined across web, app and contact-centre records, costed at the bank's cost per handled contact.">ⓘ</span></div>
+            <div class="hd"><h3>Business impact</h3><span class="info tip-left" tabindex="0" data-tip="Avoidable contact cost = (escalated + abandoned-then-contacted within 48h) × the bank's own fully loaded cost per handled contact. No cost is attributed to conversations with no further contact. Contact records joined at customer level across web, app and contact centre.">ⓘ</span></div>
             <div class="sub">Modelled from outcomes joined across web, app and contact-centre records</div>
             <div class="bd">
               <div id="impactlines">
                 <!-- lines rendered from data.js by app.js; static fallback below -->
                 <div class="line"><span>Conversations affected</span><b>4,212</b></div>
                 <div class="line"><span>Escalated to a human</span><b>1,880</b></div>
-                <div class="line"><span>Abandoned, then contacted us</span><b>1,420</b></div>
+                <div class="line"><span>Abandoned, then contacted us within 48h</span><b>1,420</b></div>
                 <div class="line"><span>Abandoned, no further contact</span><b>912</b></div>
                 <div class="line"><span>Cost per handled contact</span><b>$11.50</b></div>
               </div>
-              <div class="tot"><span style="font-size:12.5px;color:var(--dim)">Avoidable contact cost</span><span class="v" data-bind="funnel.avoidableCost">$37,950</span></div>
+              <div class="tot"><span style="font-size:12.5px;color:var(--dim)">Avoidable contact cost (modelled)</span><span class="v" data-bind="funnel.avoidableCost">$37,950</span></div>
             </div>
           </div>
 
