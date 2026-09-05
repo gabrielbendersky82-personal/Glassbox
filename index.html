@@ -52,8 +52,11 @@
       <button class="iconbtn" aria-label="Filters">⧩</button>
       <div class="top-right">
         <button class="iconbtn" aria-label="Refresh">⟳</button>
-        <span class="pill">▤ Past Month (UTC+03:00)</span>
         <button class="gia" id="giaBtn" aria-expanded="false" aria-controls="giaPanel">✦ GIA Insights</button>
+        <div class="range-picker">
+          <button class="pill" id="rangeBtn" aria-haspopup="listbox" aria-expanded="false">▤ <span id="rangeLabel">Past Month (UTC+03:00)</span> ▾</button>
+          <div class="rp-updated">Last Updated at 06:39 PM</div>
+        </div>
       </div>
     </div>
 
@@ -65,25 +68,16 @@
         <button class="on">All</button><button>Technical</button><button>Behavioral</button>
       </div>
 
-      <h4 style="margin-top:0">Analysis — <span id="giaIntent">Dispute a transaction</span></h4>
-      <p id="giaSummary">Customers raising <b>Dispute a transaction</b> and similar intents are
-        <b>recognised correctly</b> but the assistant has <b>no tool to act</b>. It points to a
-        help article, then falls back to deflection language with <b>no backend call</b> and
-        <b>no state change</b> on the account, and most conversations end escalated or abandoned.</p>
+      <h4 style="margin-top:0">Analysis — <span id="giaIntent"></span></h4>
+      <p id="giaSummary"></p>
 
       <h4>Key Takeaways</h4>
-      <ul id="giaTakeaways">
-        <li>Give the assistant a dispute-initiation tool on <u>dispute_transaction</u>, or hand off directly instead of deflecting.</li>
-        <li>Suppress identical consecutive responses — repeats immediately precede abandonment in this cohort.</li>
-        <li>Attach the affected replays to the backlog item so the fix carries its own evidence.</li>
-      </ul>
+      <ul id="giaTakeaways"></ul>
 
       <div class="verdict">
-        <div class="top"><span style="color:var(--red)">⚑</span><span class="name" id="giaCause">Missing tooling</span><span class="conf" id="giaConf">87% confidence</span></div>
-        <div class="why" id="giaEvidence">Consistent with a missing capability: <em>intent recognised</em> at high confidence ·
-          <em>no backend call</em> during the conversation · <em>deflection phrasing</em> matched ·
-          <em>no state change</em> on the account.</div>
-        <div class="cohort" id="giaSeen">Seen in <u>4,212 conversations</u> with this signature this month.</div>
+        <div class="top"><span style="color:var(--red)">⚑</span><span class="name" id="giaCause"></span><span class="conf" id="giaConf"></span></div>
+        <div class="why" id="giaEvidence"></div>
+        <div class="cohort" id="giaSeen"></div>
       </div>
 
       <div class="askbox">Ask a question about this cause<span class="go">→</span></div>
@@ -96,8 +90,8 @@
         <div class="card">
           <div class="hd"><h3>Conversation Struggle Score</h3><span class="info">ⓘ</span></div>
           <div class="bd">
-            <div class="scorewrap"><div class="face">😖</div><div class="bigscore" data-bind="dashboard.struggleScore">0.62</div></div>
-            <span class="rank poor" data-bind="dashboard.struggleRank">Poor</span>
+            <div class="scorewrap"><div class="face">😖</div><div class="bigscore" id="dashScore"></div></div>
+            <span class="rank poor" id="dashRank"></span>
           </div>
         </div>
 
@@ -108,9 +102,9 @@
               <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#E04141" stop-opacity=".22"/><stop offset="1" stop-color="#E04141" stop-opacity="0"/>
               </linearGradient></defs>
-              <text x="0" y="9" font-size="8" fill="var(--faint)">1.0</text>
-              <path d="M8,62 L46,60 L84,57 L122,52 L160,44 L198,38 L236,30 L274,26 L292,24" fill="none" stroke="#E04141" stroke-width="2"/>
-              <path d="M8,62 L46,60 L84,57 L122,52 L160,44 L198,38 L236,30 L274,26 L292,24 L292,92 L8,92 Z" fill="url(#g1)"/>
+              <text id="chartStruggleAxis" x="0" y="9" font-size="8" fill="var(--faint)"></text>
+              <path id="chartStruggleLine" d="" fill="none" stroke="#E04141" stroke-width="2"/>
+              <path id="chartStruggleFill" d="" fill="url(#g1)"/>
             </svg>
           </div>
         </div>
@@ -119,10 +113,10 @@
           <div class="hd"><h3>Conversations</h3><span class="info">ⓘ</span></div>
           <div class="bd">
             <div class="k" style="font-size:11.5px;color:var(--dim)">Total Conversations</div>
-            <div class="total" data-bind="dashboard.totalConversations">48.2 K</div>
+            <div class="total" id="dashTotal"></div>
             <div class="kv" style="margin-top:12px">
-              <div><div class="k">Struggled ⓘ</div><div class="v"><span data-bind="dashboard.struggledPct">34%</span> <small data-bind="dashboard.struggledCount">(16.4K)</small></div></div>
-              <div><div class="k">Abandoned ⓘ</div><div class="v" data-bind="dashboard.abandonedPct">21%</div></div>
+              <div><div class="k">Struggled ⓘ</div><div class="v"><span id="dashStruggledPct"></span> <small id="dashStruggledCount"></small></div></div>
+              <div><div class="k">Abandoned ⓘ</div><div class="v" id="dashAbandoned"></div></div>
             </div>
           </div>
         </div>
@@ -134,9 +128,9 @@
               <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#4F46E5" stop-opacity=".26"/><stop offset="1" stop-color="#4F46E5" stop-opacity="0"/>
               </linearGradient></defs>
-              <text x="0" y="9" font-size="8" fill="var(--faint)">2.4K</text>
-              <path d="M8,58 L38,50 L68,62 L98,44 L128,55 L158,36 L188,48 L218,30 L248,42 L278,26 L292,34" fill="none" stroke="#4F46E5" stroke-width="2"/>
-              <path d="M8,58 L38,50 L68,62 L98,44 L128,55 L158,36 L188,48 L218,30 L248,42 L278,26 L292,34 L292,92 L8,92 Z" fill="url(#g2)"/>
+              <text id="chartVolumeAxis" x="0" y="9" font-size="8" fill="var(--faint)"></text>
+              <path id="chartVolumeLine" d="" fill="none" stroke="#4F46E5" stroke-width="2"/>
+              <path id="chartVolumeFill" d="" fill="url(#g2)"/>
             </svg>
           </div>
         </div>
@@ -153,25 +147,7 @@
                 <th class="r">Avg. Conversation Score ▾</th><th>Leading cause</th><th></th>
               </tr></thead>
               <tbody id="intents">
-                <!-- rows rendered from data.js by app.js; static fallback below -->
-                <tr class="sel"><td><div class="intent"><span class="tick">⚑</span>Dispute a transaction</div></td>
-                  <td class="affected">4,212 <span>(9%)</span></td><td style="width:70px"><div class="minibar" style="width:60px"></div></td>
-                  <td class="r"><span class="chip hi">0.71</span></td><td class="cause"><b>Missing tooling</b></td><td class="arrow">›</td></tr>
-                <tr><td><div class="intent"><span class="tick">⚑</span>Refund status</div></td>
-                  <td class="affected">3,180 <span>(7%)</span></td><td><div class="minibar" style="width:46px"></div></td>
-                  <td class="r"><span class="chip hi">0.64</span></td><td class="cause"><b>Missing tooling</b></td><td class="arrow">›</td></tr>
-                <tr><td><div class="intent"><span class="tick">⚑</span>Card declined — why?</div></td>
-                  <td class="affected">2,940 <span>(6%)</span></td><td><div class="minibar" style="width:42px"></div></td>
-                  <td class="r"><span class="chip hi">0.58</span></td><td class="cause"><b>Context / retrieval</b></td><td class="arrow">›</td></tr>
-                <tr><td><div class="intent"><span class="tick grey">⚑</span>Change address</div></td>
-                  <td class="affected">1,120 <span>(2%)</span></td><td><div class="minibar" style="width:18px"></div></td>
-                  <td class="r"><span class="chip lo">0.44</span></td><td class="cause"><b>Prompt / policy</b></td><td class="arrow">›</td></tr>
-                <tr><td><div class="intent"><span class="tick grey">⚑</span>Payment failed</div></td>
-                  <td class="affected">980 <span>(2%)</span></td><td><div class="minibar" style="width:15px"></div></td>
-                  <td class="r"><span class="chip lo">0.41</span></td><td class="cause"><b>Assistant latency</b></td><td class="arrow">›</td></tr>
-                <tr><td><div class="intent"><span class="tick grey">⚑</span>Statement request</div></td>
-                  <td class="affected">610 <span>(1%)</span></td><td><div class="minibar" style="width:9px"></div></td>
-                  <td class="r"><span class="chip lo">0.28</span></td><td class="cause">Unclassified</td><td class="arrow">›</td></tr>
+                <!-- rows rendered from the active range dataset by app.js -->
               </tbody>
             </table>
           </div>
@@ -185,23 +161,18 @@
                 <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--grey-chip)" stroke-width="5"/>
                 <circle id="ring" cx="21" cy="21" r="15.9" fill="none" stroke="#4F46E5" stroke-width="5"
                         stroke-dasharray="9 91" stroke-dashoffset="25" stroke-linecap="round"/>
-                <text id="ringPc" x="21" y="23" text-anchor="middle" font-size="7" font-family="Poppins" fill="var(--text)">9%</text>
+                <text id="ringPc" x="21" y="23" text-anchor="middle" font-size="7" font-family="Poppins" fill="var(--text)"></text>
               </svg>
               <div>
                 <div class="lbl">Conversations affected</div>
-                <div class="n" id="panelN">4,212</div>
+                <div class="n" id="panelN"></div>
                 <div class="lbl" style="margin-top:6px">Escalated or abandoned</div>
-                <div class="n" id="panelEsc">61%</div>
+                <div class="n" id="panelEsc"></div>
               </div>
             </div>
 
             <h4 style="margin:16px 0 2px;font-size:11.5px;color:var(--dim);font-weight:600">Cause breakdown</h4>
-            <div class="causelist" id="causelist">
-              <div class="causerow"><span style="width:112px">Missing tooling</span><span class="bar"><i style="width:74%;background:#E04141"></i></span><span class="pc">74%</span></div>
-              <div class="causerow"><span style="width:112px">Context / retrieval</span><span class="bar"><i style="width:14%;background:#F0A93B"></i></span><span class="pc">14%</span></div>
-              <div class="causerow"><span style="width:112px">Prompt / policy</span><span class="bar"><i style="width:5%;background:#4F46E5"></i></span><span class="pc">5%</span></div>
-              <div class="causerow"><span style="width:112px">Unclassified</span><span class="bar"><i style="width:7%;background:#9A9AB0"></i></span><span class="pc">7%</span></div>
-            </div>
+            <div class="causelist" id="causelist"></div>
 
             <div class="seealso">
               <h4>See Also</h4>

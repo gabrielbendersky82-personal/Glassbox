@@ -1,13 +1,23 @@
 /* Shared behaviour for the AI Interaction Analysis prototype.
-   No storage, no fetch, no analytics — static demo only. */
+   No storage, no fetch, no analytics, no date maths — static demo only.
+   All figures come from the active range dataset in data.js. */
 
 (function () {
   "use strict";
   var D = window.GLASSBOX_DATA || {};
+  var $ = function (id) { return document.getElementById(id); };
 
-  /* ---- data-bind hydration (all screens) ----
-     Any element with data-bind="path.to.key" gets its text set from
-     GLASSBOX_DATA. HTML keeps the same values as static fallback. */
+  var RANGE_ORDER = ["day", "week", "twoWeeks", "month", "custom"];
+  var RANGE_NAMES = {
+    day: "Past Day", week: "Past Week", twoWeeks: "Past Two Weeks",
+    month: "Past Month", custom: "Custom range"
+  };
+  var activeKey = "month";
+  var selectedIntent = null;
+
+  function activeRange() { return D.ranges ? D.ranges[activeKey] : null; }
+
+  /* ---- data-bind hydration (screens not yet range-driven) ---- */
   document.querySelectorAll("[data-bind]").forEach(function (el) {
     var v = el.dataset.bind.split(".").reduce(function (o, k) {
       return o == null ? o : o[k];
@@ -15,18 +25,99 @@
     if (v != null) el.textContent = v;
   });
 
+  /* ---- inline SVG line charts ----
+     Series values map onto the 300-wide viewBox: x spaced 8..292, y scaled
+     to the series' own min/max so each range's shape reads clearly. */
+  function chartPaths(points, yTop, yBottom) {
+    var min = Math.min.apply(null, points), max = Math.max.apply(null, points);
+    var pad = (max - min) * 0.2 || 1;
+    var lo = min - pad, hi = max + pad;
+    var n = points.length;
+    var coords = points.map(function (v, i) {
+      var x = n === 1 ? 150 : 8 + i * (284 / (n - 1));
+      var y = yBottom - (v - lo) / (hi - lo) * (yBottom - yTop);
+      return Math.round(x * 10) / 10 + "," + Math.round(y * 10) / 10;
+    });
+    var line = "M" + coords.join(" L");
+    return { line: line, fill: line + " L292,92 L8,92 Z" };
+  }
+
+  function renderChart(prefix, series) {
+    var lineEl = $(prefix + "Line");
+    if (!lineEl) return;
+    var p = chartPaths(series.points, 14, 84);
+    lineEl.setAttribute("d", p.line);
+    var fillEl = $(prefix + "Fill");
+    if (fillEl) fillEl.setAttribute("d", p.fill);
+    var axisEl = $(prefix + "Axis");
+    if (axisEl) axisEl.textContent = series.axis;
+  }
+
+  /* ---- date range picker (one implementation, initialised per screen) ---- */
+  function initRangePicker(onChange) {
+    var btn = $("rangeBtn");
+    if (!btn) return;
+    var wrap = btn.closest(".range-picker");
+    var menu = document.createElement("div");
+    menu.className = "rp-menu";
+    menu.setAttribute("role", "listbox");
+    menu.hidden = true;
+    menu.innerHTML = RANGE_ORDER.map(function (k) {
+      return '<button class="rp-opt" role="option" data-range="' + k + '">' + RANGE_NAMES[k] + "</button>";
+    }).join("");
+    wrap.appendChild(menu);
+
+    function syncLabel() {
+      $("rangeLabel").textContent = activeRange().label;
+      menu.querySelectorAll(".rp-opt").forEach(function (o) {
+        o.classList.toggle("on", o.dataset.range === activeKey);
+        o.setAttribute("aria-selected", String(o.dataset.range === activeKey));
+      });
+    }
+
+    function setOpen(open) {
+      menu.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+    }
+
+    btn.addEventListener("click", function () { setOpen(menu.hidden); });
+    menu.addEventListener("click", function (e) {
+      var opt = e.target.closest(".rp-opt");
+      if (!opt) return;
+      activeKey = opt.dataset.range;
+      syncLabel();
+      setOpen(false);
+      btn.focus();
+      onChange(activeRange());
+    });
+    menu.addEventListener("keydown", function (e) {
+      var opts = Array.prototype.slice.call(menu.querySelectorAll(".rp-opt"));
+      var i = opts.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") { e.preventDefault(); (opts[i + 1] || opts[0]).focus(); }
+      if (e.key === "ArrowUp") { e.preventDefault(); (opts[i - 1] || opts[opts.length - 1]).focus(); }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !menu.hidden) { setOpen(false); btn.focus(); }
+    });
+    document.addEventListener("click", function (e) {
+      if (!menu.hidden && !wrap.contains(e.target)) setOpen(false);
+    });
+
+    syncLabel();
+  }
+
   /* ---- GIA Insights panel toggle (dashboard + replay) ---- */
-  var giaBtn = document.getElementById("giaBtn");
-  var giaPanel = document.getElementById("giaPanel");
+  var giaBtn = $("giaBtn");
+  var giaPanel = $("giaPanel");
   if (giaBtn && giaPanel) {
     var rbody = document.querySelector(".rbody");
-    function setGia(open) {
+    var setGia = function (open) {
       giaPanel.hidden = !open;
       giaBtn.setAttribute("aria-expanded", String(open));
       if (rbody) rbody.classList.toggle("gia-hidden", !open);
-    }
+    };
     giaBtn.addEventListener("click", function () { setGia(giaPanel.hidden); });
-    var giaClose = document.getElementById("giaClose");
+    var giaClose = $("giaClose");
     if (giaClose) giaClose.addEventListener("click", function () { setGia(false); giaBtn.focus(); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !giaPanel.hidden) { setGia(false); giaBtn.focus(); }
@@ -36,24 +127,54 @@
   /* Fill the dashboard GIA panel with the analysis for one cause. */
   function renderGiaCause(intentName, causeName) {
     var g = D.giaByCause && D.giaByCause[causeName];
-    var el = document.getElementById("giaIntent");
+    var el = $("giaIntent");
     if (!g || !el) return;
     el.textContent = intentName;
-    document.getElementById("giaSummary").innerHTML = g.summary;
-    document.getElementById("giaTakeaways").innerHTML = g.takeaways.map(function (t) {
+    $("giaSummary").innerHTML = g.summary;
+    $("giaTakeaways").innerHTML = g.takeaways.map(function (t) {
       return "<li>" + t + "</li>";
     }).join("");
-    document.getElementById("giaCause").textContent = causeName;
-    document.getElementById("giaConf").textContent = g.verdict.confidence;
-    document.getElementById("giaEvidence").innerHTML = g.verdict.evidence;
-    document.getElementById("giaSeen").innerHTML = g.verdict.seen;
+    $("giaCause").textContent = causeName;
+    $("giaConf").textContent = g.verdict.confidence;
+    $("giaEvidence").innerHTML = g.verdict.evidence;
+    $("giaSeen").innerHTML = g.verdict.seen;
   }
 
-  /* ---- Screen 1 · failing intents table + detail panel ---- */
-  var tbody = document.getElementById("intents");
-  if (tbody && D.intents) {
-    tbody.innerHTML = D.intents.map(function (d, i) {
-      return '<tr data-i="' + i + '" tabindex="0"' + (i === 0 ? ' class="sel"' : "") + ">" +
+  /* ---- Screen 1 · dashboard ---- */
+  var tbody = $("intents");
+
+  function selectIntentRow(row, intents) {
+    tbody.querySelectorAll("tr").forEach(function (x) { x.classList.remove("sel"); });
+    row.classList.add("sel");
+    var d = intents[+row.dataset.i];
+    selectedIntent = d.name;
+    $("panelTitle").textContent = d.name;
+    $("panelN").textContent = d.count;
+    $("panelEsc").textContent = d.esc;
+    $("ringPc").textContent = d.pct + "%";
+    $("ring").setAttribute("stroke-dasharray", d.pct + " " + (100 - d.pct));
+    $("causelist").innerHTML = d.causes.map(function (c) {
+      return '<div class="causerow"><span style="width:112px">' + c[0] + "</span>" +
+        '<span class="bar"><i style="width:' + c[1] + "%;background:" + c[2] + '"></i></span>' +
+        '<span class="pc">' + c[1] + "%</span></div>";
+    }).join("");
+    renderGiaCause(d.name, d.lead);
+  }
+
+  function renderDashboard(r) {
+    $("dashScore").textContent = r.dashboard.score;
+    var rank = $("dashRank");
+    rank.textContent = r.dashboard.rank;
+    rank.className = "rank " + r.dashboard.rank.toLowerCase();
+    $("dashTotal").textContent = r.dashboard.total;
+    $("dashStruggledPct").textContent = r.dashboard.struggledPct;
+    $("dashStruggledCount").textContent = r.dashboard.struggledCount;
+    $("dashAbandoned").textContent = r.dashboard.abandonedPct;
+    renderChart("chartStruggle", r.charts.struggle);
+    renderChart("chartVolume", r.charts.volume);
+
+    tbody.innerHTML = r.intents.map(function (d, i) {
+      return '<tr data-i="' + i + '" tabindex="0">' +
         '<td><div class="intent"><span class="tick' + (d.hot ? "" : " grey") + '">⚑</span>' + d.name + "</div></td>" +
         '<td class="affected">' + d.count + " <span>(" + d.pct + "%)</span></td>" +
         '<td style="width:70px"><div class="minibar" style="width:' + d.barPx + 'px"></div></td>' +
@@ -63,36 +184,26 @@
     }).join("");
 
     var rows = tbody.querySelectorAll("tr");
-
-    function select(row) {
-      rows.forEach(function (x) { x.classList.remove("sel"); });
-      row.classList.add("sel");
-      var d = D.intents[+row.dataset.i];
-      document.getElementById("panelTitle").textContent = d.name;
-      document.getElementById("panelN").textContent = d.count;
-      document.getElementById("panelEsc").textContent = d.esc;
-      document.getElementById("ringPc").textContent = d.pct + "%";
-      document.getElementById("ring").setAttribute("stroke-dasharray", d.pct + " " + (100 - d.pct));
-      document.getElementById("causelist").innerHTML = d.causes.map(function (c) {
-        return '<div class="causerow"><span style="width:112px">' + c[0] + "</span>" +
-          '<span class="bar"><i style="width:' + c[1] + "%;background:" + c[2] + '"></i></span>' +
-          '<span class="pc">' + c[1] + "%</span></div>";
-      }).join("");
-      renderGiaCause(d.name, d.lead);
-    }
-
-    rows.forEach(function (r) {
-      r.addEventListener("click", function () { select(r); });
-      r.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(r); }
+    rows.forEach(function (row) {
+      row.addEventListener("click", function () { selectIntentRow(row, r.intents); });
+      row.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectIntentRow(row, r.intents); }
       });
     });
 
-    select(rows[0]);
+    /* keep the previously selected intent selected if it still exists */
+    var keep = 0;
+    r.intents.forEach(function (d, i) { if (d.name === selectedIntent) keep = i; });
+    selectIntentRow(rows[keep], r.intents);
   }
 
-  /* ---- Screen 3 · funnel steps + business impact ---- */
-  var funsteps = document.getElementById("funsteps");
+  if (tbody && D.ranges) {
+    initRangePicker(renderDashboard);
+    renderDashboard(activeRange());
+  }
+
+  /* ---- Screen 3 · funnel (month dataset until wired to the picker) ---- */
+  var funsteps = $("funsteps");
   if (funsteps && D.funnel) {
     funsteps.innerHTML = D.funnel.steps.map(function (s, i) {
       var bar = '<div class="bar" style="width:' + s.width + "%" +
@@ -103,7 +214,7 @@
     }).join("");
   }
 
-  var impact = document.getElementById("impactlines");
+  var impact = $("impactlines");
   if (impact && D.funnel) {
     impact.innerHTML = D.funnel.impact.map(function (l) {
       return '<div class="line"><span>' + l[0] + "</span><b>" + l[1] + "</b></div>";

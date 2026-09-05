@@ -1,49 +1,291 @@
 /* All mock figures for the AI Interaction Analysis prototype live here.
-   Edit a number once and every screen that shows it updates.
-   Illustrative data for concept review — not real GlassBank figures. */
+   One dataset per date range — the picker swaps the active dataset and
+   every number on screen re-renders from it. Edit a number once and every
+   screen that shows it updates. No date maths anywhere: labels are strings.
+   Illustrative data for concept review — not real GlassBank figures.
+
+   Invariants that keep the story straight across ranges:
+   - Dispute a transaction stays the top failing intent, Missing tooling
+     stays its leading cause, in every range.
+   - impact: affected = escalated + abandonedContacted + abandonedNoContact,
+     avoidableCost = (escalated + abandonedContacted) × $11.50 exactly.
+   - Struggle scores worsen in shorter ranges: the prompt v4.2 regression
+     is recent, so narrowing the window sharpens it (0.74 day → 0.62 month).
+   - The v4.2 marker only appears on trend charts whose window contains
+     the release (twoWeeks / month / custom). */
 
 var GLASSBOX_DATA = {
 
-  /* ---- Screen 1 · index.html ---- */
-  dashboard: {
-    struggleScore: "0.62",
-    struggleRank: "Poor",
-    totalConversations: "48.2 K",
-    struggledPct: "34%",
-    struggledCount: "(16.4K)",
-    abandonedPct: "21%"
-  },
+  ranges: {
 
-  /* Failing intents table + right detail panel.
-     causes: [name, percent, colour] — names come from the fixed set:
-     Missing tooling · Context / retrieval · Prompt / policy ·
-     Assistant latency · Handoff · Unclassified */
-  intents: [
-    { name: "Dispute a transaction", count: "4,212", pct: 9, barPx: 60,
-      score: "0.71", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "61%",
-      causes: [["Missing tooling", 74, "#E04141"], ["Context / retrieval", 14, "#F0A93B"],
-               ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
-    { name: "Refund status", count: "3,180", pct: 7, barPx: 46,
-      score: "0.64", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "54%",
-      causes: [["Missing tooling", 68, "#E04141"], ["Assistant latency", 16, "#F0A93B"],
-               ["Context / retrieval", 9, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
-    { name: "Card declined — why?", count: "2,940", pct: 6, barPx: 42,
-      score: "0.58", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "49%",
-      causes: [["Context / retrieval", 71, "#F0A93B"], ["Prompt / policy", 12, "#4F46E5"],
-               ["Missing tooling", 8, "#E04141"], ["Unclassified", 9, "#9A9AB0"]] },
-    { name: "Change address", count: "1,120", pct: 2, barPx: 18,
-      score: "0.44", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "33%",
-      causes: [["Prompt / policy", 64, "#4F46E5"], ["Context / retrieval", 18, "#F0A93B"],
-               ["Missing tooling", 6, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
-    { name: "Payment failed", count: "980", pct: 2, barPx: 15,
-      score: "0.41", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "31%",
-      causes: [["Assistant latency", 70, "#F0A93B"], ["Context / retrieval", 13, "#4F46E5"],
-               ["Missing tooling", 6, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
-    { name: "Statement request", count: "610", pct: 1, barPx: 9,
-      score: "0.28", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "18%",
-      causes: [["Unclassified", 58, "#9A9AB0"], ["Assistant latency", 21, "#F0A93B"],
-               ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
-  ],
+    /* ------------------------------------------------ Past Day */
+    day: {
+      label: "Past Day (UTC+03:00)",
+      prevPeriod: "Feb 24 – Feb 25",
+      dashboard: { score: "0.74", rank: "Poor", total: "1.6 K",
+        struggledPct: "39%", struggledCount: "(630)", abandonedPct: "25%" },
+      charts: {
+        struggle: { axis: "1.0", points: [0.70, 0.71, 0.73, 0.72, 0.74, 0.75, 0.74, 0.76] },
+        volume:   { axis: "90",  points: [48, 71, 64, 83, 77, 68, 59, 52] },
+        trend:    { mark: null,  points: [30.6, 30.9, 31.2, 30.8, 31.4, 31.0, 31.3, 31.5] }
+      },
+      intents: [
+        { name: "Dispute a transaction", count: "176", pct: 11, barPx: 60,
+          score: "0.79", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "66%",
+          causes: [["Missing tooling", 78, "#E04141"], ["Context / retrieval", 11, "#F0A93B"],
+                   ["Prompt / policy", 4, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Refund status", count: "121", pct: 8, barPx: 41,
+          score: "0.71", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "60%",
+          causes: [["Missing tooling", 71, "#E04141"], ["Assistant latency", 14, "#F0A93B"],
+                   ["Context / retrieval", 8, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Card declined — why?", count: "96", pct: 6, barPx: 33,
+          score: "0.62", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "52%",
+          causes: [["Context / retrieval", 73, "#F0A93B"], ["Prompt / policy", 11, "#4F46E5"],
+                   ["Missing tooling", 7, "#E04141"], ["Unclassified", 9, "#9A9AB0"]] },
+        { name: "Change address", count: "34", pct: 2, barPx: 12,
+          score: "0.45", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "35%",
+          causes: [["Prompt / policy", 66, "#4F46E5"], ["Context / retrieval", 17, "#F0A93B"],
+                   ["Missing tooling", 5, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
+        { name: "Payment failed", count: "31", pct: 2, barPx: 11,
+          score: "0.42", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "33%",
+          causes: [["Assistant latency", 72, "#F0A93B"], ["Context / retrieval", 12, "#4F46E5"],
+                   ["Missing tooling", 5, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
+        { name: "Statement request", count: "18", pct: 1, barPx: 6,
+          score: "0.29", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "20%",
+          causes: [["Unclassified", 61, "#9A9AB0"], ["Assistant latency", 19, "#F0A93B"],
+                   ["Context / retrieval", 11, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
+      ],
+      funnel: {
+        steps: [
+          { n: "447", name: "Assistant opened", width: 100, colour: "" },
+          { n: "231", name: "Intent: dispute_transaction", width: 52, colour: "" },
+          { n: "168", name: "Assistant deflected — no backend call", width: 38, colour: "var(--amber)" },
+          { n: "139", name: "Escalated or abandoned", width: 31, colour: "var(--red)" }
+        ],
+        drops: ["↓ 48.3% did not raise this intent", "↓ 27.3% received a usable answer", "↓ 17.3% resolved another way"],
+        failureRatio: "31.1%", struggleScore: "0.79", struggleRank: "Poor",
+        impact: [["Conversations affected", "176"], ["Escalated to a human", "81"],
+                 ["Abandoned, then contacted us", "59"], ["Abandoned, no further contact", "36"],
+                 ["Cost per handled contact", "$11.50"]],
+        avoidableCost: "$1,610"
+      }
+    },
+
+    /* ------------------------------------------------ Past Week */
+    week: {
+      label: "Past Week (UTC+03:00)",
+      prevPeriod: "Feb 12 – Feb 19",
+      dashboard: { score: "0.71", rank: "Poor", total: "11.9 K",
+        struggledPct: "37%", struggledCount: "(4.4K)", abandonedPct: "23%" },
+      charts: {
+        struggle: { axis: "1.0",  points: [0.66, 0.68, 0.67, 0.70, 0.71, 0.72, 0.74] },
+        volume:   { axis: "2.0K", points: [1.5, 1.8, 1.6, 1.9, 1.7, 1.8, 1.6] },
+        trend:    { mark: null,   points: [28.2, 28.6, 28.4, 28.9, 29.1, 28.8, 29.2] }
+      },
+      intents: [
+        { name: "Dispute a transaction", count: "1,094", pct: 9, barPx: 60,
+          score: "0.76", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "63%",
+          causes: [["Missing tooling", 76, "#E04141"], ["Context / retrieval", 12, "#F0A93B"],
+                   ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Refund status", count: "807", pct: 7, barPx: 44,
+          score: "0.68", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "57%",
+          causes: [["Missing tooling", 70, "#E04141"], ["Assistant latency", 15, "#F0A93B"],
+                   ["Context / retrieval", 8, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Card declined — why?", count: "731", pct: 6, barPx: 40,
+          score: "0.60", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "51%",
+          causes: [["Context / retrieval", 72, "#F0A93B"], ["Prompt / policy", 12, "#4F46E5"],
+                   ["Missing tooling", 7, "#E04141"], ["Unclassified", 9, "#9A9AB0"]] },
+        { name: "Change address", count: "262", pct: 2, barPx: 14,
+          score: "0.44", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "34%",
+          causes: [["Prompt / policy", 65, "#4F46E5"], ["Context / retrieval", 18, "#F0A93B"],
+                   ["Missing tooling", 5, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
+        { name: "Payment failed", count: "241", pct: 2, barPx: 13,
+          score: "0.42", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "32%",
+          causes: [["Assistant latency", 71, "#F0A93B"], ["Context / retrieval", 12, "#4F46E5"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
+        { name: "Statement request", count: "149", pct: 1, barPx: 8,
+          score: "0.28", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "19%",
+          causes: [["Unclassified", 59, "#9A9AB0"], ["Assistant latency", 20, "#F0A93B"],
+                   ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
+      ],
+      funnel: {
+        steps: [
+          { n: "3.1K", name: "Assistant opened", width: 100, colour: "" },
+          { n: "1.6K", name: "Intent: dispute_transaction", width: 51, colour: "" },
+          { n: "1.1K", name: "Assistant deflected — no backend call", width: 36, colour: "var(--amber)" },
+          { n: "894", name: "Escalated or abandoned", width: 29, colour: "var(--red)" }
+        ],
+        drops: ["↓ 48.4% did not raise this intent", "↓ 29.6% received a usable answer", "↓ 20.6% resolved another way"],
+        failureRatio: "28.8%", struggleScore: "0.76", struggleRank: "Poor",
+        impact: [["Conversations affected", "1,094"], ["Escalated to a human", "489"],
+                 ["Abandoned, then contacted us", "371"], ["Abandoned, no further contact", "234"],
+                 ["Cost per handled contact", "$11.50"]],
+        avoidableCost: "$9,890"
+      }
+    },
+
+    /* ------------------------------------------------ Past Two Weeks */
+    twoWeeks: {
+      label: "Past Two Weeks (UTC+03:00)",
+      prevPeriod: "Jan 29 – Feb 12",
+      dashboard: { score: "0.67", rank: "Poor", total: "23.6 K",
+        struggledPct: "36%", struggledCount: "(8.5K)", abandonedPct: "22%" },
+      charts: {
+        struggle: { axis: "1.0",  points: [0.48, 0.50, 0.52, 0.58, 0.64, 0.66, 0.68, 0.69, 0.70, 0.71, 0.70, 0.72, 0.71, 0.73] },
+        volume:   { axis: "2.0K", points: [1.5, 1.7, 1.6, 1.9, 1.6, 1.8, 1.7, 2.0, 1.8, 1.7, 1.9, 1.6, 1.8, 1.7] },
+        trend:    { mark: { f: 0.14, label: "v4.2 released" },
+                    points: [18.1, 17.9, 27.0, 27.4, 27.2, 27.8, 28.1, 27.9, 28.3, 28.0, 28.4, 28.2, 28.6, 28.4] }
+      },
+      intents: [
+        { name: "Dispute a transaction", count: "2,167", pct: 9, barPx: 60,
+          score: "0.74", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "62%",
+          causes: [["Missing tooling", 75, "#E04141"], ["Context / retrieval", 13, "#F0A93B"],
+                   ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Refund status", count: "1,633", pct: 7, barPx: 45,
+          score: "0.66", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "56%",
+          causes: [["Missing tooling", 69, "#E04141"], ["Assistant latency", 15, "#F0A93B"],
+                   ["Context / retrieval", 9, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Card declined — why?", count: "1,489", pct: 6, barPx: 41,
+          score: "0.59", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "50%",
+          causes: [["Context / retrieval", 72, "#F0A93B"], ["Prompt / policy", 12, "#4F46E5"],
+                   ["Missing tooling", 8, "#E04141"], ["Unclassified", 8, "#9A9AB0"]] },
+        { name: "Change address", count: "571", pct: 2, barPx: 16,
+          score: "0.44", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "34%",
+          causes: [["Prompt / policy", 64, "#4F46E5"], ["Context / retrieval", 18, "#F0A93B"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
+        { name: "Payment failed", count: "498", pct: 2, barPx: 14,
+          score: "0.41", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "31%",
+          causes: [["Assistant latency", 70, "#F0A93B"], ["Context / retrieval", 13, "#4F46E5"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
+        { name: "Statement request", count: "306", pct: 1, barPx: 8,
+          score: "0.28", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "18%",
+          causes: [["Unclassified", 58, "#9A9AB0"], ["Assistant latency", 21, "#F0A93B"],
+                   ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
+      ],
+      funnel: {
+        steps: [
+          { n: "6.2K", name: "Assistant opened", width: 100, colour: "" },
+          { n: "3.1K", name: "Intent: dispute_transaction", width: 50, colour: "" },
+          { n: "2.1K", name: "Assistant deflected — no backend call", width: 35, colour: "var(--amber)" },
+          { n: "1.7K", name: "Escalated or abandoned", width: 28, colour: "var(--red)" }
+        ],
+        drops: ["↓ 49.8% did not raise this intent", "↓ 30.6% received a usable answer", "↓ 20.9% resolved another way"],
+        failureRatio: "27.4%", struggleScore: "0.74", struggleRank: "Poor",
+        impact: [["Conversations affected", "2,167"], ["Escalated to a human", "966"],
+                 ["Abandoned, then contacted us", "730"], ["Abandoned, no further contact", "471"],
+                 ["Cost per handled contact", "$11.50"]],
+        avoidableCost: "$19,504"
+      }
+    },
+
+    /* ------------------------------------------------ Past Month (default) */
+    month: {
+      label: "Past Month (UTC+03:00)",
+      prevPeriod: "Dec 28 – Jan 27",
+      dashboard: { score: "0.62", rank: "Poor", total: "48.2 K",
+        struggledPct: "34%", struggledCount: "(16.4K)", abandonedPct: "21%" },
+      charts: {
+        struggle: { axis: "1.0",  points: [0.41, 0.42, 0.44, 0.47, 0.52, 0.56, 0.61, 0.64, 0.66] },
+        volume:   { axis: "2.4K", points: [1.7, 1.9, 1.5, 2.1, 1.8, 2.3, 1.9, 2.4, 2.0, 2.4, 2.2] },
+        trend:    { mark: { f: 0.48, label: "v4.2 released" },
+                    points: [18.0, 17.6, 18.2, 17.8, 18.0, 18.0, 26.5, 26.8, 27.2, 27.6, 28.0] }
+      },
+      intents: [
+        { name: "Dispute a transaction", count: "4,212", pct: 9, barPx: 60,
+          score: "0.71", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "61%",
+          causes: [["Missing tooling", 74, "#E04141"], ["Context / retrieval", 14, "#F0A93B"],
+                   ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Refund status", count: "3,180", pct: 7, barPx: 46,
+          score: "0.64", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "54%",
+          causes: [["Missing tooling", 68, "#E04141"], ["Assistant latency", 16, "#F0A93B"],
+                   ["Context / retrieval", 9, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Card declined — why?", count: "2,940", pct: 6, barPx: 42,
+          score: "0.58", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "49%",
+          causes: [["Context / retrieval", 71, "#F0A93B"], ["Prompt / policy", 12, "#4F46E5"],
+                   ["Missing tooling", 8, "#E04141"], ["Unclassified", 9, "#9A9AB0"]] },
+        { name: "Change address", count: "1,120", pct: 2, barPx: 18,
+          score: "0.44", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "33%",
+          causes: [["Prompt / policy", 64, "#4F46E5"], ["Context / retrieval", 18, "#F0A93B"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
+        { name: "Payment failed", count: "980", pct: 2, barPx: 15,
+          score: "0.41", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "31%",
+          causes: [["Assistant latency", 70, "#F0A93B"], ["Context / retrieval", 13, "#4F46E5"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
+        { name: "Statement request", count: "610", pct: 1, barPx: 9,
+          score: "0.28", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "18%",
+          causes: [["Unclassified", 58, "#9A9AB0"], ["Assistant latency", 21, "#F0A93B"],
+                   ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
+      ],
+      funnel: {
+        steps: [
+          { n: "12.4K", name: "Assistant opened", width: 100, colour: "" },
+          { n: "6.1K", name: "Intent: dispute_transaction", width: 49, colour: "" },
+          { n: "4.2K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)" },
+          { n: "3.3K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
+        ],
+        drops: ["↓ 50.8% did not raise this intent", "↓ 31.1% received a usable answer", "↓ 21.4% resolved another way"],
+        failureRatio: "26.6%", struggleScore: "0.71", struggleRank: "Poor",
+        impact: [["Conversations affected", "4,212"], ["Escalated to a human", "1,880"],
+                 ["Abandoned, then contacted us", "1,420"], ["Abandoned, no further contact", "912"],
+                 ["Cost per handled contact", "$11.50"]],
+        avoidableCost: "$37,950"
+      }
+    },
+
+    /* ------------------------------------------------ Custom range (fixed dataset) */
+    custom: {
+      label: "Feb 1, 7:39 PM - Feb 26 2026, 7:39 PM (UTC+03:00)",
+      prevPeriod: "Jan 6 – Jan 31",
+      dashboard: { score: "0.63", rank: "Poor", total: "41.8 K",
+        struggledPct: "34%", struggledCount: "(14.2K)", abandonedPct: "21%" },
+      charts: {
+        struggle: { axis: "1.0",  points: [0.44, 0.46, 0.49, 0.55, 0.62, 0.65, 0.68, 0.70, 0.71] },
+        volume:   { axis: "2.0K", points: [1.4, 1.7, 1.5, 1.9, 1.6, 1.8, 1.7, 1.9, 1.6] },
+        trend:    { mark: { f: 0.22, label: "v4.2 released" },
+                    points: [17.9, 18.2, 27.1, 27.5, 27.3, 27.9, 28.2, 28.0, 28.4] }
+      },
+      intents: [
+        { name: "Dispute a transaction", count: "3,655", pct: 9, barPx: 60,
+          score: "0.70", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "60%",
+          causes: [["Missing tooling", 74, "#E04141"], ["Context / retrieval", 14, "#F0A93B"],
+                   ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Refund status", count: "2,762", pct: 7, barPx: 45,
+          score: "0.63", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "53%",
+          causes: [["Missing tooling", 68, "#E04141"], ["Assistant latency", 16, "#F0A93B"],
+                   ["Context / retrieval", 9, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
+        { name: "Card declined — why?", count: "2,551", pct: 6, barPx: 42,
+          score: "0.58", scoreChip: "hi", hot: true, lead: "Context / retrieval", esc: "48%",
+          causes: [["Context / retrieval", 71, "#F0A93B"], ["Prompt / policy", 12, "#4F46E5"],
+                   ["Missing tooling", 8, "#E04141"], ["Unclassified", 9, "#9A9AB0"]] },
+        { name: "Change address", count: "973", pct: 2, barPx: 16,
+          score: "0.44", scoreChip: "lo", hot: false, lead: "Prompt / policy", esc: "33%",
+          causes: [["Prompt / policy", 64, "#4F46E5"], ["Context / retrieval", 18, "#F0A93B"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 12, "#9A9AB0"]] },
+        { name: "Payment failed", count: "851", pct: 2, barPx: 14,
+          score: "0.41", scoreChip: "lo", hot: false, lead: "Assistant latency", esc: "31%",
+          causes: [["Assistant latency", 70, "#F0A93B"], ["Context / retrieval", 13, "#4F46E5"],
+                   ["Missing tooling", 6, "#E04141"], ["Unclassified", 11, "#9A9AB0"]] },
+        { name: "Statement request", count: "528", pct: 1, barPx: 9,
+          score: "0.28", scoreChip: "lo", hot: false, lead: "Unclassified", esc: "18%",
+          causes: [["Unclassified", 58, "#9A9AB0"], ["Assistant latency", 21, "#F0A93B"],
+                   ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
+      ],
+      funnel: {
+        steps: [
+          { n: "10.7K", name: "Assistant opened", width: 100, colour: "" },
+          { n: "5.3K", name: "Intent: dispute_transaction", width: 50, colour: "" },
+          { n: "3.6K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)" },
+          { n: "2.9K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
+        ],
+        drops: ["↓ 50.5% did not raise this intent", "↓ 31.4% received a usable answer", "↓ 20.2% resolved another way"],
+        failureRatio: "27.1%", struggleScore: "0.70", struggleRank: "Poor",
+        impact: [["Conversations affected", "3,655"], ["Escalated to a human", "1,630"],
+                 ["Abandoned, then contacted us", "1,232"], ["Abandoned, no further contact", "793"],
+                 ["Cost per handled contact", "$11.50"]],
+        avoidableCost: "$32,913"
+      }
+    }
+  },
 
   /* GIA Cause Insights — one analysis per leading cause. Keyed by the
      `lead` field of the selected intent row. Copy stays hypothesis-level
@@ -137,36 +379,17 @@ var GLASSBOX_DATA = {
     }
   },
 
-  /* ---- Screen 2 · conversation.html ---- */
+  /* ---- Screen 2 · conversation.html ----
+     A replay is a single session, so these do not change with the range. */
   replay: {
     struggleScore: "0.71",
     avoidableContact: "$38",
     duration: "02:04"
-  },
-
-  /* ---- Screen 3 · funnel.html ---- */
-  funnel: {
-    steps: [
-      { n: "12.4K", name: "Assistant opened", width: 100, colour: "" },
-      { n: "6.1K", name: "Intent: dispute_transaction", width: 49, colour: "" },
-      { n: "4.2K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)" },
-      { n: "3.3K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
-    ],
-    drops: [
-      "↓ 50.8% did not raise this intent",
-      "↓ 31.1% received a usable answer",
-      "↓ 21.4% resolved another way"
-    ],
-    failureRatio: "26.6%",
-    struggleScore: "0.71",
-    struggleRank: "Poor",
-    impact: [
-      ["Conversations affected", "4,212"],
-      ["Escalated to a human", "1,880"],
-      ["Abandoned, then contacted us", "1,420"],
-      ["Abandoned, no further contact", "912"],
-      ["Cost per handled contact", "$11.50"]
-    ],
-    avoidableCost: "$37,950"
   }
 };
+
+/* Compatibility aliases for screens not yet range-driven: funnel.html reads
+   these until it is wired to the picker. Default range is Past Month. */
+GLASSBOX_DATA.funnel = GLASSBOX_DATA.ranges.month.funnel;
+GLASSBOX_DATA.dashboard = GLASSBOX_DATA.ranges.month.dashboard;
+GLASSBOX_DATA.intents = GLASSBOX_DATA.ranges.month.intents;
