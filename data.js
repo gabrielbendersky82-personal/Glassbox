@@ -301,16 +301,20 @@ var GLASSBOX_DATA = {
   /* ---- Assistant Portfolio meshboard (portfolio.html) ----
      Illustrative scenario: a portfolio of assistants across vendors and
      channels, scored on one scale. Rows sorted by struggle score. Only the
-     Servicing Assistant drills into the AI Interaction Analysis meshboard. */
+     Servicing Assistant drills into the AI Interaction Analysis meshboard.
+
+     Scope: digital assistants only — web and mobile, where Glassbox captures
+     the session. Voice/IVR is deliberately out of scope for this concept.
+     Summary figures are volume-weighted across the rows below:
+     score (48.2×0.62 + 21.4×0.44 + 30.8×0.38) / 100.4 = 0.51,
+     escalated or abandoned (48.2×29% + 21.4×17% + 30.8×14%) / 100.4 = 22%. */
   portfolio: {
     score: "0.51", rank: "Poor",
-    total: "118.0 K", assistants: "4", channels: "Web · Mobile · Voice",
+    total: "100.4 K", assistants: "3", channels: "Web · Mobile",
     escAbandoned: "22%",
     rows: [
       { name: "Servicing Assistant", meta: "Chat · Vendor A", count: "48.2 K", barPx: 60,
         score: "0.62", chip: "hi", hot: true, task: "54%", esc: "29%", href: "index.html" },
-      { name: "IVR Assistant", meta: "Voice · Vendor C", count: "17.6 K", barPx: 22,
-        score: "0.51", chip: "hi", hot: true, task: "62%", esc: "24%" },
       { name: "Sales Assistant", meta: "Chat · Vendor B", count: "21.4 K", barPx: 27,
         score: "0.44", chip: "lo", hot: false, task: "71%", esc: "17%" },
       { name: "In-app Assistant", meta: "Mobile · in-house", count: "30.8 K", barPx: 38,
