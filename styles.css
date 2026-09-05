@@ -307,6 +307,19 @@ a{color:var(--indigo)}
 .rp-opt:hover{background:var(--border-soft)}
 .rp-opt.on{background:var(--indigo-soft);color:var(--indigo);font-weight:600}
 
+/* info tooltips */
+.info{position:relative;cursor:help}
+.info::after{
+  content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 7px);
+  transform:translateX(-50%);width:220px;z-index:90;
+  background:var(--navy);color:#fff;font-size:11.5px;line-height:1.5;
+  font-weight:400;font-family:Inter,sans-serif;text-align:left;
+  padding:8px 10px;border-radius:7px;
+  opacity:0;visibility:hidden;pointer-events:none
+}
+.info:hover::after,.info:focus-visible::after{opacity:1;visibility:visible}
+.info.tip-left::after{left:auto;right:-8px;transform:none}
+
 /* assistant portfolio */
 .row3{grid-template-columns:1fr 1.3fr 1fr}
 @media(max-width:1080px){.row3{grid-template-columns:1fr}}

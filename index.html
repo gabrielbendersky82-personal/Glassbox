@@ -89,7 +89,7 @@
 
       <div class="grid row4">
         <div class="card">
-          <div class="hd"><h3>Conversation Struggle Score</h3><span class="info">ⓘ</span></div>
+          <div class="hd"><h3>Conversation Struggle Score</h3><span class="info" tabindex="0" data-tip="Average struggle across assistant conversations in the selected range, scored 0–1 from behavioural signals: rephrase loops, deflection language, repeated intent failure and abandonment.">ⓘ</span></div>
           <div class="bd">
             <div class="scorewrap"><div class="face">😖</div><div class="bigscore" id="dashScore"></div></div>
             <span class="rank poor" id="dashRank"></span>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="card">
-          <div class="hd"><h3>Struggle Score Over Time</h3><span class="info">ⓘ</span></div>
+          <div class="hd"><h3>Struggle Score Over Time</h3><span class="info" tabindex="0" data-tip="Daily average Conversation Struggle Score over the selected range. The sustained rise follows the prompt v4.2 release.">ⓘ</span></div>
           <div class="bd">
             <svg viewBox="0 0 300 92" width="100%" height="92" preserveAspectRatio="none" role="img" aria-label="Struggle score rising over the month">
               <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
@@ -111,19 +111,19 @@
         </div>
 
         <div class="card">
-          <div class="hd"><h3>Conversations</h3><span class="info">ⓘ</span></div>
+          <div class="hd"><h3>Conversations</h3><span class="info" tabindex="0" data-tip="All Servicing Assistant conversations in the selected range, across web and mobile.">ⓘ</span></div>
           <div class="bd">
             <div class="k" style="font-size:11.5px;color:var(--dim)">Total Conversations</div>
             <div class="total" id="dashTotal"></div>
             <div class="kv" style="margin-top:12px">
-              <div><div class="k">Struggled ⓘ</div><div class="v"><span id="dashStruggledPct"></span> <small id="dashStruggledCount"></small></div></div>
-              <div><div class="k">Abandoned ⓘ</div><div class="v" id="dashAbandoned"></div></div>
+              <div><div class="k">Struggled <span class="info" tabindex="0" data-tip="Share of conversations showing at least one struggle signal, with the affected count.">ⓘ</span></div><div class="v"><span id="dashStruggledPct"></span> <small id="dashStruggledCount"></small></div></div>
+              <div><div class="k">Abandoned <span class="info" tabindex="0" data-tip="Share of conversations the customer closed without completing the task or escalating.">ⓘ</span></div><div class="v" id="dashAbandoned"></div></div>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <div class="hd"><h3>Conversations Over Time</h3><span class="info">ⓘ</span></div>
+          <div class="hd"><h3>Conversations Over Time</h3><span class="info tip-left" tabindex="0" data-tip="Assistant conversation volume per day over the selected range.">ⓘ</span></div>
           <div class="bd">
             <svg viewBox="0 0 300 92" width="100%" height="92" preserveAspectRatio="none" role="img" aria-label="Conversation volume by day">
               <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
@@ -139,7 +139,7 @@
 
       <div class="split">
         <div class="card">
-          <div class="hd"><h3>Failing intents</h3><span class="info">ⓘ</span><span class="gear">⚙</span></div>
+          <div class="hd"><h3>Failing intents</h3><span class="info" tabindex="0" data-tip="Recognised intents ranked by average Conversation Struggle Score. Leading cause is the highest-confidence hypothesis for each intent — see the cause breakdown for the full mix.">ⓘ</span><span class="gear">⚙</span></div>
           <div class="sub">Ranked by average conversation struggle score</div>
           <div class="bd" style="padding-left:4px;padding-right:4px">
             <table class="tbl">

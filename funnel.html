@@ -59,7 +59,7 @@
 
       <div class="fun">
         <div class="card">
-          <div class="hd"><h3>Funnel steps</h3><span class="info">ⓘ</span></div>
+          <div class="hd"><h3>Funnel steps</h3><span class="info" tabindex="0" data-tip="Conversation counts at each stage, built from events observed in replays: assistant opened, intent raised, deflection with no backend call, then escalation or abandonment.">ⓘ</span></div>
           <div class="sub">Built from events observed in the conversation replay</div>
           <div class="bd" id="funsteps">
             <!-- steps rendered from data.js by app.js; static fallback below -->
@@ -82,21 +82,21 @@
 
         <div>
           <div class="card">
-            <div class="hd"><h3>Failure ratio</h3><span class="info">ⓘ</span></div>
+            <div class="hd"><h3>Failure ratio</h3><span class="info" tabindex="0" data-tip="Share of assistant conversations that reach the final funnel step — escalated or abandoned — in the selected range.">ⓘ</span></div>
             <div class="bd" style="text-align:center;padding:20px 16px 22px">
               <div class="num" style="font-size:40px;font-weight:600;color:var(--red)" data-bind="funnel.failureRatio">26.6%</div>
               <div style="font-size:12px;color:var(--dim);margin-top:4px">of assistant conversations end here</div>
             </div>
           </div>
           <div class="card" style="margin-top:14px">
-            <div class="hd"><h3>Avg. Conversation Struggle Score</h3><span class="info">ⓘ</span></div>
+            <div class="hd"><h3>Avg. Conversation Struggle Score</h3><span class="info" tabindex="0" data-tip="Average struggle score of the conversations in this funnel, paired with its Struggle Rank.">ⓘ</span></div>
             <div class="bd" style="display:flex;align-items:center;gap:14px">
               <div class="face">😖</div><div class="bigscore" data-bind="funnel.struggleScore">0.71</div>
               <span class="rank poor" style="margin:0 0 0 auto" data-bind="funnel.struggleRank">Poor</span>
             </div>
           </div>
           <div class="card" style="margin-top:14px">
-            <div class="hd"><h3>Trend since prompt v4.2</h3><span class="info">ⓘ</span></div>
+            <div class="hd"><h3>Trend since prompt v4.2</h3><span class="info" tabindex="0" data-tip="Failure ratio over time. The step change coincides with the prompt v4.2 release — consistent with a regression.">ⓘ</span></div>
             <div class="bd">
               <svg viewBox="0 0 300 70" width="100%" height="70" preserveAspectRatio="none" role="img" aria-label="Failure rate step change after version 4.2">
                 <line x1="150" y1="4" x2="150" y2="66" stroke="var(--border)" stroke-dasharray="3 3"/>
@@ -110,7 +110,7 @@
 
         <div>
           <div class="card impact">
-            <div class="hd"><h3>Business impact</h3><span class="info">ⓘ</span></div>
+            <div class="hd"><h3>Business impact</h3><span class="info tip-left" tabindex="0" data-tip="Outcomes joined across web, app and contact-centre records, costed at the bank's cost per handled contact.">ⓘ</span></div>
             <div class="sub">Modelled from outcomes joined across web, app and contact-centre records</div>
             <div class="bd">
               <div id="impactlines">
