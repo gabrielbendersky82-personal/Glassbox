@@ -73,6 +73,11 @@ a{color:var(--indigo)}
 .nav a.active .ico{color:var(--indigo)}
 .nav button.inert{color:var(--dim);cursor:default}
 .nav button.inert:hover{background:transparent}
+.nav a.parent-open{font-weight:600}
+.nav .subgroup{display:flex;flex-direction:column;gap:1px;margin:1px 0 2px 18px;
+  padding-left:9px;border-left:1px solid var(--border-soft)}
+.nav .sub{padding:7px 10px;font-size:13px;gap:0}
+.nav a.sub.active{background:var(--indigo-soft);color:var(--indigo);font-weight:600}
 .side .foot{margin-top:auto;padding:14px 18px 0;border-top:1px solid var(--border-soft);
   color:var(--faint);font-size:11px;line-height:1.5}
 .side .foot b{color:var(--dim);font-weight:600}
