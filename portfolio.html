@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistant Portfolio · Glassbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2212%22 fill=%22none%22 stroke=%22%234F46E5%22 stroke-width=%227%22/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="feedback-tab">Feedback</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark"></span><span class="wordmark">GLASSBOX</span><span class="collapse">⇤</span></div>
+    <nav class="nav">
+      <a class="parent-open" href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">▾</span></a>
+      <div class="subgroup">
+        <button class="inert sub" tabindex="-1">Struggle Analysis</button>
+        <a class="sub active" href="portfolio.html" aria-current="page">Assistant Portfolio</a>
+        <a class="sub" href="index.html">AI Interaction Analysis</a>
+      </div>
+      <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
+      <a href="conversation.html"><span class="ico">▶</span>Recorded Sessions</a>
+      <button class="inert" tabindex="-1"><span class="ico">⁘</span>Interaction Maps</button>
+      <button class="inert" tabindex="-1"><span class="ico">▯</span>Mobile Analytics</button>
+      <button class="inert" tabindex="-1"><span class="ico">◔</span>Monitoring<span class="chev">›</span></button>
+      <a href="funnel.html"><span class="ico">≣</span>Conversions<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">◑</span>Product Intelligence<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">◬</span>Alerts &amp; Anomalies<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">▤</span>Reports</button>
+      <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
+    </nav>
+    <div class="foot">
+      <b>Concept prototype.</b> Four screens across Meshboards, Recorded Sessions and Conversions. Illustrative data.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb"><span class="muted">Meshboards</span><span class="sep">›</span>Assistant Portfolio<span class="caret">▾</span></div>
+      <div class="top-right">
+        <div class="help">Help <span class="b">?</span><span class="b">⋮</span></div>
+        <div class="avatar">GB</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="pill green"><span class="dots"></span>GlassBank-Web</span>
+      <span class="pill">▤ All Assistants</span>
+      <button class="iconbtn" aria-label="Filters">⧩</button>
+      <div class="top-right">
+        <button class="iconbtn" aria-label="Refresh">⟳</button>
+        <span class="pill">▤ Past Month (UTC+03:00)</span>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="illus">Illustrative scenario — a portfolio of assistants across vendors and channels. Not real GlassBank figures.</div>
+
+      <div class="grid row3">
+        <div class="card">
+          <div class="hd"><h3>Portfolio Struggle Score</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <div class="scorewrap"><div class="face">😕</div><div class="bigscore" id="pfScore"></div></div>
+            <span class="rank poor" id="pfRank"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3>Conversations</h3><span class="info">ⓘ</span></div>
+          <div class="bd">
+            <div class="k" style="font-size:11.5px;color:var(--dim)">Total Conversations · all assistants</div>
+            <div class="total" id="pfTotal"></div>
+            <div class="kv" style="margin-top:12px">
+              <div><div class="k">Assistants</div><div class="v" id="pfAssistants"></div></div>
+              <div><div class="k">Channels</div><div class="v" style="font-size:14px;padding-top:5px" id="pfChannels"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3>Escalated or Abandoned</h3><span class="info">ⓘ</span></div>
+          <div class="bd" style="text-align:center;padding:20px 16px 22px">
+            <div class="num" style="font-size:40px;font-weight:600;color:var(--amber)" id="pfEsc"></div>
+            <div style="font-size:12px;color:var(--dim);margin-top:4px">of conversations across all assistants</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="hd"><h3>Assistants</h3><span class="info">ⓘ</span><span class="gear">⚙</span></div>
+        <div class="sub">One struggle scale and one task-completion measure across assistants.
+          In-conversation analytics remain in each vendor's console.</div>
+        <div class="bd" style="padding-left:4px;padding-right:4px">
+          <table class="tbl">
+            <thead><tr>
+              <th style="padding-left:12px">Assistant</th><th>Conversations</th><th></th>
+              <th class="r">Avg. Conversation Struggle Score ▾</th><th>Task Completion</th>
+              <th>Escalated or abandoned</th><th></th>
+            </tr></thead>
+            <tbody id="assistants">
+              <!-- rows rendered from data.js by app.js -->
+            </tbody>
+          </table>
+        </div>
+        <div class="sub" style="padding:0 16px 14px">Select the Servicing Assistant to open its AI Interaction Analysis meshboard.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

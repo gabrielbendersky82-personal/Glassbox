@@ -202,6 +202,40 @@
     renderDashboard(activeRange());
   }
 
+  /* ---- Assistant Portfolio meshboard ---- */
+  var asst = $("assistants");
+  if (asst && D.portfolio) {
+    var pf = D.portfolio;
+    $("pfScore").textContent = pf.score;
+    var pfRank = $("pfRank");
+    pfRank.textContent = pf.rank;
+    pfRank.className = "rank " + pf.rank.toLowerCase();
+    $("pfTotal").textContent = pf.total;
+    $("pfAssistants").textContent = pf.assistants;
+    $("pfChannels").textContent = pf.channels;
+    $("pfEsc").textContent = pf.escAbandoned;
+
+    asst.innerHTML = pf.rows.map(function (a) {
+      return "<tr" + (a.href ? ' data-href="' + a.href + '" tabindex="0"' : ' class="norow"') + ">" +
+        '<td><div class="intent"><span class="tick' + (a.hot ? "" : " grey") + '">▣</span>' +
+          "<span>" + a.name + '<div class="asst-meta">' + a.meta + "</div></span></div></td>" +
+        '<td class="affected">' + a.count + "</td>" +
+        '<td style="width:70px"><div class="minibar" style="width:' + a.barPx + 'px"></div></td>' +
+        '<td class="r"><span class="chip ' + a.chip + '">' + a.score + "</span></td>" +
+        '<td class="cause"><b>' + a.task + "</b></td>" +
+        '<td class="cause">' + a.esc + "</td>" +
+        '<td class="arrow">' + (a.href ? "›" : "") + "</td></tr>";
+    }).join("");
+
+    asst.querySelectorAll("tr[data-href]").forEach(function (row) {
+      var go = function () { window.location.href = row.dataset.href; };
+      row.addEventListener("click", go);
+      row.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+  }
+
   /* ---- Screen 3 · funnel (month dataset until wired to the picker) ---- */
   var funsteps = $("funsteps");
   if (funsteps && D.funnel) {

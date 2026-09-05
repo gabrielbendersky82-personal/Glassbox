@@ -20,6 +20,7 @@
       <a href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">▾</span></a>
       <div class="subgroup">
         <button class="inert sub" tabindex="-1">Struggle Analysis</button>
+        <a class="sub" href="portfolio.html">Assistant Portfolio</a>
         <a class="sub" href="index.html">AI Interaction Analysis</a>
       </div>
       <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
@@ -34,7 +35,7 @@
       <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
     </nav>
     <div class="foot">
-      <b>Concept prototype.</b> Three screens: Meshboards, Recorded Sessions, Conversions. Illustrative data.
+      <b>Concept prototype.</b> Four screens across Meshboards, Recorded Sessions and Conversions. Illustrative data.
     </div>
   </aside>
 
@@ -56,6 +57,7 @@
             <div class="meta"><span>🇬🇧</span><span class="date">Mar 12 2026</span><span style="color:var(--faint)">|</span>
               <span>10:24:06 AM</span><span style="color:var(--dim)">🖥 ⊞ ⬤</span><span style="color:var(--faint)">ⓘ 🏷</span></div>
             <div class="uid">**********</div>
+            <div class="guard">🛡 Bank-retained record · 7-yr schedule</div>
           </div>
           <div class="stat"><div class="n">😖 <span data-bind="replay.struggleScore">0.71</span></div><div class="c">Struggles</div></div>
           <div class="stat"><div class="n" style="color:var(--red)">↓ <span data-bind="replay.avoidableContact">$38</span></div><div class="c">Avoidable contact</div></div>
@@ -78,6 +80,8 @@
             <div class="pagerow"><div><div class="t">GlassBank — Transactions</div><div class="u">glassbk.digital/user/transactions</div></div>
               <div class="strugbar"></div><div class="time">00:14</div></div>
 
+            <div class="ev flag"><span class="ei">☒</span><div><div class="en">Dead Click</div><div class="ed">"Dispute" — element not actionable</div></div><span class="et">00:22</span></div>
+            <div class="ev flag"><span class="ei">↯</span><div><div class="en">Rage click</div><div class="ed">Transaction row · 4 clicks</div></div><span class="et">00:28</span></div>
             <div class="ev"><span class="ei">▣</span><div><div class="en">Assistant opened</div><div class="ed">Servicing Assistant · v4.2</div></div><span class="et">00:41</span></div>
             <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Intent: dispute_transaction · 0.91</div></div><span class="et">00:47</span></div>
             <div class="ev"><span class="ei">✦</span><div><div class="en">Assistant turn</div><div class="ed">2.1s · no backend call</div></div><span class="et">00:52</span></div>
@@ -90,6 +94,7 @@
             <div class="ev bad"><span class="ei">⚠</span><div><div class="en">Repeated intent failure</div><div class="ed">dispute_transaction · 3 turns</div></div><span class="et">01:36</span></div>
             <div class="ev bad"><span class="ei">✕</span><div><div class="en">Conversation abandoned</div><div class="ed">Closed without escalating</div></div><span class="et">01:52</span></div>
             <div class="ev"><span class="ei">↩</span><div><div class="en">Page exit</div><div class="ed">No task completed</div></div><span class="et">02:04</span></div>
+            <div class="ev flag"><span class="ei">☎</span><div><div class="en">Contact centre call</div><div class="ed">Next day · same topic</div></div><span class="et">+1 day</span></div>
           </div>
 
           <div class="stage">
@@ -155,6 +160,7 @@
 
             <h4>Key Takeaways</h4>
             <ul>
+              <li>The customer attempted self-serve dispute on <u>Transactions</u> first — a Dead Click on "Dispute" preceded the conversation, which started as a symptom.</li>
               <li>Give the assistant a tool to raise a dispute on <u>dispute_transaction</u>, or hand off directly instead of deflecting.</li>
               <li>Suppress identical consecutive responses — the repeat at 01:36 preceded abandonment.</li>
               <li>Review the deflection wording on <u>Card security</u>; it offers no route forward.</li>

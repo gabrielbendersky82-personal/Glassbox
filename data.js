@@ -287,6 +287,26 @@ var GLASSBOX_DATA = {
     }
   },
 
+  /* ---- Assistant Portfolio meshboard (portfolio.html) ----
+     Illustrative scenario: a portfolio of assistants across vendors and
+     channels, scored on one scale. Rows sorted by struggle score. Only the
+     Servicing Assistant drills into the AI Interaction Analysis meshboard. */
+  portfolio: {
+    score: "0.51", rank: "Poor",
+    total: "118.0 K", assistants: "4", channels: "Web · Mobile · Voice",
+    escAbandoned: "22%",
+    rows: [
+      { name: "Servicing Assistant", meta: "Chat · Vendor A", count: "48.2 K", barPx: 60,
+        score: "0.62", chip: "hi", hot: true, task: "54%", esc: "29%", href: "index.html" },
+      { name: "IVR Assistant", meta: "Voice · Vendor C", count: "17.6 K", barPx: 22,
+        score: "0.51", chip: "hi", hot: true, task: "62%", esc: "24%" },
+      { name: "Sales Assistant", meta: "Chat · Vendor B", count: "21.4 K", barPx: 27,
+        score: "0.44", chip: "lo", hot: false, task: "71%", esc: "17%" },
+      { name: "In-app Assistant", meta: "Mobile · in-house", count: "30.8 K", barPx: 38,
+        score: "0.38", chip: "lo", hot: false, task: "76%", esc: "14%" }
+    ]
+  },
+
   /* GIA Cause Insights — one analysis per leading cause. Keyed by the
      `lead` field of the selected intent row. Copy stays hypothesis-level
      ("consistent with"), with the evidence directly beneath each claim. */

@@ -307,6 +307,14 @@ a{color:var(--indigo)}
 .rp-opt:hover{background:var(--border-soft)}
 .rp-opt.on{background:var(--indigo-soft);color:var(--indigo);font-weight:600}
 
+/* assistant portfolio */
+.row3{grid-template-columns:1fr 1.3fr 1fr}
+@media(max-width:1080px){.row3{grid-template-columns:1fr}}
+.asst-meta{font-size:11px;color:var(--faint);font-weight:400;margin-top:1px}
+.tbl tbody tr.norow{cursor:default}
+.tbl tbody tr.norow:hover{background:transparent}
+.guard{font-size:10.5px;color:var(--faint);margin-top:2px;letter-spacing:0}
+
 @media(max-width:1180px){
   .events{border-right:none;border-bottom:1px solid var(--border);max-height:300px}
   .insights{border-left:none;border-top:1px solid var(--border);max-height:none}
