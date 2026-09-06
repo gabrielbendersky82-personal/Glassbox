@@ -22,6 +22,15 @@ var GLASSBOX_DATA = {
     day: {
       label: "Past Day (UTC+03:00)",
       prevPeriod: "Feb 24 – Feb 25",
+      report: {
+        periodLabel: "Day to 9 March 2026", priorScore: "0.66",
+        bottomLine:
+          "Assistant struggle rose from 0.66 to 0.74 over the last day. Most of the increase " +
+          "comes from one cause: the assistant recognises transactional intents it has no tool " +
+          "to act on, and deflects. Four intents account for 68% of failing conversations and an " +
+          "estimated $2,392 in avoidable contact. Two are fixable with tooling; one is a " +
+          "regression from prompt v4.2 and can be reverted this week."
+      },
       dashboard: { score: "0.74", rank: "Poor", total: "1.6 K",
         struggledPct: "39%", struggledCount: "(630)", abandonedPct: "25%",
         repeatContact48h: "15%", unclassifiedShare: "9%" },
@@ -76,6 +85,15 @@ var GLASSBOX_DATA = {
     week: {
       label: "Past Week (UTC+03:00)",
       prevPeriod: "Feb 12 – Feb 19",
+      report: {
+        periodLabel: "Week of 9 March 2026", priorScore: "0.63",
+        bottomLine:
+          "Assistant struggle rose from 0.63 to 0.71 this week. Most of the increase comes from " +
+          "one cause: the assistant recognises transactional intents it has no tool to act on, " +
+          "and deflects. Four intents account for 66% of failing conversations and an estimated " +
+          "$15,111 in avoidable contact. Two are fixable with tooling; one is a regression from " +
+          "prompt v4.2 and can be reverted this week."
+      },
       dashboard: { score: "0.71", rank: "Poor", total: "11.9 K",
         struggledPct: "37%", struggledCount: "(4.4K)", abandonedPct: "23%",
         repeatContact48h: "14%", unclassifiedShare: "9%" },
@@ -130,6 +148,15 @@ var GLASSBOX_DATA = {
     twoWeeks: {
       label: "Past Two Weeks (UTC+03:00)",
       prevPeriod: "Jan 29 – Feb 12",
+      report: {
+        periodLabel: "Two weeks to 9 March 2026", priorScore: "0.58",
+        bottomLine:
+          "Assistant struggle rose from 0.58 to 0.67 over the past fortnight. Most of the " +
+          "increase comes from one cause: the assistant recognises transactional intents it has " +
+          "no tool to act on, and deflects. Four intents account for 69% of failing " +
+          "conversations and an estimated $29,923 in avoidable contact. Two are fixable with " +
+          "tooling; one is a regression from prompt v4.2 and can be reverted this week."
+      },
       dashboard: { score: "0.67", rank: "Poor", total: "23.6 K",
         struggledPct: "36%", struggledCount: "(8.5K)", abandonedPct: "22%",
         repeatContact48h: "13%", unclassifiedShare: "8%" },
@@ -185,6 +212,15 @@ var GLASSBOX_DATA = {
     month: {
       label: "Past Month (UTC+03:00)",
       prevPeriod: "Dec 28 – Jan 27",
+      report: {
+        periodLabel: "Month to 9 March 2026", priorScore: "0.52",
+        bottomLine:
+          "Assistant struggle rose from 0.52 to 0.62 this month. Most of the increase comes from " +
+          "one cause: the assistant recognises transactional intents it has no tool to act on, " +
+          "and deflects. Four intents account for 70% of failing conversations and an estimated " +
+          "$58,420 in avoidable contact. Two are fixable with tooling; one is a regression from " +
+          "prompt v4.2 and can be reverted this week."
+      },
       dashboard: { score: "0.62", rank: "Poor", total: "48.2 K",
         struggledPct: "34%", struggledCount: "(16.4K)", abandonedPct: "21%",
         repeatContact48h: "12%", unclassifiedShare: "8%" },
@@ -240,6 +276,15 @@ var GLASSBOX_DATA = {
     custom: {
       label: "Feb 1, 7:39 PM - Feb 26 2026, 7:39 PM (UTC+03:00)",
       prevPeriod: "Jan 6 – Jan 31",
+      report: {
+        periodLabel: "Feb 1 – Feb 26 2026", priorScore: "0.53",
+        bottomLine:
+          "Assistant struggle rose from 0.53 to 0.63 across the selected range. Most of the " +
+          "increase comes from one cause: the assistant recognises transactional intents it has " +
+          "no tool to act on, and deflects. Four intents account for 70% of failing " +
+          "conversations and an estimated $50,669 in avoidable contact. Two are fixable with " +
+          "tooling; one is a regression from prompt v4.2 and can be reverted this week."
+      },
       dashboard: { score: "0.63", rank: "Poor", total: "41.8 K",
         struggledPct: "34%", struggledCount: "(14.2K)", abandonedPct: "21%",
         repeatContact48h: "12%", unclassifiedShare: "8%" },
@@ -324,6 +369,43 @@ var GLASSBOX_DATA = {
         score: "0.44", chip: "lo", hot: false, task: "71%", esc: "17%" },
       { name: "In-app Assistant", meta: "Mobile · in-house", count: "30.8 K", barPx: 38,
         score: "0.38", chip: "lo", hot: false, task: "76%", esc: "14%" }
+    ]
+  },
+
+  /* ---- Weekly AI Interaction Report (report.html) ----
+     Narrative that does not vary by range. The numbers in each finding are
+     read at render time from the active range's `intents` row and funnel, so
+     the report reconciles with the other screens by construction rather than
+     by copying figures. Recommendations are proposals ("would address"),
+     never instructions, and each one follows from its own cause. */
+  reportMeta: {
+    generated: "Generated Monday 9 March 2026",
+    findings: [
+      {
+        intent: "Dispute a transaction",
+        cause: "Missing tooling",
+        confidence: "87% confidence",
+        happening: "Customers ask to dispute a card transaction. The assistant recognises the " +
+          "intent every time, points to a Help Centre article, then returns an identical " +
+          "deflection with no account lookup. Most conversations end escalated or abandoned.",
+        evidence: [
+          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
+          { t: "No state change on the account after the conversation", tier: 1 },
+          { t: "Identical consecutive response repeated before abandonment", tier: 1 },
+          { t: "Intent recognised at 0.91 on all turns", tier: 2 },
+          { t: "No backend call during the conversation", tier: 2 }
+        ],
+        recommendation: "Adding a dispute-initiation tool to the servicing assistant would " +
+          "address this cluster directly. Where the tool cannot ship this quarter, handing off " +
+          "to an agent at the point of recognition — rather than deflecting to the Help " +
+          "Centre — would remove most of the repeat contact this cause generates.",
+        effort: "Medium",
+        costFrom: "funnel",
+        links: [
+          { label: "View 4,212 conversations", href: "conversation.html" },
+          { label: "Open funnel", href: "funnel.html" }
+        ]
+      }
     ]
   },
 

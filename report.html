@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Interaction Report · Glassbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2212%22 fill=%22none%22 stroke=%22%234F46E5%22 stroke-width=%227%22/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="feedback-tab">Feedback</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark"></span><span class="wordmark">GLASSBOX</span><span class="collapse">⇤</span></div>
+    <nav class="nav">
+      <a href="index.html"><span class="ico">▦</span>Meshboards<span class="chev">▾</span></a>
+      <div class="subgroup">
+        <button class="inert sub" tabindex="-1">Struggle Analysis</button>
+        <a class="sub" href="portfolio.html">Assistant Portfolio</a>
+        <a class="sub" href="index.html">AI Interaction Analysis</a>
+      </div>
+      <button class="inert" tabindex="-1"><span class="ico">⇥</span>Augmented Journey Map</button>
+      <a href="conversation.html"><span class="ico">▶</span>Recorded Sessions</a>
+      <button class="inert" tabindex="-1"><span class="ico">⁘</span>Interaction Maps</button>
+      <button class="inert" tabindex="-1"><span class="ico">▯</span>Mobile Analytics</button>
+      <button class="inert" tabindex="-1"><span class="ico">◔</span>Monitoring<span class="chev">›</span></button>
+      <a href="funnel.html"><span class="ico">≣</span>Conversions<span class="chev">›</span></a>
+      <button class="inert" tabindex="-1"><span class="ico">◑</span>Product Intelligence<span class="chev">›</span></button>
+      <button class="inert" tabindex="-1"><span class="ico">◬</span>Alerts &amp; Anomalies<span class="chev">›</span></button>
+      <a class="active" href="report.html" aria-current="page"><span class="ico">▤</span>Reports</a>
+      <button class="inert" tabindex="-1"><span class="ico">✦</span>Voice of the Silent</button>
+    </nav>
+    <div class="foot">
+      <b>Concept prototype.</b> Five screens across Meshboards, Recorded Sessions, Conversions and Reports. Illustrative data.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb"><span class="muted">Reports</span><span class="sep">›</span><span class="muted">AI Interaction Analysis</span><span class="sep">›</span><span id="repPeriodCrumb">Month to 9 March 2026</span><span class="caret">▾</span></div>
+      <div class="top-right">
+        <div class="help">Help <span class="b">?</span><span class="b">⋮</span></div>
+        <div class="avatar">GB</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="pill green"><span class="dots"></span>GlassBank</span>
+      <div class="seg" role="group" aria-label="Platform">
+        <button class="on" aria-pressed="true">Web</button><button aria-pressed="false">Mobile</button>
+      </div>
+      <span class="pill">▤ Servicing Assistant</span>
+      <div class="top-right">
+        <div class="range-picker">
+          <button class="pill" id="rangeBtn" aria-haspopup="listbox" aria-expanded="false">▤ <span id="rangeLabel">Past Month (UTC+03:00)</span> ▾</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas doc">
+      <div class="illus">Illustrative data for concept review — not real GlassBank figures.</div>
+
+      <div class="rephead">
+        <h1>AI Interaction Report</h1>
+        <div class="meta"><span id="repGenerated"></span> · <span id="repPeriod"></span> · Servicing Assistant</div>
+      </div>
+
+      <div class="bottomline">
+        <h3>Bottom line</h3>
+        <p id="repBottomLine"></p>
+      </div>
+
+      <h2>Findings</h2>
+      <div class="seclead">Ranked by estimated avoidable contact cost. Each finding links to the evidence behind it.</div>
+      <div id="repFindings"></div>
+
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

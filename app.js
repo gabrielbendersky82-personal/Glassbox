@@ -253,6 +253,59 @@
     });
   }
 
+
+  /* ---- Weekly AI Interaction Report ----
+     Finding numbers are read from the active range so the report reconciles
+     with the dashboard and funnel by construction. */
+  var repFindings = $("repFindings");
+
+  function findingCost(r, meta) {
+    if (meta.costFrom === "funnel") return r.funnel.avoidableCost;
+    return meta.cost && meta.cost[activeKey];
+  }
+
+  function renderReport(r) {
+    if (!repFindings || !D.reportMeta) return;
+    $("repGenerated").textContent = D.reportMeta.generated;
+    $("repPeriod").textContent = r.report.periodLabel;
+    $("repPeriodCrumb").textContent = r.report.periodLabel;
+    $("repBottomLine").textContent = r.report.bottomLine;
+
+    repFindings.innerHTML = D.reportMeta.findings.map(function (m, i) {
+      var row = null;
+      r.intents.forEach(function (x) { if (x.name === m.intent) row = x; });
+      if (!row) return "";
+      return '<div class="finding">' +
+        '<div class="fhead"><span class="rank-n">' + (i + 1) + "</span>" +
+          '<span class="ftitle">' + m.intent + "</span>" +
+          '<span class="fstats"><span><b>' + row.count + "</b> conversations (" + row.pct + "%)</span>" +
+          '<span class="chip ' + row.scoreChip + '">' + row.score + "</span></span></div>" +
+
+        '<div class="fblock"><div class="lbl">What&rsquo;s happening</div><p>' + m.happening + "</p></div>" +
+
+        '<div class="fblock"><div class="lbl">Why</div>' +
+          '<div class="fcause"><span style="color:var(--red)">⚑</span>' + m.cause +
+          '<span class="conf">' + m.confidence + "</span></div>" +
+          evidenceList(m.evidence) + tierKeyHtml() + "</div>" +
+
+        '<div class="fblock"><div class="lbl">What to do</div><p>' + m.recommendation + "</p></div>" +
+
+        '<div class="fblock"><div class="lbl">What it&rsquo;s worth</div>' +
+          '<div class="worth"><span class="amt">' + findingCost(r, m) + "</span>" +
+          '<span style="font-size:12.5px;color:var(--dim)">estimated avoidable contact</span>' +
+          '<span class="effort ' + m.effort.toLowerCase() + '">' + m.effort + " effort</span></div></div>" +
+
+        '<div class="flinks">' + m.links.map(function (l) {
+          return '<a href="' + l.href + '">' + l.label + "</a>";
+        }).join("") + "</div></div>";
+    }).join("");
+  }
+
+  if (repFindings && D.ranges) {
+    initRangePicker(renderReport);
+    renderReport(activeRange());
+  }
+
   /* ---- Screen 3 · funnel (month dataset until wired to the picker) ---- */
   var funsteps = $("funsteps");
   if (funsteps && D.funnel) {
