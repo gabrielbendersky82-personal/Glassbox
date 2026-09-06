@@ -7,9 +7,10 @@
    Invariants that keep the story straight across ranges:
    - Dispute a transaction stays the top failing intent, Missing tooling
      stays its leading cause, in every range.
-   - Cost is observed only: avoidableCost = (escalated + returned within 48h)
-     × $11.50. Nothing is priced that the session record cannot see, so no
-     phone contact is counted — the real figure is higher.
+   - Cost is observed only, and escalations only: avoidableCost = escalated ×
+     $6.50 (a configured per-tenant input). 48-hour returns are displayed but
+     never priced — a customer who escalated and returned would be counted
+     twice. Phone contact is never counted, so the real figure is higher.
    - Struggle scores worsen in shorter ranges: the prompt v4.2 regression
      is recent, so narrowing the window sharpens it (0.74 day → 0.62 month).
    - The v4.2 marker only appears on trend charts whose window contains
@@ -28,14 +29,14 @@ var GLASSBOX_DATA = {
           { label: "Conversation Struggle Score", value: "0.74", prior: "0.66", delta: "+0.08", dir: "up" },
           { label: "Failing-intent rate", value: "29.8%", prior: "25.4%", delta: "+4.4pp", dir: "up" },
           { label: "Abandonment after answer", value: "25%", prior: "21%", delta: "+4pp", dir: "up" },
-          { label: "Avoidable contact cost", value: "$2,208", prior: "$1,782", delta: "+$426", dir: "up" }
+          { label: "Avoidable contact cost", value: "$1,131", prior: "$897", delta: "+$234", dir: "up" }
         ],
         periodLabel: "Day to 9 March 2026", priorScore: "0.66",
         bottomLine:
           "Assistant struggle rose from 0.66 to 0.74 over the last day. Most of the increase " +
           "comes from one cause: the assistant recognises transactional intents it has no tool " +
           "to act on, and deflects. Four intents account for 68% of failing conversations and an " +
-          "estimated $2,208 in observed avoidable contact. Two are fixable with tooling; one is a " +
+          "estimated $1,131 in observed avoidable contact. Two are fixable with tooling; one is a " +
           "regression from prompt v4.2 and can be reverted this week."
       },
       dashboard: { score: "0.74", rank: "Poor", total: "1.6 K",
@@ -76,15 +77,17 @@ var GLASSBOX_DATA = {
         steps: [
           { n: "447", name: "Assistant opened", width: 100, colour: "" },
           { n: "231", name: "Intent: dispute_transaction", width: 52, colour: "" },
-          { n: "168", name: "Assistant deflected — no backend call", width: 38, colour: "var(--amber)" },
+          { n: "168", name: "Assistant deflected — no backend call", width: 38, colour: "var(--amber)",
+            note: "Intent recognised, no matching tool call observed in the session record." },
           { n: "139", name: "Escalated or abandoned", width: 31, colour: "var(--red)" }
         ],
-        drops: ["↓ 48.3% did not raise this intent", "↓ 27.3% received a usable answer", "↓ 17.3% resolved another way"],
+        drops: ["↓ 48.3% raised a different intent", "↓ 27.3% received a usable answer", "↓ 17.3% resolved another way"],
         failureRatio: "31.1%", struggleScore: "0.79", struggleRank: "Poor",
-        impact: [["Conversations affected", "176"], ["Escalated to a human", "81"],
-                 ["Returned within 48 hours", "43"],
-                 ["Cost per handled contact", "$11.50"]],
-        avoidableCost: "$1,426"
+        impact: [["Conversations affected", "176"], ["Escalated to a human", "82"],
+                 ["Returned within 48 hours", "43", { note: "not in total" }],
+                 ["Cost per handled contact (configured)", "$6.50",
+                  { tip: "Set per tenant during onboarding. Default $6.50 — midpoint of the ContactBabel financial-services range ($5–$12 per contact)." }]],
+        avoidableCost: "$533"
       }
     },
 
@@ -97,14 +100,14 @@ var GLASSBOX_DATA = {
           { label: "Conversation Struggle Score", value: "0.71", prior: "0.63", delta: "+0.08", dir: "up" },
           { label: "Failing-intent rate", value: "27.6%", prior: "23.6%", delta: "+4.0pp", dir: "up" },
           { label: "Abandonment after answer", value: "23%", prior: "19%", delta: "+4pp", dir: "up" },
-          { label: "Avoidable contact cost", value: "$13,409", prior: "$10,879", delta: "+$2,530", dir: "up" }
+          { label: "Avoidable contact cost", value: "$6,695", prior: "$5,343", delta: "+$1,352", dir: "up" }
         ],
         periodLabel: "Week of 9 March 2026", priorScore: "0.63",
         bottomLine:
           "Assistant struggle rose from 0.63 to 0.71 this week. Most of the increase comes from " +
           "one cause: the assistant recognises transactional intents it has no tool to act on, " +
           "and deflects. Four intents account for 66% of failing conversations and an estimated " +
-          "$13,409 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
+          "$6,695 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
           "prompt v4.2 and can be reverted this week."
       },
       dashboard: { score: "0.71", rank: "Poor", total: "11.9 K",
@@ -145,15 +148,17 @@ var GLASSBOX_DATA = {
         steps: [
           { n: "3.1K", name: "Assistant opened", width: 100, colour: "" },
           { n: "1.6K", name: "Intent: dispute_transaction", width: 51, colour: "" },
-          { n: "1.1K", name: "Assistant deflected — no backend call", width: 36, colour: "var(--amber)" },
+          { n: "1.1K", name: "Assistant deflected — no backend call", width: 36, colour: "var(--amber)",
+            note: "Intent recognised, no matching tool call observed in the session record." },
           { n: "894", name: "Escalated or abandoned", width: 29, colour: "var(--red)" }
         ],
-        drops: ["↓ 48.4% did not raise this intent", "↓ 29.6% received a usable answer", "↓ 20.6% resolved another way"],
+        drops: ["↓ 48.4% raised a different intent", "↓ 29.6% received a usable answer", "↓ 20.6% resolved another way"],
         failureRatio: "28.8%", struggleScore: "0.76", struggleRank: "Poor",
-        impact: [["Conversations affected", "1,094"], ["Escalated to a human", "489"],
-                 ["Returned within 48 hours", "261"],
-                 ["Cost per handled contact", "$11.50"]],
-        avoidableCost: "$8,625"
+        impact: [["Conversations affected", "1,094"], ["Escalated to a human", "490"],
+                 ["Returned within 48 hours", "261", { note: "not in total" }],
+                 ["Cost per handled contact (configured)", "$6.50",
+                  { tip: "Set per tenant during onboarding. Default $6.50 — midpoint of the ContactBabel financial-services range ($5–$12 per contact)." }]],
+        avoidableCost: "$3,185"
       }
     },
 
@@ -166,14 +171,14 @@ var GLASSBOX_DATA = {
           { label: "Conversation Struggle Score", value: "0.67", prior: "0.58", delta: "+0.09", dir: "up" },
           { label: "Failing-intent rate", value: "28.2%", prior: "24.1%", delta: "+4.1pp", dir: "up" },
           { label: "Abandonment after answer", value: "22%", prior: "18%", delta: "+4pp", dir: "up" },
-          { label: "Avoidable contact cost", value: "$26,565", prior: "$21,459", delta: "+$5,106", dir: "up" }
+          { label: "Avoidable contact cost", value: "$13,195", prior: "$10,530", delta: "+$2,665", dir: "up" }
         ],
         periodLabel: "Two weeks to 9 March 2026", priorScore: "0.58",
         bottomLine:
           "Assistant struggle rose from 0.58 to 0.67 over the past fortnight. Most of the " +
           "increase comes from one cause: the assistant recognises transactional intents it has " +
           "no tool to act on, and deflects. Four intents account for 69% of failing " +
-          "conversations and an estimated $26,565 in observed avoidable contact. Two are fixable with " +
+          "conversations and an estimated $13,195 in observed avoidable contact. Two are fixable with " +
           "tooling; one is a regression from prompt v4.2 and can be reverted this week."
       },
       dashboard: { score: "0.67", rank: "Poor", total: "23.6 K",
@@ -215,15 +220,17 @@ var GLASSBOX_DATA = {
         steps: [
           { n: "6.2K", name: "Assistant opened", width: 100, colour: "" },
           { n: "3.1K", name: "Intent: dispute_transaction", width: 50, colour: "" },
-          { n: "2.1K", name: "Assistant deflected — no backend call", width: 35, colour: "var(--amber)" },
+          { n: "2.1K", name: "Assistant deflected — no backend call", width: 35, colour: "var(--amber)",
+            note: "Intent recognised, no matching tool call observed in the session record." },
           { n: "1.7K", name: "Escalated or abandoned", width: 28, colour: "var(--red)" }
         ],
-        drops: ["↓ 49.8% did not raise this intent", "↓ 30.6% received a usable answer", "↓ 20.9% resolved another way"],
+        drops: ["↓ 49.8% raised a different intent", "↓ 30.6% received a usable answer", "↓ 20.9% resolved another way"],
         failureRatio: "27.4%", struggleScore: "0.74", struggleRank: "Poor",
         impact: [["Conversations affected", "2,167"], ["Escalated to a human", "966"],
-                 ["Returned within 48 hours", "514"],
-                 ["Cost per handled contact", "$11.50"]],
-        avoidableCost: "$17,020"
+                 ["Returned within 48 hours", "514", { note: "not in total" }],
+                 ["Cost per handled contact (configured)", "$6.50",
+                  { tip: "Set per tenant during onboarding. Default $6.50 — midpoint of the ContactBabel financial-services range ($5–$12 per contact)." }]],
+        avoidableCost: "$6,279"
       }
     },
 
@@ -236,14 +243,14 @@ var GLASSBOX_DATA = {
           { label: "Conversation Struggle Score", value: "0.62", prior: "0.52", delta: "+0.10", dir: "up" },
           { label: "Failing-intent rate", value: "27.1%", prior: "22.4%", delta: "+4.7pp", dir: "up" },
           { label: "Abandonment after answer", value: "21%", prior: "17%", delta: "+4pp", dir: "up" },
-          { label: "Avoidable contact cost", value: "$52,382", prior: "$41,860", delta: "+$10,522", dir: "up" }
+          { label: "Avoidable contact cost", value: "$25,675", prior: "$20,514", delta: "+$5,161", dir: "up" }
         ],
         periodLabel: "Month to 9 March 2026", priorScore: "0.52",
         bottomLine:
           "Assistant struggle rose from 0.52 to 0.62 this month. Most of the increase comes from " +
           "one cause: the assistant recognises transactional intents it has no tool to act on, " +
           "and deflects. Four intents account for 70% of failing conversations and an estimated " +
-          "$52,382 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
+          "$25,675 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
           "prompt v4.2 and can be reverted this week."
       },
       dashboard: { score: "0.62", rank: "Poor", total: "48.2 K",
@@ -285,15 +292,17 @@ var GLASSBOX_DATA = {
         steps: [
           { n: "12.4K", name: "Assistant opened", width: 100, colour: "" },
           { n: "6.1K", name: "Intent: dispute_transaction", width: 49, colour: "" },
-          { n: "4.2K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)" },
+          { n: "4.2K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)",
+            note: "Intent recognised, no matching tool call observed in the session record." },
           { n: "3.3K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
         ],
-        drops: ["↓ 50.8% did not raise this intent", "↓ 31.1% received a usable answer", "↓ 21.4% resolved another way"],
+        drops: ["↓ 50.8% raised a different intent", "↓ 31.1% received a usable answer", "↓ 21.4% resolved another way"],
         failureRatio: "26.6%", struggleScore: "0.71", struggleRank: "Poor",
         impact: [["Conversations affected", "4,212"], ["Escalated to a human", "1,880"],
-                 ["Returned within 48 hours", "1,001"],
-                 ["Cost per handled contact", "$11.50"]],
-        avoidableCost: "$33,131"
+                 ["Returned within 48 hours", "1,001", { note: "not in total" }],
+                 ["Cost per handled contact (configured)", "$6.50",
+                  { tip: "Set per tenant during onboarding. Default $6.50 — midpoint of the ContactBabel financial-services range ($5–$12 per contact)." }]],
+        avoidableCost: "$12,220"
       }
     },
 
@@ -306,14 +315,14 @@ var GLASSBOX_DATA = {
           { label: "Conversation Struggle Score", value: "0.63", prior: "0.53", delta: "+0.10", dir: "up" },
           { label: "Failing-intent rate", value: "27.1%", prior: "23.0%", delta: "+4.1pp", dir: "up" },
           { label: "Abandonment after answer", value: "21%", prior: "17%", delta: "+4pp", dir: "up" },
-          { label: "Avoidable contact cost", value: "$45,494", prior: "$36,432", delta: "+$9,062", dir: "up" }
+          { label: "Avoidable contact cost", value: "$22,269", prior: "$17,784", delta: "+$4,485", dir: "up" }
         ],
         periodLabel: "Feb 1 – Feb 26 2026", priorScore: "0.53",
         bottomLine:
           "Assistant struggle rose from 0.53 to 0.63 across the selected range. Most of the " +
           "increase comes from one cause: the assistant recognises transactional intents it has " +
           "no tool to act on, and deflects. Four intents account for 70% of failing " +
-          "conversations and an estimated $45,494 in observed avoidable contact. Two are fixable with " +
+          "conversations and an estimated $22,269 in observed avoidable contact. Two are fixable with " +
           "tooling; one is a regression from prompt v4.2 and can be reverted this week."
       },
       dashboard: { score: "0.63", rank: "Poor", total: "41.8 K",
@@ -355,15 +364,17 @@ var GLASSBOX_DATA = {
         steps: [
           { n: "10.7K", name: "Assistant opened", width: 100, colour: "" },
           { n: "5.3K", name: "Intent: dispute_transaction", width: 50, colour: "" },
-          { n: "3.6K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)" },
+          { n: "3.6K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)",
+            note: "Intent recognised, no matching tool call observed in the session record." },
           { n: "2.9K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
         ],
-        drops: ["↓ 50.5% did not raise this intent", "↓ 31.4% received a usable answer", "↓ 20.2% resolved another way"],
+        drops: ["↓ 50.5% raised a different intent", "↓ 31.4% received a usable answer", "↓ 20.2% resolved another way"],
         failureRatio: "27.1%", struggleScore: "0.70", struggleRank: "Poor",
         impact: [["Conversations affected", "3,655"], ["Escalated to a human", "1,630"],
-                 ["Returned within 48 hours", "868"],
-                 ["Cost per handled contact", "$11.50"]],
-        avoidableCost: "$28,727"
+                 ["Returned within 48 hours", "868", { note: "not in total" }],
+                 ["Cost per handled contact (configured)", "$6.50",
+                  { tip: "Set per tenant during onboarding. Default $6.50 — midpoint of the ContactBabel financial-services range ($5–$12 per contact)." }]],
+        avoidableCost: "$10,595"
       }
     }
   },
@@ -446,7 +457,7 @@ var GLASSBOX_DATA = {
           "smaller change than the dispute tool. Surfacing expected refund dates in the " +
           "confirmation email would also reduce the volume reaching the assistant at all.",
         effort: "Low",
-        cost: { day: "$506", week: "$3,013", twoWeeks: "$6,026", month: "$11,615", custom: "$10,120" },
+        cost: { day: "$351", week: "$2,093", twoWeeks: "$4,134", month: "$8,060", custom: "$6,994" },
         links: [
           { label: "View 3,180 conversations", href: "conversation.html" },
           { label: "Open funnel", href: "funnel.html" }
@@ -469,7 +480,7 @@ var GLASSBOX_DATA = {
           "are not in the assistant's retrieval index. Indexing them, and grounding the answer in " +
           "the specific declined transaction, would address this cluster without new tooling.",
         effort: "Medium",
-        cost: { day: "$207", week: "$1,403", twoWeeks: "$2,806", month: "$4,945", custom: "$4,301" },
+        cost: { day: "$182", week: "$1,053", twoWeeks: "$2,080", month: "$4,030", custom: "$3,497" },
         links: [
           { label: "View 2,940 conversations", href: "conversation.html" },
           { label: "Open funnel", href: "funnel.html" }
@@ -493,7 +504,7 @@ var GLASSBOX_DATA = {
           "this journey — reverting or amending that clause would restore the pre-v4.2 completion " +
           "rate. Worth A/B testing the amended wording before a full rollout.",
         effort: "Low",
-        cost: { day: "$69", week: "$368", twoWeeks: "$713", month: "$2,691", custom: "$2,346" },
+        cost: { day: "$65", week: "$364", twoWeeks: "$702", month: "$1,365", custom: "$1,183" },
         links: [
           { label: "View 1,120 conversations", href: "conversation.html" },
           { label: "Open funnel", href: "funnel.html" }

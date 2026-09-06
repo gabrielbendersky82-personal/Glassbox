@@ -143,7 +143,7 @@ That card is the point of the entire prototype. Give it visual weight.
 - Reuse their vocabulary: Struggle Score, Struggle Rank, Affected Sessions, Exit %, Find Sessions, See Also, Affected Page Journey, Meshboards, GIA.
 - Cause names, fixed set: **Missing tooling · Context / retrieval · Prompt / policy · Assistant latency · Unclassified**. Unclassified always carries a real share — published, not hidden.
 - Struggle signals, nine grouped by **evidence source**: *From the transcript* (rephrase loops · circular conversations · explicit frustration · escalation requests) · *From the assistant's turns and timing* (repeated intent failure · intent misunderstanding · deflection · response latency) · *From the session after the chat closes* (abandonment after an answer · failed task completion · repeat contact within 48 hours).
-- Cost is **observed only**: price nothing the session record cannot see. Avoidable contact = (escalated + returned within 48 hours) × the customer's cost per contact. Phone contact is never counted — say the real figure is higher.
+- Cost is **observed only**: price nothing the session record cannot see. Avoidable contact = escalated to a human × the customer's configured cost per contact — escalations only, so nobody is counted twice. 48-hour returns are displayed but never priced. Phone contact is never counted — say the real figure is higher.
 - Hallucinations are deliberately **not** a struggle type — detect the evidence of a wrong answer, never claim the error itself.
 - Evidence carries a capture tier: **Tier 1** from the session record on day one, **Tier 2** needs the optional assistant event schema.
 - Cause classification is **per cluster**, never per conversation.

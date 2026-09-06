@@ -347,15 +347,22 @@
       var bar = '<div class="bar" style="width:' + s.width + "%" +
         (s.colour ? ";background:" + s.colour : "") + '"></div>';
       var drop = D.funnel.drops[i] ? '<div class="drop">' + D.funnel.drops[i] + "</div>" : "";
+      var note = s.note ? '<div class="step-note">' + s.note + "</div>" : "";
       return '<div class="step"><div class="lab"><span class="n">' + s.n +
-        '</span><span class="nm">' + s.name + "</span></div>" + bar + "</div>" + drop;
+        '</span><span class="nm">' + s.name + "</span></div>" + bar + note + "</div>" + drop;
     }).join("");
   }
 
   var impact = $("impactlines");
   if (impact && D.funnel) {
     impact.innerHTML = D.funnel.impact.map(function (l) {
-      return '<div class="line"><span>' + l[0] + "</span><b>" + l[1] + "</b></div>";
+      var extra = "";
+      if (l[2] && l[2].tip) {
+        extra = ' <span class="info tip-left" tabindex="0" data-tip="' + l[2].tip + '">\u24d8</span>';
+      } else if (l[2] && l[2].note) {
+        extra = ' <span class="line-note">' + l[2].note + "</span>";
+      }
+      return '<div class="line"><span>' + l[0] + extra + "</span><b>" + l[1] + "</b></div>";
     }).join("");
   }
 })();

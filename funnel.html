@@ -68,14 +68,15 @@
             <!-- steps rendered from data.js by app.js; static fallback below -->
             <div class="step"><div class="lab"><span class="n">12.4K</span><span class="nm">Assistant opened</span></div>
               <div class="bar" style="width:100%"></div></div>
-            <div class="drop">↓ 50.8% did not raise this intent</div>
+            <div class="drop">↓ 50.8% raised a different intent</div>
 
             <div class="step"><div class="lab"><span class="n">6.1K</span><span class="nm">Intent: dispute_transaction</span></div>
               <div class="bar" style="width:49%"></div></div>
             <div class="drop">↓ 31.1% received a usable answer</div>
 
             <div class="step"><div class="lab"><span class="n">4.2K</span><span class="nm">Assistant deflected — no backend call</span></div>
-              <div class="bar" style="width:34%;background:var(--amber)"></div></div>
+              <div class="bar" style="width:34%;background:var(--amber)"></div>
+              <div class="step-note">Intent recognised, no matching tool call observed in the session record.</div></div>
             <div class="drop">↓ 21.4% resolved another way</div>
 
             <div class="step"><div class="lab"><span class="n">3.3K</span><span class="nm">Escalated or abandoned</span></div>
@@ -92,9 +93,11 @@
             </div>
           </div>
           <div class="card" style="margin-top:14px">
-            <div class="hd"><h3>Avg. Conversation Struggle Score</h3><span class="info" tabindex="0" data-tip="Average struggle score of the conversations in this funnel, paired with its Struggle Rank.">ⓘ</span></div>
+            <div class="hd"><h3>Avg. Conversation Struggle Score</h3><span class="info" tabindex="0" data-tip="Conversation Struggle Score, 0–1. Higher is worse. Composite of rephrase loops, repeated intent failure, sentiment decline, explicit escalation, and post-answer abandonment. Averaged across the conversations in this funnel and paired with its Struggle Rank.">ⓘ</span></div>
             <div class="bd" style="display:flex;align-items:center;gap:14px">
-              <div class="face">😖</div><div class="bigscore" data-bind="funnel.struggleScore">0.71</div>
+              <div class="face">😖</div>
+              <div><div class="bigscore" data-bind="funnel.struggleScore">0.71</div>
+                <div class="score-dir">higher is worse</div></div>
               <span class="rank poor" style="margin:0 0 0 auto" data-bind="funnel.struggleRank">Poor</span>
             </div>
           </div>
@@ -113,25 +116,27 @@
 
         <div>
           <div class="card impact">
-            <div class="hd"><h3>Business impact</h3><span class="info tip-left" tabindex="0" data-tip="Avoidable contact cost = (escalated + returned within 48 hours) × the customer's own cost per handled contact. Both inputs are observed in the session record. Customers who phoned instead are not counted, so the real figure is higher.">ⓘ</span></div>
-            <div class="sub">Observed in the session record only — escalations and returns within 48 hours</div>
+            <div class="hd"><h3>Business impact</h3><span class="info tip-left" tabindex="0" data-tip="Avoidable contact cost = escalated to a human × the configured cost per handled contact. Escalations only: a customer who escalated and also returned would otherwise be counted twice, so 48-hour returns are shown but not priced. Customers who phoned instead are not counted, so the real figure is higher.">ⓘ</span></div>
+            <div class="sub">Observed in the session record only — priced on escalations to a human</div>
             <div class="bd">
               <div id="impactlines">
                 <!-- lines rendered from data.js by app.js; static fallback below -->
                 <div class="line"><span>Conversations affected</span><b>4,212</b></div>
                 <div class="line"><span>Escalated to a human</span><b>1,880</b></div>
-                <div class="line"><span>Returned within 48 hours</span><b>1,001</b></div>
-                <div class="line"><span>Cost per handled contact</span><b>$11.50</b></div>
+                <div class="line"><span>Returned within 48 hours <span class="line-note">not in total</span></span><b>1,001</b></div>
+                <div class="line"><span>Cost per handled contact (configured)</span><b>$6.50</b></div>
               </div>
-              <div class="tot"><span style="font-size:12.5px;color:var(--dim)">Avoidable contact cost, observed only</span><span class="v" data-bind="funnel.avoidableCost">$33,131</span></div>
+              <div class="tot"><span style="font-size:12.5px;color:var(--dim)">Avoidable contact cost, observed only</span><span class="v" data-bind="funnel.avoidableCost">$12,220</span></div>
+              <div class="tot-note">Escalated contacts only. 48-hour returns shown separately;
+                not all returns become human contacts.</div>
             </div>
           </div>
 
           <div class="ticket">
             <h4>Backlog item this produces</h4>
             <p><b>Add a dispute-initiation tool to the servicing assistant.</b><br>
-               Intent recognised, no tool available, 4,212 conversations, 61% escalate or abandon,
-               $33,131 observed avoidable contact cost this month. Evidence: 4,212 conversation
+               Intent recognised, no tool available, 4,212 conversations, 78% escalate or abandon,
+               $12,220 observed avoidable contact cost this month. Evidence: 4,212 conversation
                replays attached, retained on GlassBank's schedule.
                Excludes customers who phoned instead — the real figure is higher.</p>
             <div class="acts">
