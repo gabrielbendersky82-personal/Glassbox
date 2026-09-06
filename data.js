@@ -11,10 +11,12 @@
      $6.50 (a configured per-tenant input). 48-hour returns are displayed but
      never priced — a customer who escalated and returned would be counted
      twice. Phone contact is never counted, so the real figure is higher.
-   - Struggle scores worsen in shorter ranges: the prompt v4.2 regression
-     is recent, so narrowing the window sharpens it (0.74 day → 0.62 month).
-   - The v4.2 marker only appears on trend charts whose window contains
-     the release (twoWeeks / month / custom). */
+   - Struggle scores worsen in shorter ranges: the regression that began on
+     4 March is recent, so narrowing the window sharpens it (0.74 → 0.62).
+   - The 4 March marker only appears on trend charts whose window contains
+     that date (twoWeeks / month / custom). Glassbox detects the step change
+     from conversations; the prompt version is named from the customer's
+     release calendar, never observed. */
 
 var GLASSBOX_DATA = {
 
@@ -37,7 +39,7 @@ var GLASSBOX_DATA = {
           "comes from one cause: the assistant recognises transactional intents it has no tool " +
           "to act on, and deflects. Four intents account for 68% of failing conversations and an " +
           "estimated $1,131 in observed avoidable contact. Two are fixable with tooling; one is a " +
-          "regression from prompt v4.2 and can be reverted this week."
+          "regression that began on 4 March and can be reverted this week."
       },
       dashboard: { score: "0.74", rank: "Poor", total: "1.6 K",
         struggledPct: "39%", struggledCount: "(630)", abandonedPct: "25%",
@@ -107,8 +109,8 @@ var GLASSBOX_DATA = {
           "Assistant struggle rose from 0.63 to 0.71 this week. Most of the increase comes from " +
           "one cause: the assistant recognises transactional intents it has no tool to act on, " +
           "and deflects. Four intents account for 66% of failing conversations and an estimated " +
-          "$6,695 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
-          "prompt v4.2 and can be reverted this week."
+          "$6,695 in observed avoidable contact. Two are fixable with tooling; one is a regression " +
+          "that began on 4 March and can be reverted this week."
       },
       dashboard: { score: "0.71", rank: "Poor", total: "11.9 K",
         struggledPct: "37%", struggledCount: "(4.4K)", abandonedPct: "23%",
@@ -179,7 +181,7 @@ var GLASSBOX_DATA = {
           "increase comes from one cause: the assistant recognises transactional intents it has " +
           "no tool to act on, and deflects. Four intents account for 69% of failing " +
           "conversations and an estimated $13,195 in observed avoidable contact. Two are fixable with " +
-          "tooling; one is a regression from prompt v4.2 and can be reverted this week."
+          "tooling; one is a regression that began on 4 March and can be reverted this week."
       },
       dashboard: { score: "0.67", rank: "Poor", total: "23.6 K",
         struggledPct: "36%", struggledCount: "(8.5K)", abandonedPct: "22%",
@@ -187,7 +189,7 @@ var GLASSBOX_DATA = {
       charts: {
         struggle: { axis: "1.0",  points: [0.48, 0.50, 0.52, 0.58, 0.64, 0.66, 0.68, 0.69, 0.70, 0.71, 0.70, 0.72, 0.71, 0.73] },
         volume:   { axis: "2.0K", points: [1.5, 1.7, 1.6, 1.9, 1.6, 1.8, 1.7, 2.0, 1.8, 1.7, 1.9, 1.6, 1.8, 1.7] },
-        trend:    { mark: { f: 0.14, label: "v4.2 released" },
+        trend:    { mark: { f: 0.14, label: "4 March" },
                     points: [18.1, 17.9, 27.0, 27.4, 27.2, 27.8, 28.1, 27.9, 28.3, 28.0, 28.4, 28.2, 28.6, 28.4] }
       },
       intents: [
@@ -250,8 +252,8 @@ var GLASSBOX_DATA = {
           "Assistant struggle rose from 0.52 to 0.62 this month. Most of the increase comes from " +
           "one cause: the assistant recognises transactional intents it has no tool to act on, " +
           "and deflects. Four intents account for 70% of failing conversations and an estimated " +
-          "$25,675 in observed avoidable contact. Two are fixable with tooling; one is a regression from " +
-          "prompt v4.2 and can be reverted this week."
+          "$25,675 in observed avoidable contact. Two are fixable with tooling; one is a regression " +
+          "that began on 4 March and can be reverted this week."
       },
       dashboard: { score: "0.62", rank: "Poor", total: "48.2 K",
         struggledPct: "34%", struggledCount: "(16.4K)", abandonedPct: "21%",
@@ -259,7 +261,7 @@ var GLASSBOX_DATA = {
       charts: {
         struggle: { axis: "1.0",  points: [0.41, 0.42, 0.44, 0.47, 0.52, 0.56, 0.61, 0.64, 0.66] },
         volume:   { axis: "2.4K", points: [1.7, 1.9, 1.5, 2.1, 1.8, 2.3, 1.9, 2.4, 2.0, 2.4, 2.2] },
-        trend:    { mark: { f: 0.48, label: "v4.2 released" },
+        trend:    { mark: { f: 0.48, label: "4 March" },
                     points: [18.0, 17.6, 18.2, 17.8, 18.0, 18.0, 26.5, 26.8, 27.2, 27.6, 28.0] }
       },
       intents: [
@@ -323,7 +325,7 @@ var GLASSBOX_DATA = {
           "increase comes from one cause: the assistant recognises transactional intents it has " +
           "no tool to act on, and deflects. Four intents account for 70% of failing " +
           "conversations and an estimated $22,269 in observed avoidable contact. Two are fixable with " +
-          "tooling; one is a regression from prompt v4.2 and can be reverted this week."
+          "tooling; one is a regression that began on 4 March and can be reverted this week."
       },
       dashboard: { score: "0.63", rank: "Poor", total: "41.8 K",
         struggledPct: "34%", struggledCount: "(14.2K)", abandonedPct: "21%",
@@ -331,7 +333,7 @@ var GLASSBOX_DATA = {
       charts: {
         struggle: { axis: "1.0",  points: [0.44, 0.46, 0.49, 0.55, 0.62, 0.65, 0.68, 0.70, 0.71] },
         volume:   { axis: "2.0K", points: [1.4, 1.7, 1.5, 1.9, 1.6, 1.8, 1.7, 1.9, 1.6] },
-        trend:    { mark: { f: 0.22, label: "v4.2 released" },
+        trend:    { mark: { f: 0.22, label: "4 March" },
                     points: [17.9, 18.2, 27.1, 27.5, 27.3, 27.9, 28.2, 28.0, 28.4] }
       },
       intents: [
@@ -489,19 +491,20 @@ var GLASSBOX_DATA = {
         intent: "Change address",
         cause: "Prompt / policy",
         confidence: "72% confidence",
-        happening: "Customers ask to change their address. The assistant has the tooling, but the " +
-          "policy wording introduced in prompt v4.2 asks for a verification step this channel " +
-          "cannot complete, so it declines — and repeats the same policy text when pushed.",
+        happening: "Customers ask to change their address. The assistant has the tooling, but its " +
+          "policy wording asks for a verification step this channel cannot complete, so it " +
+          "declines — and repeats the same policy text when pushed. The same behaviour appears " +
+          "across unrelated intents, starting abruptly on 4 March.",
         evidence: [
-          { t: "Policy phrasing matched on the refusal turns", tier: 1 },
-          { t: "Identical policy text repeated after the customer pushed back", tier: 1 },
-          { t: "Failure rate steps up at the prompt v4.2 release date", tier: 2 },
-          { t: "Tool available but never invoked", tier: 2 }
+          { t: "The same behaviour appears across unrelated intents", tier: 1 },
+          { t: "Step change in failure rate beginning 4 March", tier: 1 },
+          { t: "Prompt version v4.2 shipped that date — names what changed", tier: 2 }
         ],
         recommendation: "This is the one finding that can be reverted rather than built. The " +
-          "verification clause added in prompt v4.2 does not appear to be required by policy on " +
-          "this journey — reverting or amending that clause would restore the pre-v4.2 completion " +
-          "rate. Worth A/B testing the amended wording before a full rollout.",
+          "behaviour starts abruptly on one date and spans unrelated intents, which points at the " +
+          "policy wording rather than at any single journey; GlassBank's release calendar names " +
+          "prompt v4.2 that day. Reverting or amending the verification clause would restore the " +
+          "earlier completion rate. Worth A/B testing the amended wording before a full rollout.",
         effort: "Low",
         cost: { day: "$65", week: "$364", twoWeeks: "$702", month: "$1,365", custom: "$1,183" },
         links: [
@@ -603,7 +606,9 @@ var GLASSBOX_DATA = {
     "Prompt / policy": {
       summary: "On <b>Change address</b> the assistant has the tooling but its <b>policy wording " +
         "over-restricts</b>: it asks for verification steps the flow does not support, then " +
-        "declines to proceed. Customers who push back receive the same policy text again.",
+        "declines to proceed. Customers who push back receive the same policy text again. The " +
+        "<b>same behaviour appears across unrelated intents, starting abruptly on one date</b> — " +
+        "a pattern more consistent with a prompt or policy change than with a per-intent gap.",
       takeaways: [
         "Review the policy block governing <u>change_address</u> — it demands a verification path the channel cannot complete.",
         "Offer the in-app settings route as the next step instead of a bare refusal.",
@@ -613,10 +618,9 @@ var GLASSBOX_DATA = {
         confidence: "72% confidence",
         lead: "Consistent with prompt or policy over-restriction:",
         evidence: [
-          { t: "Policy phrasing matched on the refusal turns", tier: 1 },
-          { t: "Identical policy text repeated after the customer pushed back", tier: 1 },
-          { t: "No compliance constraint requires refusal on this journey", tier: 1 },
-          { t: "Tool available but never invoked", tier: 2 }
+          { t: "The same behaviour appears across unrelated intents", tier: 1 },
+          { t: "Step change in failure rate beginning 4 March", tier: 1 },
+          { t: "Prompt version v4.2 shipped that date — names what changed", tier: 2 }
         ],
         cluster: "1,120 conversations share this signature this month."
       }
