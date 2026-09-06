@@ -254,6 +254,27 @@
   }
 
 
+  /* ---- What happened next: user timeline strip (replay screen) ----
+     Every step states its capture status. The uncaptured phone call is shown
+     as an explicit gap, not omitted — the boundary is the point. */
+  var utl = $("userTimeline");
+  if (utl && D.userTimeline) {
+    var t = D.userTimeline;
+    utl.innerHTML = "<h3>" + t.title + "</h3>" +
+      '<div class="utl-sub">' + t.sub + "</div>" +
+      '<div class="utl-row">' + t.steps.map(function (s, i) {
+        return (i ? '<span class="utl-arrow">›</span>' : "") +
+          '<div class="utl-step"><div class="utl-when">' + s.when + "</div>" +
+          '<div class="utl-what">' + s.what + "</div>" +
+          '<div class="utl-detail">' + s.detail + "</div>" +
+          '<span class="utl-cap ' + s.cap + '">' +
+            (s.cap === "observed" ? "Observed in the session record" : "Not captured") + "</span>" +
+          (s.gap ? '<div class="utl-gap"><b>Not captured</b>' + s.gap + "</div>" : "") +
+          "</div>";
+      }).join("") + "</div>" +
+      '<div class="utl-foot">' + t.foot + "</div>";
+  }
+
   /* ---- Weekly AI Interaction Report ----
      Finding numbers are read from the active range so the report reconciles
      with the dashboard and funnel by construction. */

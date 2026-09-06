@@ -413,8 +413,8 @@ var GLASSBOX_DATA = {
           { t: "Deflection phrasing matched on 2 turns", tier: 1 },
           { t: "No state change on the account after the conversation", tier: 1 },
           { t: "Identical consecutive response repeated before abandonment", tier: 1 },
-          { t: "Intent recognised at 0.91 on all turns", tier: 2 },
-          { t: "No backend call during the conversation", tier: 2 }
+          { t: "Intent recognised at 0.91 on all turns", tier: 1 },
+          { t: "No backend call during the conversation", tier: 1 }
         ],
         recommendation: "Adding a dispute-initiation tool to the servicing assistant would " +
           "address this cluster directly. Where the tool cannot ship this quarter, handing off " +
@@ -438,8 +438,8 @@ var GLASSBOX_DATA = {
           { t: "Answer directs to phone on 71% of affected turns", tier: 1 },
           { t: "No order or payment record referenced in the reply", tier: 1 },
           { t: "No state change on the account after the conversation", tier: 1 },
-          { t: "Intent recognised at 0.88 average across the cluster", tier: 2 },
-          { t: "No backend call on the affected turns", tier: 2 }
+          { t: "Intent recognised at 0.88 average across the cluster", tier: 1 },
+          { t: "No backend call on the affected turns", tier: 1 }
         ],
         recommendation: "A read-only refund-status lookup would resolve most of this cluster. " +
           "The assistant needs to retrieve status rather than act on it, which is a materially " +
@@ -462,7 +462,7 @@ var GLASSBOX_DATA = {
         evidence: [
           { t: "Generic answer repeated after the customer rephrased", tier: 1 },
           { t: "Customer re-asked with added detail the answer never used", tier: 1 },
-          { t: "Backend call made on the affected turns", tier: 2 },
+          { t: "Backend call made on the affected turns", tier: 1 },
           { t: "Retrieved passages scored low relevance to the query", tier: 2 }
         ],
         recommendation: "The gap is decline reason codes: they exist in the payments record but " +
@@ -485,7 +485,7 @@ var GLASSBOX_DATA = {
         evidence: [
           { t: "Policy phrasing matched on the refusal turns", tier: 1 },
           { t: "Identical policy text repeated after the customer pushed back", tier: 1 },
-          { t: "Failure rate steps up at the prompt v4.2 release date", tier: 1 },
+          { t: "Failure rate steps up at the prompt v4.2 release date", tier: 2 },
           { t: "Tool available but never invoked", tier: 2 }
         ],
         recommendation: "This is the one finding that can be reverted rather than built. The " +
@@ -564,8 +564,8 @@ var GLASSBOX_DATA = {
           { t: "Deflection phrasing matched on 2 turns", tier: 1 },
           { t: "No state change on the account after the conversation", tier: 1 },
           { t: "Identical consecutive response repeated before abandonment", tier: 1 },
-          { t: "Intent recognised at 0.91 on all turns", tier: 2 },
-          { t: "No backend call during the conversation", tier: 2 }
+          { t: "Intent recognised at 0.91 on all turns", tier: 1 },
+          { t: "No backend call during the conversation", tier: 1 }
         ],
         cluster: "4,212 conversations share this signature this month."
       }
@@ -585,7 +585,7 @@ var GLASSBOX_DATA = {
         evidence: [
           { t: "Generic answer repeated after the customer rephrased", tier: 1 },
           { t: "Customer re-asked with added detail the answer never used", tier: 1 },
-          { t: "Backend call made on the affected turns", tier: 2 },
+          { t: "Backend call made on the affected turns", tier: 1 },
           { t: "Retrieved passages scored low relevance to the query", tier: 2 }
         ],
         cluster: "2,940 conversations share this signature this month."
@@ -653,6 +653,34 @@ var GLASSBOX_DATA = {
         cluster: "610 conversations sit in this cohort this month, published rather than hidden."
       }
     }
+  },
+
+  /* ---- What happened next: the same masked user across 48 hours ----
+     The point of this strip is the boundary, not just the story: every step
+     states whether it is in the session record or not. The phone call after
+     the branch-locator visit is inferred and never observed, which is why the
+     funnel prices contact as "observed only". */
+  userTimeline: {
+    title: "What happened next — 48 hours",
+    sub: "Same masked user ********** · three sessions, one unresolved intent",
+    steps: [
+      { when: "Mar 12 · 10:24",
+        what: "Transactions → Assistant → abandoned",
+        detail: "No task completed. The dispute was never raised.",
+        cap: "observed" },
+      { when: "Mar 12 · +40 min",
+        what: "Branch locator page",
+        detail: "Searched for a branch, then left the site.",
+        cap: "observed",
+        gap: "Phone contact not captured — outside the session record" },
+      { when: "Mar 14 · 09:12",
+        what: "Returned, same intent",
+        detail: "Raised dispute_transaction again. Escalated to a human.",
+        cap: "observed" }
+    ],
+    foot: "All three sessions are in the record. The call the customer may have made between " +
+      "them is not — which is why the funnel prices contact as observed only, and why the real " +
+      "figure is higher than the one on screen."
   },
 
   /* ---- Screen 2 · conversation.html ----
