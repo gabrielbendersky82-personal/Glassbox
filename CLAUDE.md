@@ -142,7 +142,8 @@ That card is the point of the entire prototype. Give it visual weight.
 - Say **Assistant** or **Conversation**. **Never "Bot"** — Glassbox already uses `Bot` / `Bot Reason` for automated traffic detection, and reusing it reads as not knowing the data model.
 - Reuse their vocabulary: Struggle Score, Struggle Rank, Affected Sessions, Exit %, Find Sessions, See Also, Affected Page Journey, Meshboards, GIA.
 - Cause names, fixed set: **Missing tooling · Context / retrieval · Prompt / policy · Assistant latency · Unclassified**. Unclassified always carries a real share — published, not hidden.
-- Struggle signals, nine in three families: *Repetition and repair* (rephrase loop · circular conversation · repeated intent failure) · *Sentiment and explicit signals* (sentiment decline · explicit frustration · escalation requested) · *Outcome signals* (abandonment after answer · failed task completion · intent misunderstanding).
+- Struggle signals, nine grouped by **evidence source**: *From the transcript* (rephrase loops · circular conversations · explicit frustration · escalation requests) · *From the assistant's turns and timing* (repeated intent failure · intent misunderstanding · deflection · response latency) · *From the session after the chat closes* (abandonment after an answer · failed task completion · repeat contact within 48 hours).
+- Cost is **observed only**: price nothing the session record cannot see. Avoidable contact = (escalated + returned within 48 hours) × the customer's cost per contact. Phone contact is never counted — say the real figure is higher.
 - Hallucinations are deliberately **not** a struggle type — detect the evidence of a wrong answer, never claim the error itself.
 - Evidence carries a capture tier: **Tier 1** from the session record on day one, **Tier 2** needs the optional assistant event schema.
 - Cause classification is **per cluster**, never per conversation.

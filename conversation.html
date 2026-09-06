@@ -76,13 +76,13 @@
             <div class="evsearch"><span style="color:var(--faint)">🔍</span><input placeholder="Search events" aria-label="Search events"><span style="color:var(--faint)">⌃⌄</span></div>
 
             <div class="siglegend">
-              <h5>Struggle signals</h5>
-              <div class="sigfam"><div class="fam">Repetition and repair</div>
-                <div class="sigs">Rephrase loop · Circular conversation · Repeated intent failure</div></div>
-              <div class="sigfam"><div class="fam">Sentiment and explicit signals</div>
-                <div class="sigs">Sentiment decline · Explicit frustration · Escalation requested</div></div>
-              <div class="sigfam"><div class="fam">Outcome signals</div>
-                <div class="sigs">Abandonment after answer · Failed task completion · Intent misunderstanding</div></div>
+              <h5>Struggle signals · by evidence source</h5>
+              <div class="sigfam"><div class="fam">From the transcript</div>
+                <div class="sigs">Rephrase loops · Circular conversations · Explicit frustration · Escalation requests</div></div>
+              <div class="sigfam"><div class="fam">From the assistant&rsquo;s turns and timing</div>
+                <div class="sigs">Repeated intent failure · Intent misunderstanding · Deflection · Response latency</div></div>
+              <div class="sigfam"><div class="fam">From the session after the chat closes</div>
+                <div class="sigs">Abandonment after an answer · Failed task completion · Repeat contact within 48 hours</div></div>
             </div>
 
             <div class="pagerow"><div><div class="t">GlassBank — Home</div><div class="u">glassbk.digital/</div></div>
@@ -98,17 +98,16 @@
             <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Rephrase of same intent</div></div><span class="et">01:06</span></div>
             <div class="ev flag"><span class="ei">↻</span><div><div class="en">Rephrase loop</div><div class="ed">2nd attempt, same intent</div></div><span class="et">01:06</span></div>
             <div class="ev"><span class="ei">✦</span><div><div class="en">Assistant turn</div><div class="ed">1.9s · no backend call</div></div><span class="et">01:11</span></div>
-            <div class="ev"><span class="ei">⊘</span><div><div class="en">Deflection phrasing<span class="evtag">evidence</span></div><div class="ed">"you'll need to contact us"</div></div><span class="et">01:11</span></div>
+            <div class="ev flag"><span class="ei">⊘</span><div><div class="en">Deflection</div><div class="ed">"you'll need to contact us"</div></div><span class="et">01:11</span></div>
             <div class="ev flag"><span class="ei">!</span><div><div class="en">Explicit frustration</div><div class="ed">"I don't want an article"</div></div><span class="et">01:12</span></div>
             <div class="ev"><span class="ei">👤</span><div><div class="en">User turn</div><div class="ed">Rephrase of same intent</div></div><span class="et">01:31</span></div>
             <div class="ev flag"><span class="ei">↻</span><div><div class="en">Rephrase loop</div><div class="ed">3rd attempt, same intent</div></div><span class="et">01:31</span></div>
-            <div class="ev flag"><span class="ei">↘</span><div><div class="en">Sentiment decline</div><div class="ed">Across turns 2–4</div></div><span class="et">01:33</span></div>
             <div class="ev bad"><span class="ei">⟳</span><div><div class="en">Circular conversation</div><div class="ed">Identical response returned</div></div><span class="et">01:36</span></div>
             <div class="ev bad"><span class="ei">⚠</span><div><div class="en">Repeated intent failure</div><div class="ed">dispute_transaction · 3 turns</div></div><span class="et">01:36</span></div>
             <div class="ev bad"><span class="ei">✕</span><div><div class="en">Abandonment after answer</div><div class="ed">Closed without escalating</div></div><span class="et">01:52</span></div>
             <div class="ev bad"><span class="ei">⊗</span><div><div class="en">Failed task completion</div><div class="ed">Dispute never raised</div></div><span class="et">02:00</span></div>
             <div class="ev"><span class="ei">↩</span><div><div class="en">Page exit</div><div class="ed">Left the Transactions page</div></div><span class="et">02:04</span></div>
-            <div class="ev flag"><span class="ei">☎</span><div><div class="en">Contact centre call</div><div class="ed">Next day · same topic</div></div><span class="et">+1 day</span></div>
+            <div class="ev"><span class="ei">◌</span><div><div class="en">Phone contact<span class="evtag">not captured</span></div><div class="ed">Outside the session record</div></div><span class="et">—</span></div>
           </div>
 
           <div class="stage">
