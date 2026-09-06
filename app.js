@@ -271,6 +271,19 @@
     $("repPeriodCrumb").textContent = r.report.periodLabel;
     $("repBottomLine").textContent = r.report.bottomLine;
 
+    $("repChanged").innerHTML = r.report.changed.map(function (c) {
+      return '<div class="chg"><div class="lbl">' + c.label + "</div>" +
+        '<div class="val">' + c.value +
+        '<span class="delta ' + c.dir + '" style="font-family:Inter">' + c.delta + "</span></div>" +
+        '<div class="cmp">from ' + c.prior + " last period</div></div>";
+    }).join("");
+
+    $("repUnclassified").innerHTML = D.reportMeta.unclassified.map(function (u) {
+      return '<div class="uncl"><div class="un-i">' + u.intent + "</div>" +
+        '<div class="un-v">' + u.vol[activeKey] + "</div>" +
+        '<div class="un-w">' + u.why + "</div></div>";
+    }).join("");
+
     repFindings.innerHTML = D.reportMeta.findings.map(function (m, i) {
       var row = null;
       r.intents.forEach(function (x) { if (x.name === m.intent) row = x; });

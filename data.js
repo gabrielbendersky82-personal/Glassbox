@@ -23,6 +23,12 @@ var GLASSBOX_DATA = {
       label: "Past Day (UTC+03:00)",
       prevPeriod: "Feb 24 – Feb 25",
       report: {
+        changed: [
+          { label: "Conversation Struggle Score", value: "0.74", prior: "0.66", delta: "+0.08", dir: "up" },
+          { label: "Failing-intent rate", value: "29.8%", prior: "25.4%", delta: "+4.4pp", dir: "up" },
+          { label: "Abandonment after answer", value: "25%", prior: "21%", delta: "+4pp", dir: "up" },
+          { label: "Avoidable contact cost", value: "$2,392", prior: "$1,932", delta: "+$460", dir: "up" }
+        ],
         periodLabel: "Day to 9 March 2026", priorScore: "0.66",
         bottomLine:
           "Assistant struggle rose from 0.66 to 0.74 over the last day. Most of the increase " +
@@ -86,6 +92,12 @@ var GLASSBOX_DATA = {
       label: "Past Week (UTC+03:00)",
       prevPeriod: "Feb 12 – Feb 19",
       report: {
+        changed: [
+          { label: "Conversation Struggle Score", value: "0.71", prior: "0.63", delta: "+0.08", dir: "up" },
+          { label: "Failing-intent rate", value: "27.6%", prior: "23.6%", delta: "+4.0pp", dir: "up" },
+          { label: "Abandonment after answer", value: "23%", prior: "19%", delta: "+4pp", dir: "up" },
+          { label: "Avoidable contact cost", value: "$15,111", prior: "$12,190", delta: "+$2,921", dir: "up" }
+        ],
         periodLabel: "Week of 9 March 2026", priorScore: "0.63",
         bottomLine:
           "Assistant struggle rose from 0.63 to 0.71 this week. Most of the increase comes from " +
@@ -149,6 +161,12 @@ var GLASSBOX_DATA = {
       label: "Past Two Weeks (UTC+03:00)",
       prevPeriod: "Jan 29 – Feb 12",
       report: {
+        changed: [
+          { label: "Conversation Struggle Score", value: "0.67", prior: "0.58", delta: "+0.09", dir: "up" },
+          { label: "Failing-intent rate", value: "28.2%", prior: "24.1%", delta: "+4.1pp", dir: "up" },
+          { label: "Abandonment after answer", value: "22%", prior: "18%", delta: "+4pp", dir: "up" },
+          { label: "Avoidable contact cost", value: "$29,923", prior: "$24,610", delta: "+$5,313", dir: "up" }
+        ],
         periodLabel: "Two weeks to 9 March 2026", priorScore: "0.58",
         bottomLine:
           "Assistant struggle rose from 0.58 to 0.67 over the past fortnight. Most of the " +
@@ -213,6 +231,12 @@ var GLASSBOX_DATA = {
       label: "Past Month (UTC+03:00)",
       prevPeriod: "Dec 28 – Jan 27",
       report: {
+        changed: [
+          { label: "Conversation Struggle Score", value: "0.62", prior: "0.52", delta: "+0.10", dir: "up" },
+          { label: "Failing-intent rate", value: "27.1%", prior: "22.4%", delta: "+4.7pp", dir: "up" },
+          { label: "Abandonment after answer", value: "21%", prior: "17%", delta: "+4pp", dir: "up" },
+          { label: "Avoidable contact cost", value: "$58,420", prior: "$47,150", delta: "+$11,270", dir: "up" }
+        ],
         periodLabel: "Month to 9 March 2026", priorScore: "0.52",
         bottomLine:
           "Assistant struggle rose from 0.52 to 0.62 this month. Most of the increase comes from " +
@@ -277,6 +301,12 @@ var GLASSBOX_DATA = {
       label: "Feb 1, 7:39 PM - Feb 26 2026, 7:39 PM (UTC+03:00)",
       prevPeriod: "Jan 6 – Jan 31",
       report: {
+        changed: [
+          { label: "Conversation Struggle Score", value: "0.63", prior: "0.53", delta: "+0.10", dir: "up" },
+          { label: "Failing-intent rate", value: "27.1%", prior: "23.0%", delta: "+4.1pp", dir: "up" },
+          { label: "Abandonment after answer", value: "21%", prior: "17%", delta: "+4pp", dir: "up" },
+          { label: "Avoidable contact cost", value: "$50,669", prior: "$41,285", delta: "+$9,384", dir: "up" }
+        ],
         periodLabel: "Feb 1 – Feb 26 2026", priorScore: "0.53",
         bottomLine:
           "Assistant struggle rose from 0.53 to 0.63 across the selected range. Most of the " +
@@ -405,7 +435,97 @@ var GLASSBOX_DATA = {
           { label: "View 4,212 conversations", href: "conversation.html" },
           { label: "Open funnel", href: "funnel.html" }
         ]
+      },
+      {
+        intent: "Refund status",
+        cause: "Missing tooling",
+        confidence: "82% confidence",
+        happening: "Customers ask where their refund has got to. The assistant identifies the " +
+          "intent and explains the refund policy correctly, but cannot look up the status of a " +
+          "specific refund, so it directs the customer to call instead.",
+        evidence: [
+          { t: "Answer directs to phone on 71% of affected turns", tier: 1 },
+          { t: "No order or payment record referenced in the reply", tier: 1 },
+          { t: "No state change on the account after the conversation", tier: 1 },
+          { t: "Intent recognised at 0.88 average across the cluster", tier: 2 },
+          { t: "No backend call on the affected turns", tier: 2 }
+        ],
+        recommendation: "A read-only refund-status lookup would resolve most of this cluster. " +
+          "The assistant needs to retrieve status rather than act on it, which is a materially " +
+          "smaller change than the dispute tool. Surfacing expected refund dates in the " +
+          "confirmation email would also reduce the volume reaching the assistant at all.",
+        effort: "Low",
+        cost: { day: "$506", week: "$3,450", twoWeeks: "$6,900", month: "$13,570", custom: "$11,776" },
+        links: [
+          { label: "View 3,180 conversations", href: "conversation.html" },
+          { label: "Open funnel", href: "funnel.html" }
+        ]
+      },
+      {
+        intent: "Card declined — why?",
+        cause: "Context / retrieval",
+        confidence: "78% confidence",
+        happening: "Customers ask why a card payment was declined. The assistant does call the " +
+          "backend, but the content it retrieves covers general card FAQs rather than decline " +
+          "reason codes, so the answer stays generic and customers re-ask with more detail.",
+        evidence: [
+          { t: "Generic answer repeated after the customer rephrased", tier: 1 },
+          { t: "Customer re-asked with added detail the answer never used", tier: 1 },
+          { t: "Backend call made on the affected turns", tier: 2 },
+          { t: "Retrieved passages scored low relevance to the query", tier: 2 }
+        ],
+        recommendation: "The gap is decline reason codes: they exist in the payments record but " +
+          "are not in the assistant's retrieval index. Indexing them, and grounding the answer in " +
+          "the specific declined transaction, would address this cluster without new tooling.",
+        effort: "Medium",
+        cost: { day: "$207", week: "$1,403", twoWeeks: "$2,806", month: "$5,520", custom: "$4,784" },
+        links: [
+          { label: "View 2,940 conversations", href: "conversation.html" },
+          { label: "Open funnel", href: "funnel.html" }
+        ]
+      },
+      {
+        intent: "Change address",
+        cause: "Prompt / policy",
+        confidence: "72% confidence",
+        happening: "Customers ask to change their address. The assistant has the tooling, but the " +
+          "policy wording introduced in prompt v4.2 asks for a verification step this channel " +
+          "cannot complete, so it declines — and repeats the same policy text when pushed.",
+        evidence: [
+          { t: "Policy phrasing matched on the refusal turns", tier: 1 },
+          { t: "Identical policy text repeated after the customer pushed back", tier: 1 },
+          { t: "Failure rate steps up at the prompt v4.2 release date", tier: 1 },
+          { t: "Tool available but never invoked", tier: 2 }
+        ],
+        recommendation: "This is the one finding that can be reverted rather than built. The " +
+          "verification clause added in prompt v4.2 does not appear to be required by policy on " +
+          "this journey — reverting or amending that clause would restore the pre-v4.2 completion " +
+          "rate. Worth A/B testing the amended wording before a full rollout.",
+        effort: "Low",
+        cost: { day: "$69", week: "$368", twoWeeks: "$713", month: "$1,380", custom: "$1,196" },
+        links: [
+          { label: "View 1,120 conversations", href: "conversation.html" },
+          { label: "Open funnel", href: "funnel.html" }
+        ]
       }
+    ],
+
+    /* Clusters the model declines to classify. Volumes reconcile with the
+       dashboard's unclassified share (e.g. month 1,312 = 8% of 16.4K struggled).
+       This section is deliberately visible — published, not hidden. */
+    unclassified: [
+      { intent: "Statement request",
+        vol: { day: "18", week: "149", twoWeeks: "306", month: "610", custom: "528" },
+        why: "No consistent signature across the cohort — struggle signals appear on different " +
+          "turns with no repeated pattern. Needs labelled samples before a cause can be proposed." },
+      { intent: "Card replacement",
+        vol: { day: "22", week: "148", twoWeeks: "232", month: "425", custom: "368" },
+        why: "Retrieval and latency signals appear in similar proportion. Separating them needs " +
+          "Tier 2 retrieval context, which is not enabled on this assistant." },
+      { intent: "Standing order amendment",
+        vol: { day: "17", week: "99", twoWeeks: "142", month: "277", custom: "240" },
+        why: "Volume sits below the threshold for a confident cluster judgement this period. " +
+          "Re-check once the cohort is larger rather than acting on a weak signature." }
     ]
   },
 
