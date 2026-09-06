@@ -183,18 +183,9 @@
               <div class="top"><span style="color:var(--red)">⚑</span><span class="name">Missing tooling</span><span class="conf">87% confidence</span></div>
               <div class="cluster"><b>Cluster classification</b> — 4,212 conversations share this
                 signature this month. The cause is assigned to the cluster, not to this conversation alone.</div>
-              <div class="why">
-                Consistent with a missing capability:
-                <ul class="evlist">
-                  <li><em>Deflection phrasing matched on 2 turns</em><span class="tier t1">Tier 1</span></li>
-                  <li><em>No state change on the account after the conversation</em><span class="tier t1">Tier 1</span></li>
-                  <li><em>Identical consecutive response repeated before abandonment</em><span class="tier t1">Tier 1</span></li>
-                  <li><em>Intent recognised at 0.91 on all turns</em><span class="tier t1">Tier 1</span></li>
-                  <li><em>No backend call during the conversation</em><span class="tier t1">Tier 1</span></li>
-                </ul>
-                <div class="tierkey">Tier 1 — from the session record, day one, no assistant integration<br>
-                  Tier 2 — needs the optional assistant event schema</div>
-              </div>
+              <!-- Evidence, tier chips and the tier key all render from
+                   data.js via app.js, so the chip component lives in one place. -->
+              <div class="why" id="replayEvidence"></div>
             </div>
 
             <div class="askbox">Ask a question about this conversation<span class="go">→</span></div>

@@ -130,7 +130,8 @@
   function evidenceList(evidence) {
     return '<ul class="evlist">' + evidence.map(function (e) {
       return "<li><em>" + e.t + "</em>" +
-        '<span class="tier t' + e.tier + '">Tier ' + e.tier + "</span></li>";
+        '<span class="tier t' + e.tier + '" title="' + D.tierKey[e.tier] +
+        '">T' + e.tier + "</span></li>";
     }).join("") + "</ul>";
   }
 
@@ -251,6 +252,17 @@
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
       });
     });
+  }
+
+
+  /* ---- Replay cause verdict (replay screen) ----
+     The verdict card's evidence is rendered from the same giaByCause entry the
+     dashboard panel reads, through the same evidenceList(). One chip component,
+     one source of truth — the replay and the dashboard cannot drift apart. */
+  var replayEv = $("replayEvidence");
+  if (replayEv && D.giaByCause && D.giaByCause["Missing tooling"]) {
+    var rv = D.giaByCause["Missing tooling"].verdict;
+    replayEv.innerHTML = rv.lead + evidenceList(rv.evidence) + tierKeyHtml();
   }
 
 

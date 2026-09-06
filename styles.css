@@ -4,7 +4,7 @@
   --bg:#F4F4F9; --card:#FFFFFF; --border:#E6E6EF; --border-soft:#F0F0F6;
   --text:#2E2E42; --dim:#6F6F86; --faint:#9A9AB0;
   --indigo:#4F46E5; --indigo-soft:#EEF0FE; --indigo-line:#C9CCFA;
-  --navy:#201F45; --pink:#E5308F;
+  --navy:#201F45; --pink:#E5308F; --pink-soft:#FDE7F2;
   --amber:#F0A93B; --amber-soft:#FDF3E0;
   --red:#E04141; --red-band:rgba(224,65,65,.16); --red-soft:#FBE3E3;
   --green:#12A57A; --green-soft:#DEF5EC;
@@ -18,6 +18,7 @@
     --text:#E8E8F2; --dim:#A5A5BE; --faint:#7C7C97;
     --indigo:#8F87FF; --indigo-soft:#26244A; --indigo-line:#3B3770;
     --grey-chip:#2C2A4A; --yellow-chip:#4A3F1A; --green-soft:#123A2E; --red-soft:#3D1E1E; --amber-soft:#3A2C14;
+    --pink-soft:#3A1730;
     --shadow:0 1px 2px rgba(0,0,0,.3);
   }
 }
@@ -26,6 +27,7 @@
   --text:#E8E8F2; --dim:#A5A5BE; --faint:#7C7C97;
   --indigo:#8F87FF; --indigo-soft:#26244A; --indigo-line:#3B3770;
   --grey-chip:#2C2A4A; --yellow-chip:#4A3F1A; --green-soft:#123A2E; --red-soft:#3D1E1E; --amber-soft:#3A2C14;
+    --pink-soft:#3A1730;
   --shadow:0 1px 2px rgba(0,0,0,.3);
 }
 
@@ -321,10 +323,11 @@ a{color:var(--indigo)}
 .info.tip-left::after{left:auto;right:-8px;transform:none}
 
 /* capture tier chips (Tier 1 day one · Tier 2 assistant event schema) */
-.tier{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:4px;
-  font-size:10px;font-weight:600;font-family:Inter,sans-serif;vertical-align:1px;white-space:nowrap}
-.tier.t1{background:var(--green-soft);color:var(--green)}
-.tier.t2{background:var(--grey-chip);color:var(--dim)}
+.tier{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;
+  font-size:10px;font-weight:600;font-family:Inter,sans-serif;vertical-align:1px;white-space:nowrap;
+  letter-spacing:.02em;background:transparent;border:1px solid transparent}
+.tier.t1{border-color:var(--border);color:var(--dim)}
+.tier.t2{background:var(--pink-soft);border-color:var(--pink);color:var(--pink)}
 .evlist{margin:8px 0 0;padding:0;list-style:none}
 .evlist li{font-size:12px;color:var(--dim);line-height:1.5;padding:3px 0}
 .evlist li em{color:var(--text);font-style:normal;font-weight:500}

@@ -421,11 +421,10 @@ var GLASSBOX_DATA = {
           "intent every time, points to a Help Centre article, then returns an identical " +
           "deflection with no account lookup. Most conversations end escalated or abandoned.",
         evidence: [
-          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
-          { t: "No state change on the account after the conversation", tier: 1 },
-          { t: "Identical consecutive response repeated before abandonment", tier: 1 },
           { t: "Intent recognised at 0.91 on all turns", tier: 1 },
-          { t: "No backend call during the conversation", tier: 1 }
+          { t: "No backend call during the conversation", tier: 1 },
+          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
+          { t: "No state change on the account after the conversation", tier: 1 }
         ],
         recommendation: "Adding a dispute-initiation tool to the servicing assistant would " +
           "address this cluster directly. Where the tool cannot ship this quarter, handing off " +
@@ -572,11 +571,10 @@ var GLASSBOX_DATA = {
         confidence: "87% confidence",
         lead: "Consistent with a missing capability:",
         evidence: [
-          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
-          { t: "No state change on the account after the conversation", tier: 1 },
-          { t: "Identical consecutive response repeated before abandonment", tier: 1 },
           { t: "Intent recognised at 0.91 on all turns", tier: 1 },
-          { t: "No backend call during the conversation", tier: 1 }
+          { t: "No backend call during the conversation", tier: 1 },
+          { t: "Deflection phrasing matched on 2 turns", tier: 1 },
+          { t: "No state change on the account after the conversation", tier: 1 }
         ],
         cluster: "4,212 conversations share this signature this month."
       }
