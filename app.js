@@ -177,6 +177,55 @@
     renderGiaCause(d.name, d.lead);
   }
 
+  /* ---- Regression alerts (dashboard) ----
+     Glassbox already owns the alerting engine; this only emits into it. The
+     banner appears only in the ranges an alert names, which is why the month
+     view shows nothing: a 30-day baseline absorbs a six-day step change.
+     A dismissal lasts only as long as the range it was made in: changing range
+     is a new query, so the banner re-evaluates and comes back. No storage, per
+     the guardrails. */
+  var dismissed = {};
+  var dismissedFor = null;
+
+  function renderAlerts() {
+    var bar = $("alertBar");
+    if (!bar) return;
+    if (dismissedFor !== activeKey) { dismissed = {}; dismissedFor = activeKey; }
+    var live = (D.alerts || []).filter(function (a) {
+      return a.ranges.indexOf(activeKey) !== -1 && !dismissed[a.intent];
+    });
+    bar.innerHTML = live.map(function (a) {
+      return '<div class="alertbar" role="status" data-intent="' + a.intent + '">' +
+        '<span class="ab-ico" aria-hidden="true">◬</span>' +
+        '<div class="ab-body">' +
+          '<div class="ab-line"><b>' + a.title + "</b> — <i>" + a.intent + "</i>: " +
+            a.metric + ". " + a.affected + '. <b class="ab-when">' + a.detected + "</b></div>" +
+          '<div class="src">' + a.source + "</div>" +
+          '<div class="ab-acts">' +
+            '<button type="button" class="ab-view">View cluster</button>' +
+            '<button type="button" class="ab-pulse" title="Opens the alert in Pulse, where Glassbox anomaly detection already lives.">Open in Pulse</button>' +
+          "</div>" +
+        "</div>" +
+        '<button type="button" class="ab-x" aria-label="Dismiss alert">✕</button>' +
+      "</div>";
+    }).join("");
+
+    bar.querySelectorAll(".alertbar").forEach(function (el) {
+      var intent = el.dataset.intent;
+      el.querySelector(".ab-x").addEventListener("click", function () {
+        dismissed[intent] = true;
+        renderAlerts();
+      });
+      el.querySelector(".ab-view").addEventListener("click", function () {
+        var r = activeRange(), rows = tbody.querySelectorAll("tr"), hit = -1;
+        r.intents.forEach(function (d, i) { if (d.name === intent) hit = i; });
+        if (hit < 0) return;
+        selectIntentRow(rows[hit], r.intents);
+        rows[hit].scrollIntoView({ block: "nearest" });
+      });
+    });
+  }
+
   function renderDashboard(r) {
     $("dashScore").textContent = r.dashboard.score;
     var rank = $("dashRank");
@@ -190,6 +239,7 @@
     $("dashUnclassified").textContent = r.dashboard.unclassifiedShare;
     renderChart("chartStruggle", r.charts.struggle);
     renderChart("chartVolume", r.charts.volume);
+    renderAlerts();
 
     tbody.innerHTML = r.intents.map(function (d, i) {
       return '<tr data-i="' + i + '" tabindex="0">' +

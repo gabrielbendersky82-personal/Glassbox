@@ -533,6 +533,28 @@ var GLASSBOX_DATA = {
     ]
   },
 
+  /* ---- Regression alerts emitted into Pulse ----
+     Glassbox already runs anomaly detection (Anodot) and surfaces it through
+     Pulse. This capability does not add an alerting engine — it contributes a
+     new metric family for the existing one to watch. An alert is a detection
+     event, so its figures describe the regression it found, not the window the
+     analyst happens to be viewing; only `ranges` is range-sensitive.
+
+     That list is the argument for alerting at all: a six-day step change is
+     obvious against a one-day or one-week baseline and disappears into a
+     30-day one. Custom (Feb 1 – Feb 26) ends before the regression starts, so
+     it has nothing to show either. */
+  alerts: [
+    { title: "Regression detected",
+      intent: "Dispute a transaction",
+      metric: "conversation struggle up <b>0.19</b> since 4 March, against a 30-day baseline",
+      affected: "412 conversations affected",
+      detected: "Detected 7 March",
+      source: "Detected by Pulse anomaly detection on a metric this capability emits. " +
+        "Near-real-time detection of a statistical step change — not live intervention.",
+      ranges: ["day", "week", "twoWeeks"] }
+  ],
+
   /* ---- Struggle signal taxonomy (deck: nine signals, grouped by evidence
      source rather than signal type). Event labels and the replay legend must
      use exactly these names. */
