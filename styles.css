@@ -294,6 +294,10 @@ a{color:var(--indigo)}
 /* date range picker */
 .range-picker{position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
 .range-picker .pill{cursor:pointer}
+/* same control as the range picker, anchored to the left of the filter bar */
+.picker{position:relative;display:inline-flex}
+.picker .pill{cursor:pointer}
+.picker .rp-menu{left:0;right:auto;width:220px}
 .rp-updated{font-size:11px;color:var(--faint);text-align:right}
 .rp-menu{
   position:absolute;top:36px;right:0;z-index:80;width:240px;

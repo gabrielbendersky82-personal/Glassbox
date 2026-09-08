@@ -392,18 +392,56 @@ var GLASSBOX_DATA = {
      Summary figures are volume-weighted across the rows below:
      score (48.2×0.62 + 21.4×0.44 + 30.8×0.38) / 100.4 = 0.51,
      escalated or abandoned (48.2×29% + 21.4×17% + 30.8×14%) / 100.4 = 22%. */
+  /* ---- Assistant Portfolio meshboard (portfolio.html) ----
+     Rows carry numbers rather than formatted strings, because the three
+     summary cards are computed from whichever rows are visible. That way the
+     assistant filter cannot disagree with the table underneath it, and the
+     portfolio score stays the volume-weighted mean its tooltip promises.
+
+     The Servicing Assistant's conversation count and struggle score are
+     overridden at render time from the dashboard for the same range, so the
+     two meshboards cannot drift apart no matter which range is selected. */
   portfolio: {
-    score: "0.51", rank: "Poor",
-    total: "100.4 K", assistants: "3", channels: "Web · Mobile",
-    escAbandoned: "22%",
-    rows: [
-      { name: "Servicing Assistant", meta: "Chat · Vendor A", count: "48.2 K", barPx: 60,
-        score: "0.62", chip: "hi", hot: true, task: "54%", esc: "29%", href: "index.html" },
-      { name: "Sales Assistant", meta: "Chat · Vendor B", count: "21.4 K", barPx: 27,
-        score: "0.44", chip: "lo", hot: false, task: "71%", esc: "17%" },
-      { name: "In-app Assistant", meta: "Mobile · in-house", count: "30.8 K", barPx: 38,
-        score: "0.38", chip: "lo", hot: false, task: "76%", esc: "14%" }
-    ]
+    assistants: [
+      { key: "servicing", name: "Servicing Assistant", meta: "Chat · Vendor A",
+        channels: ["Web"], href: "index.html" },
+      { key: "sales", name: "Sales Assistant", meta: "Chat · Vendor B",
+        channels: ["Web"] },
+      { key: "inapp", name: "In-app Assistant", meta: "Mobile · in-house",
+        channels: ["Mobile"] }
+    ],
+
+    /* k = conversations in thousands · score = struggle · task = completion ·
+       esc = escalated or abandoned. Only the Servicing Assistant carries the
+       regression, which is the point of the screen: the other two hold steady
+       while the portfolio average is dragged down by one vendor's assistant. */
+    ranges: {
+      day: {
+        servicing: { k: 1.6,  score: 0.74, task: "49%", esc: "34%", hot: true },
+        sales:     { k: 0.7,  score: 0.46, task: "70%", esc: "18%", hot: false },
+        inapp:     { k: 1.0,  score: 0.39, task: "75%", esc: "15%", hot: false }
+      },
+      week: {
+        servicing: { k: 11.9, score: 0.71, task: "51%", esc: "32%", hot: true },
+        sales:     { k: 5.3,  score: 0.45, task: "70%", esc: "18%", hot: false },
+        inapp:     { k: 7.6,  score: 0.39, task: "75%", esc: "15%", hot: false }
+      },
+      twoWeeks: {
+        servicing: { k: 23.6, score: 0.67, task: "52%", esc: "31%", hot: true },
+        sales:     { k: 10.5, score: 0.45, task: "71%", esc: "17%", hot: false },
+        inapp:     { k: 15.1, score: 0.38, task: "76%", esc: "14%", hot: false }
+      },
+      month: {
+        servicing: { k: 48.2, score: 0.62, task: "54%", esc: "29%", hot: true },
+        sales:     { k: 21.4, score: 0.44, task: "71%", esc: "17%", hot: false },
+        inapp:     { k: 30.8, score: 0.38, task: "76%", esc: "14%", hot: false }
+      },
+      custom: {
+        servicing: { k: 41.8, score: 0.63, task: "53%", esc: "30%", hot: true },
+        sales:     { k: 18.6, score: 0.44, task: "71%", esc: "17%", hot: false },
+        inapp:     { k: 26.7, score: 0.38, task: "76%", esc: "14%", hot: false }
+      }
+    }
   },
 
   /* ---- Weekly AI Interaction Report (report.html) ----

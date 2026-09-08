@@ -53,25 +53,26 @@
     if (axisEl) axisEl.textContent = series.axis;
   }
 
-  /* ---- date range picker (one implementation, initialised per screen) ---- */
-  function initRangePicker(onChange) {
-    var btn = $("rangeBtn");
+  /* ---- dropdown picker (one implementation, shared by every filter) ----
+     The range picker and the portfolio's assistant filter are the same
+     control, so they share the .rp-menu / .rp-opt styling and this code. */
+  function initPicker(btn, opts, getActive, onPick) {
     if (!btn) return;
-    var wrap = btn.closest(".range-picker");
+    var wrap = btn.closest(".range-picker, .picker");
     var menu = document.createElement("div");
     menu.className = "rp-menu";
     menu.setAttribute("role", "listbox");
     menu.hidden = true;
-    menu.innerHTML = RANGE_ORDER.map(function (k) {
-      return '<button class="rp-opt" role="option" data-range="' + k + '">' + RANGE_NAMES[k] + "</button>";
+    menu.innerHTML = opts.map(function (o) {
+      return '<button class="rp-opt" role="option" data-val="' + o.value + '">' + o.label + "</button>";
     }).join("");
     wrap.appendChild(menu);
 
-    function syncLabel() {
-      $("rangeLabel").textContent = activeRange().label;
+    function sync() {
       menu.querySelectorAll(".rp-opt").forEach(function (o) {
-        o.classList.toggle("on", o.dataset.range === activeKey);
-        o.setAttribute("aria-selected", String(o.dataset.range === activeKey));
+        var on = o.dataset.val === getActive();
+        o.classList.toggle("on", on);
+        o.setAttribute("aria-selected", String(on));
       });
     }
 
@@ -84,17 +85,16 @@
     menu.addEventListener("click", function (e) {
       var opt = e.target.closest(".rp-opt");
       if (!opt) return;
-      activeKey = opt.dataset.range;
-      syncLabel();
       setOpen(false);
       btn.focus();
-      onChange(activeRange());
+      onPick(opt.dataset.val);
+      sync();
     });
     menu.addEventListener("keydown", function (e) {
-      var opts = Array.prototype.slice.call(menu.querySelectorAll(".rp-opt"));
-      var i = opts.indexOf(document.activeElement);
-      if (e.key === "ArrowDown") { e.preventDefault(); (opts[i + 1] || opts[0]).focus(); }
-      if (e.key === "ArrowUp") { e.preventDefault(); (opts[i - 1] || opts[opts.length - 1]).focus(); }
+      var list = Array.prototype.slice.call(menu.querySelectorAll(".rp-opt"));
+      var i = list.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") { e.preventDefault(); (list[i + 1] || list[0]).focus(); }
+      if (e.key === "ArrowUp") { e.preventDefault(); (list[i - 1] || list[list.length - 1]).focus(); }
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !menu.hidden) { setOpen(false); btn.focus(); }
@@ -103,7 +103,18 @@
       if (!menu.hidden && !wrap.contains(e.target)) setOpen(false);
     });
 
-    syncLabel();
+    sync();
+  }
+
+  function initRangePicker(onChange) {
+    var btn = $("rangeBtn");
+    if (!btn) return;
+    function label() { $("rangeLabel").textContent = activeRange().label; }
+    initPicker(btn,
+      RANGE_ORDER.map(function (k) { return { value: k, label: RANGE_NAMES[k] }; }),
+      function () { return activeKey; },
+      function (v) { activeKey = v; label(); onChange(activeRange()); });
+    label();
   }
 
   /* ---- GIA Insights panel toggle (dashboard + replay) ---- */
@@ -270,40 +281,108 @@
     renderDashboard(activeRange());
   }
 
-  /* ---- Assistant Portfolio meshboard ---- */
+  /* ---- Assistant Portfolio meshboard ----
+     Both filters are live. The three summary cards are computed from the rows
+     currently visible, so filtering to one assistant cannot leave a headline
+     describing a portfolio that is no longer on screen. */
   var asst = $("assistants");
   if (asst && D.portfolio) {
-    var pf = D.portfolio;
-    $("pfScore").textContent = pf.score;
-    var pfRank = $("pfRank");
-    pfRank.textContent = pf.rank;
-    pfRank.className = "rank " + pf.rank.toLowerCase();
-    $("pfTotal").textContent = pf.total;
-    $("pfAssistants").textContent = pf.assistants;
-    $("pfChannels").textContent = pf.channels;
-    $("pfEsc").textContent = pf.escAbandoned;
+    var assistantKey = "all";
 
-    asst.innerHTML = pf.rows.map(function (a) {
-      return "<tr" + (a.href ? ' data-href="' + a.href + '" tabindex="0"' : ' class="norow"') + ">" +
-        '<td><div class="intent"><span class="tick' + (a.hot ? "" : " grey") + '">▣</span>' +
-          "<span>" + a.name + '<div class="asst-meta">' + a.meta + "</div></span></div></td>" +
-        '<td class="affected">' + a.count + "</td>" +
-        '<td style="width:70px"><div class="minibar" style="width:' + a.barPx + 'px"></div></td>' +
-        '<td class="r"><span class="chip ' + a.chip + '">' + a.score + "</span></td>" +
-        '<td class="cause"><b>' + a.task + "</b></td>" +
-        '<td class="cause">' + a.esc + "</td>" +
-        '<td class="arrow">' + (a.href ? "›" : "") + "</td></tr>";
-    }).join("");
+    function fmtK(k) { return k.toFixed(1) + " K"; }
 
-    asst.querySelectorAll("tr[data-href]").forEach(function (row) {
-      var go = function () { window.location.href = row.dataset.href; };
-      row.addEventListener("click", go);
-      row.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    function rankFor(score) {
+      return score >= 0.5 ? "Poor" : score >= 0.3 ? "Good" : "Excellent";
+    }
+
+    function visibleAssistants() {
+      var per = D.portfolio.ranges[activeKey];
+      return D.portfolio.assistants
+        .filter(function (a) { return assistantKey === "all" || a.key === assistantKey; })
+        .map(function (a) {
+          var m = per[a.key];
+          /* The Servicing Assistant is the dashboard's subject, so its headline
+             figures come from the dashboard for this same range rather than
+             being written twice. */
+          var isServicing = a.key === "servicing";
+          var d = activeRange().dashboard;
+          return {
+            key: a.key, name: a.name, meta: a.meta, channels: a.channels, href: a.href,
+            k: m.k, hot: m.hot, task: m.task, esc: m.esc,
+            count: isServicing ? d.total : fmtK(m.k),
+            score: isServicing ? d.score : m.score.toFixed(2),
+            scoreN: isServicing ? parseFloat(d.score) : m.score
+          };
+        });
+    }
+
+    function renderPortfolio() {
+      var rows = visibleAssistants();
+      var one = assistantKey === "all" ? null : rows[0];
+      var total = rows.reduce(function (t, r) { return t + r.k; }, 0);
+      var score = rows.reduce(function (t, r) { return t + r.k * r.scoreN; }, 0) / total;
+      var esc = rows.reduce(function (t, r) { return t + r.k * parseFloat(r.esc); }, 0) / total;
+      var channels = [];
+      rows.forEach(function (r) {
+        r.channels.forEach(function (c) { if (channels.indexOf(c) === -1) channels.push(c); });
       });
-    });
-  }
 
+      $("pfScore").textContent = score.toFixed(2);
+      var rank = rankFor(score);
+      var pfRank = $("pfRank");
+      pfRank.textContent = rank;
+      pfRank.className = "rank " + rank.toLowerCase();
+      $("pfTotal").textContent = fmtK(total);
+      $("pfAssistants").textContent = String(rows.length);
+      $("pfChannels").textContent = channels.join(" · ");
+      $("pfEsc").textContent = Math.round(esc) + "%";
+
+      var who = one ? one.name : "all assistants";
+      $("pfTotalLabel").textContent = "Total Conversations · " + who;
+      $("pfEscLabel").textContent = "of conversations · " + who;
+
+      /* The footnote only makes sense while the Servicing row is on screen. */
+      var hint = $("pfHint");
+      hint.hidden = !rows.some(function (r) { return r.href; });
+
+      var maxK = Math.max.apply(null, rows.map(function (r) { return r.k; }));
+      asst.innerHTML = rows.map(function (a) {
+        return "<tr" + (a.href ? ' data-href="' + a.href + '" tabindex="0"' : ' class="norow"') + ">" +
+          '<td><div class="intent"><span class="tick' + (a.hot ? "" : " grey") + '">▣</span>' +
+            "<span>" + a.name + '<div class="asst-meta">' + a.meta + "</div></span></div></td>" +
+          '<td class="affected">' + a.count + "</td>" +
+          '<td style="width:70px"><div class="minibar" style="width:' +
+            Math.round(a.k / maxK * 60) + 'px"></div></td>' +
+          '<td class="r"><span class="chip ' + (a.scoreN >= 0.5 ? "hi" : "lo") + '">' + a.score + "</span></td>" +
+          '<td class="cause"><b>' + a.task + "</b></td>" +
+          '<td class="cause">' + a.esc + "</td>" +
+          '<td class="arrow">' + (a.href ? "›" : "") + "</td></tr>";
+      }).join("");
+
+      asst.querySelectorAll("tr[data-href]").forEach(function (row) {
+        var go = function () { window.location.href = row.dataset.href; };
+        row.addEventListener("click", go);
+        row.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+        });
+      });
+    }
+
+    initRangePicker(renderPortfolio);
+    initPicker($("asstBtn"),
+      [{ value: "all", label: "All Assistants" }].concat(
+        D.portfolio.assistants.map(function (a) { return { value: a.key, label: a.name }; })),
+      function () { return assistantKey; },
+      function (v) {
+        assistantKey = v;
+        $("asstLabel").textContent =
+          v === "all" ? "All Assistants"
+            : D.portfolio.assistants.filter(function (a) { return a.key === v; })[0].name;
+        renderPortfolio();
+      });
+
+    renderPortfolio();
+  }
 
   /* ---- Replay cause verdict (replay screen) ----
      The verdict card's evidence is rendered from the same giaByCause entry the

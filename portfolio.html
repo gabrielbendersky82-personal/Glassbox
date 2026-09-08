@@ -52,11 +52,15 @@
       <div class="seg" role="group" aria-label="Platform">
         <button class="on" aria-pressed="true">Web</button><button aria-pressed="false">Mobile</button>
       </div>
-      <span class="pill">▤ All Assistants</span>
+      <div class="picker">
+        <button class="pill" id="asstBtn" aria-haspopup="listbox" aria-expanded="false">▤ <span id="asstLabel">All Assistants</span> ▾</button>
+      </div>
       <button class="iconbtn" aria-label="Filters">⧩</button>
       <div class="top-right">
         <button class="iconbtn" aria-label="Refresh">⟳</button>
-        <span class="pill">▤ Past Month (UTC+03:00)</span>
+        <div class="range-picker">
+          <button class="pill" id="rangeBtn" aria-haspopup="listbox" aria-expanded="false">▤ <span id="rangeLabel">Past Month (UTC+03:00)</span> ▾</button>
+        </div>
       </div>
     </div>
 
@@ -75,7 +79,7 @@
         <div class="card">
           <div class="hd"><h3>Conversations</h3><span class="info" tabindex="0" data-tip="Total conversations across all digital assistants — web and mobile — in the selected range. Voice channels are out of scope for this concept.">ⓘ</span></div>
           <div class="bd">
-            <div class="k" style="font-size:11.5px;color:var(--dim)">Total Conversations · all assistants</div>
+            <div class="k" style="font-size:11.5px;color:var(--dim)" id="pfTotalLabel">Total Conversations · all assistants</div>
             <div class="total" id="pfTotal"></div>
             <div class="kv" style="margin-top:12px">
               <div><div class="k">Assistants</div><div class="v" id="pfAssistants"></div></div>
@@ -88,7 +92,7 @@
           <div class="hd"><h3>Escalated or Abandoned</h3><span class="info tip-left" tabindex="0" data-tip="Share of conversations across the portfolio that ended in escalation or abandonment.">ⓘ</span></div>
           <div class="bd" style="text-align:center;padding:20px 16px 22px">
             <div class="num" style="font-size:40px;font-weight:600;color:var(--amber)" id="pfEsc"></div>
-            <div style="font-size:12px;color:var(--dim);margin-top:4px">of conversations across all assistants</div>
+            <div style="font-size:12px;color:var(--dim);margin-top:4px" id="pfEscLabel">of conversations · all assistants</div>
           </div>
         </div>
       </div>
@@ -110,7 +114,7 @@
             </tbody>
           </table>
         </div>
-        <div class="sub" style="padding:0 16px 14px">Select the Servicing Assistant to open its AI Interaction Analysis meshboard.</div>
+        <div class="sub" style="padding:0 16px 14px" id="pfHint">Select the Servicing Assistant to open its AI Interaction Analysis meshboard.</div>
       </div>
     </div>
   </main>
