@@ -760,7 +760,12 @@ var GLASSBOX_DATA = {
      A replay is a single session, so these do not change with the range. */
   replay: {
     struggleScore: "0.71",
-    avoidableContact: "$38",
+    /* No money in this header. The session abandoned without escalating, so
+       under the escalations-only rule it contributes $0 to avoidable contact —
+       the escalation happened two days later, in the Mar 14 session, and is
+       priced there. The header states a Tier 1 observation instead, and it is
+       the same signal the 48-hour strip at the foot of the screen expands on. */
+    repeatContact: "48h",
     duration: "02:04"
   }
 };

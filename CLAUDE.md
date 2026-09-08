@@ -99,7 +99,7 @@ Keep **Unclassified** as a visible cause with real share. It signals the detecti
 
 The most important screen. Three columns inside a session-replay frame.
 
-**Header:** flag, date, time, device icons, masked user ID (`**********`), `Struggles 0.71` with emoji, `↓ $38 Avoidable contact`, then Share Session / Create ▾ / **GIA Insights** / settings.
+**Header:** flag, date, time, device icons, masked user ID (`**********`), `Struggles 0.71` with emoji, `↑ 48h Repeat contact`, then Share Session / Create ▾ / **GIA Insights** / settings.
 
 **Left — event list.** Page rows first (`GlassBank — Home`, `GlassBank — Transactions`) with mini struggle bars, then typed conversation events with timestamps:
 
