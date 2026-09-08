@@ -505,6 +505,9 @@ a{color:var(--indigo)}
   .utl-arrow{display:none}
 }
 
+.fun-pop{margin:2px 16px 12px;padding:9px 11px;border-radius:7px;background:var(--bg);
+  border:1px solid var(--border-soft);font-size:12px;color:var(--dim);line-height:1.55}
+.fun-pop b{color:var(--text);font-weight:600}
 .step-note{font-size:11px;color:var(--dim);margin-top:5px;line-height:1.45}
 .line-note{font-size:10.5px;color:var(--faint);font-style:normal}
 .tot-note{font-size:11px;color:var(--dim);line-height:1.5;margin-top:8px}

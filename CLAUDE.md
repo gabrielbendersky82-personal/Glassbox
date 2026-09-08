@@ -125,13 +125,15 @@ Every AI claim must show its evidence directly beneath it. That's the house rule
 
 ## Screen 3 — `funnel.html` · Conversational funnel
 
-**Funnel steps:** Assistant opened `12.4K` → Intent: dispute_transaction `6.1K` → Assistant deflected, no backend call `4.2K` → Escalated or abandoned `3.3K`, with drop-off percentages between steps. Bars shift indigo → amber → red down the funnel.
+**Funnel steps:** the population is stated above the funnel — `Assistant opened — 48.2K conversations in this range; 87.3% raised a different intent` — and the bars follow the intent journey: Intent: dispute_transaction `6,100` → Assistant deflected, no backend call `4,212` → Escalated or abandoned `3,300`, with drop-off percentages between steps. Bars shift indigo → amber → red down the funnel.
 
-**Failure ratio** `26.6%` · **Avg. Conversation Struggle Score** `0.71` with `Poor` chip · **Trend since prompt v4.2** showing a step change at the version marker.
+The population is context, not a bar: at true scale a 48.2K first step renders the rest as near-identical stubs and hides the drop-offs the funnel exists to show, and scaling them to it would need a broken axis. Counts are never written twice — the population is the dashboard's total for the range and the deflected step is its `conversations affected`, both read at render time.
+
+**Failure ratio** `54.1%` — of the conversations that raised this intent, not of every assistant conversation · **Avg. Conversation Struggle Score** `0.71` with `Poor` chip · **Trend since prompt v4.2** showing a step change at the version marker.
 
 **Business impact card:** conversations affected, escalated to a human, abandoned then contacted us, abandoned with no further contact, cost per handled contact, and a total avoidable contact cost of `$37,950`.
 
-**Closing card — the backlog item this produces.** Add a dispute-initiation tool to the servicing assistant; intent recognised, no tool available, 4,212 conversations, 61% escalate or abandon, $37,950 avoidable cost, 4,212 replays attached as evidence.
+**Closing card — the backlog item this produces.** Add a dispute-initiation tool to the servicing assistant; intent recognised, no tool available, 4,212 conversations, 78% escalate or abandon, $12,220 avoidable cost, 4,212 replays attached as evidence.
 
 That card is the point of the entire prototype. Give it visual weight.
 

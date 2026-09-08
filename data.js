@@ -51,7 +51,7 @@ var GLASSBOX_DATA = {
       },
       intents: [
         { name: "Dispute a transaction", count: "176", pct: 11, barPx: 60,
-          score: "0.79", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "66%",
+          score: "0.79", scoreChip: "hi", hot: true, lead: "Missing tooling", escFrom: "funnel",
           causes: [["Missing tooling", 78, "#E04141"], ["Context / retrieval", 11, "#F0A93B"],
                    ["Prompt / policy", 4, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
         { name: "Refund status", count: "121", pct: 8, barPx: 41,
@@ -76,15 +76,14 @@ var GLASSBOX_DATA = {
                    ["Context / retrieval", 11, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
       ],
       funnel: {
-        steps: [
-          { n: "447", name: "Assistant opened", width: 100, colour: "" },
-          { n: "231", name: "Intent: dispute_transaction", width: 52, colour: "" },
-          { n: "168", name: "Assistant deflected — no backend call", width: 38, colour: "var(--amber)",
-            note: "Intent recognised, no matching tool call observed in the session record." },
-          { n: "139", name: "Escalated or abandoned", width: 31, colour: "var(--red)" }
-        ],
-        drops: ["↓ 48.3% raised a different intent", "↓ 27.3% received a usable answer", "↓ 17.3% resolved another way"],
-        failureRatio: "31.1%", struggleScore: "0.79", struggleRank: "Poor",
+        /* Only two counts are stored. The funnel's first step is that
+           range's total assistant conversations and its third is the
+           Dispute cluster's "conversations affected" — both read from the
+           dashboard at render time rather than repeated here, so the funnel
+           cannot drift from the meshboard it drills into. Drop percentages
+           and the failure ratio are computed from the four counts. */
+        intentN: 231, failedN: 139,
+        struggleScore: "0.79", struggleRank: "Poor",
         impact: [["Conversations affected", "176"], ["Escalated to a human", "82"],
                  ["Returned within 48 hours", "43", { note: "not in total" }],
                  ["Cost per handled contact (configured)", "$6.50",
@@ -122,7 +121,7 @@ var GLASSBOX_DATA = {
       },
       intents: [
         { name: "Dispute a transaction", count: "1,094", pct: 9, barPx: 60,
-          score: "0.76", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "63%",
+          score: "0.76", scoreChip: "hi", hot: true, lead: "Missing tooling", escFrom: "funnel",
           causes: [["Missing tooling", 76, "#E04141"], ["Context / retrieval", 12, "#F0A93B"],
                    ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
         { name: "Refund status", count: "807", pct: 7, barPx: 44,
@@ -147,15 +146,14 @@ var GLASSBOX_DATA = {
                    ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
       ],
       funnel: {
-        steps: [
-          { n: "3.1K", name: "Assistant opened", width: 100, colour: "" },
-          { n: "1.6K", name: "Intent: dispute_transaction", width: 51, colour: "" },
-          { n: "1.1K", name: "Assistant deflected — no backend call", width: 36, colour: "var(--amber)",
-            note: "Intent recognised, no matching tool call observed in the session record." },
-          { n: "894", name: "Escalated or abandoned", width: 29, colour: "var(--red)" }
-        ],
-        drops: ["↓ 48.4% raised a different intent", "↓ 29.6% received a usable answer", "↓ 20.6% resolved another way"],
-        failureRatio: "28.8%", struggleScore: "0.76", struggleRank: "Poor",
+        /* Only two counts are stored. The funnel's first step is that
+           range's total assistant conversations and its third is the
+           Dispute cluster's "conversations affected" — both read from the
+           dashboard at render time rather than repeated here, so the funnel
+           cannot drift from the meshboard it drills into. Drop percentages
+           and the failure ratio are computed from the four counts. */
+        intentN: 1600, failedN: 894,
+        struggleScore: "0.76", struggleRank: "Poor",
         impact: [["Conversations affected", "1,094"], ["Escalated to a human", "490"],
                  ["Returned within 48 hours", "261", { note: "not in total" }],
                  ["Cost per handled contact (configured)", "$6.50",
@@ -194,7 +192,7 @@ var GLASSBOX_DATA = {
       },
       intents: [
         { name: "Dispute a transaction", count: "2,167", pct: 9, barPx: 60,
-          score: "0.74", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "62%",
+          score: "0.74", scoreChip: "hi", hot: true, lead: "Missing tooling", escFrom: "funnel",
           causes: [["Missing tooling", 75, "#E04141"], ["Context / retrieval", 13, "#F0A93B"],
                    ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
         { name: "Refund status", count: "1,633", pct: 7, barPx: 45,
@@ -219,15 +217,14 @@ var GLASSBOX_DATA = {
                    ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
       ],
       funnel: {
-        steps: [
-          { n: "6.2K", name: "Assistant opened", width: 100, colour: "" },
-          { n: "3.1K", name: "Intent: dispute_transaction", width: 50, colour: "" },
-          { n: "2.1K", name: "Assistant deflected — no backend call", width: 35, colour: "var(--amber)",
-            note: "Intent recognised, no matching tool call observed in the session record." },
-          { n: "1.7K", name: "Escalated or abandoned", width: 28, colour: "var(--red)" }
-        ],
-        drops: ["↓ 49.8% raised a different intent", "↓ 30.6% received a usable answer", "↓ 20.9% resolved another way"],
-        failureRatio: "27.4%", struggleScore: "0.74", struggleRank: "Poor",
+        /* Only two counts are stored. The funnel's first step is that
+           range's total assistant conversations and its third is the
+           Dispute cluster's "conversations affected" — both read from the
+           dashboard at render time rather than repeated here, so the funnel
+           cannot drift from the meshboard it drills into. Drop percentages
+           and the failure ratio are computed from the four counts. */
+        intentN: 3100, failedN: 1700,
+        struggleScore: "0.74", struggleRank: "Poor",
         impact: [["Conversations affected", "2,167"], ["Escalated to a human", "966"],
                  ["Returned within 48 hours", "514", { note: "not in total" }],
                  ["Cost per handled contact (configured)", "$6.50",
@@ -266,7 +263,7 @@ var GLASSBOX_DATA = {
       },
       intents: [
         { name: "Dispute a transaction", count: "4,212", pct: 9, barPx: 60,
-          score: "0.71", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "61%",
+          score: "0.71", scoreChip: "hi", hot: true, lead: "Missing tooling", escFrom: "funnel",
           causes: [["Missing tooling", 74, "#E04141"], ["Context / retrieval", 14, "#F0A93B"],
                    ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
         { name: "Refund status", count: "3,180", pct: 7, barPx: 46,
@@ -291,15 +288,14 @@ var GLASSBOX_DATA = {
                    ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
       ],
       funnel: {
-        steps: [
-          { n: "12.4K", name: "Assistant opened", width: 100, colour: "" },
-          { n: "6.1K", name: "Intent: dispute_transaction", width: 49, colour: "" },
-          { n: "4.2K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)",
-            note: "Intent recognised, no matching tool call observed in the session record." },
-          { n: "3.3K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
-        ],
-        drops: ["↓ 50.8% raised a different intent", "↓ 31.1% received a usable answer", "↓ 21.4% resolved another way"],
-        failureRatio: "26.6%", struggleScore: "0.71", struggleRank: "Poor",
+        /* Only two counts are stored. The funnel's first step is that
+           range's total assistant conversations and its third is the
+           Dispute cluster's "conversations affected" — both read from the
+           dashboard at render time rather than repeated here, so the funnel
+           cannot drift from the meshboard it drills into. Drop percentages
+           and the failure ratio are computed from the four counts. */
+        intentN: 6100, failedN: 3300,
+        struggleScore: "0.71", struggleRank: "Poor",
         impact: [["Conversations affected", "4,212"], ["Escalated to a human", "1,880"],
                  ["Returned within 48 hours", "1,001", { note: "not in total" }],
                  ["Cost per handled contact (configured)", "$6.50",
@@ -338,7 +334,7 @@ var GLASSBOX_DATA = {
       },
       intents: [
         { name: "Dispute a transaction", count: "3,655", pct: 9, barPx: 60,
-          score: "0.70", scoreChip: "hi", hot: true, lead: "Missing tooling", esc: "60%",
+          score: "0.70", scoreChip: "hi", hot: true, lead: "Missing tooling", escFrom: "funnel",
           causes: [["Missing tooling", 74, "#E04141"], ["Context / retrieval", 14, "#F0A93B"],
                    ["Prompt / policy", 5, "#4F46E5"], ["Unclassified", 7, "#9A9AB0"]] },
         { name: "Refund status", count: "2,762", pct: 7, barPx: 45,
@@ -363,15 +359,14 @@ var GLASSBOX_DATA = {
                    ["Context / retrieval", 12, "#4F46E5"], ["Prompt / policy", 9, "#E04141"]] }
       ],
       funnel: {
-        steps: [
-          { n: "10.7K", name: "Assistant opened", width: 100, colour: "" },
-          { n: "5.3K", name: "Intent: dispute_transaction", width: 50, colour: "" },
-          { n: "3.6K", name: "Assistant deflected — no backend call", width: 34, colour: "var(--amber)",
-            note: "Intent recognised, no matching tool call observed in the session record." },
-          { n: "2.9K", name: "Escalated or abandoned", width: 27, colour: "var(--red)" }
-        ],
-        drops: ["↓ 50.5% raised a different intent", "↓ 31.4% received a usable answer", "↓ 20.2% resolved another way"],
-        failureRatio: "27.1%", struggleScore: "0.70", struggleRank: "Poor",
+        /* Only two counts are stored. The funnel's first step is that
+           range's total assistant conversations and its third is the
+           Dispute cluster's "conversations affected" — both read from the
+           dashboard at render time rather than repeated here, so the funnel
+           cannot drift from the meshboard it drills into. Drop percentages
+           and the failure ratio are computed from the four counts. */
+        intentN: 5300, failedN: 2900,
+        struggleScore: "0.70", struggleRank: "Poor",
         impact: [["Conversations affected", "3,655"], ["Escalated to a human", "1,630"],
                  ["Returned within 48 hours", "868", { note: "not in total" }],
                  ["Cost per handled contact (configured)", "$6.50",

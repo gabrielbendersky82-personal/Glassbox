@@ -64,32 +64,29 @@
         <div class="card">
           <div class="hd"><h3>Funnel steps</h3><span class="info" tabindex="0" data-tip="Conversation counts at each stage, built from events observed in replays: assistant opened, intent raised, deflection with no backend call, then escalation or abandonment.">ⓘ</span></div>
           <div class="sub">Built from events observed in the conversation replay</div>
+          <div class="fun-pop" id="funPopulation"><b>Assistant opened</b> — 48.2K conversations in this range. 87.3% raised a different intent; this funnel follows the 6,100 that raised <b>dispute_transaction</b>.</div>
           <div class="bd" id="funsteps">
             <!-- steps rendered from data.js by app.js; static fallback below -->
-            <div class="step"><div class="lab"><span class="n">12.4K</span><span class="nm">Assistant opened</span></div>
+            <div class="step"><div class="lab"><span class="n">6,100</span><span class="nm">Intent: dispute_transaction</span></div>
               <div class="bar" style="width:100%"></div></div>
-            <div class="drop">↓ 50.8% raised a different intent</div>
+            <div class="drop">↓ 30.9% received a usable answer</div>
 
-            <div class="step"><div class="lab"><span class="n">6.1K</span><span class="nm">Intent: dispute_transaction</span></div>
-              <div class="bar" style="width:49%"></div></div>
-            <div class="drop">↓ 31.1% received a usable answer</div>
-
-            <div class="step"><div class="lab"><span class="n">4.2K</span><span class="nm">Assistant deflected — no backend call</span></div>
-              <div class="bar" style="width:34%;background:var(--amber)"></div>
+            <div class="step"><div class="lab"><span class="n">4,212</span><span class="nm">Assistant deflected — no backend call</span></div>
+              <div class="bar" style="width:69.0%;background:var(--amber)"></div>
               <div class="step-note">Intent recognised, no matching tool call observed in the session record.</div></div>
-            <div class="drop">↓ 21.4% resolved another way</div>
+            <div class="drop">↓ 21.7% resolved another way</div>
 
-            <div class="step"><div class="lab"><span class="n">3.3K</span><span class="nm">Escalated or abandoned</span></div>
-              <div class="bar" style="width:27%;background:var(--red)"></div></div>
+            <div class="step"><div class="lab"><span class="n">3,300</span><span class="nm">Escalated or abandoned</span></div>
+              <div class="bar" style="width:54.1%;background:var(--red)"></div></div>
           </div>
         </div>
 
         <div>
           <div class="card">
-            <div class="hd"><h3>Failure ratio</h3><span class="info" tabindex="0" data-tip="Share of assistant conversations that reach the final funnel step — escalated or abandoned — in the selected range.">ⓘ</span></div>
+            <div class="hd"><h3>Failure ratio</h3><span class="info" tabindex="0" data-tip="Of the conversations that raised this intent, the share reaching the final funnel step — escalated or abandoned. Scoped to the intent rather than to every assistant conversation, because most conversations are about something else entirely.">ⓘ</span></div>
             <div class="bd" style="text-align:center;padding:20px 16px 22px">
-              <div class="num" style="font-size:40px;font-weight:600;color:var(--red)" data-bind="funnel.failureRatio">26.6%</div>
-              <div style="font-size:12px;color:var(--dim);margin-top:4px">of assistant conversations end here</div>
+              <div class="num" style="font-size:40px;font-weight:600;color:var(--red)" id="funFailure">54.1%</div>
+              <div style="font-size:12px;color:var(--dim);margin-top:4px">of conversations that raised this intent</div>
             </div>
           </div>
           <div class="card" style="margin-top:14px">
@@ -137,9 +134,11 @@
           <div class="ticket">
             <h4>Backlog item this produces</h4>
             <p><b>Add a dispute-initiation tool to the servicing assistant.</b><br>
-               Intent recognised, no tool available, 4,212 conversations, 78% escalate or abandon,
-               $12,220 observed avoidable contact cost this month. Evidence: 4,212 conversation
-               replays attached, retained on GlassBank's schedule.
+               Intent recognised, no tool available, <span id="funAffected">4,212</span> conversations,
+               <span id="funEsc">78%</span> escalate or abandon,
+               <span data-bind="funnel.avoidableCost">$12,220</span> observed avoidable contact cost
+               this month. Evidence: 4,212 conversation replays attached, retained on
+               GlassBank's schedule.
                Excludes customers who phoned instead — the real figure is higher.</p>
             <div class="acts">
               <button>↗ Send to backlog</button>

@@ -25,6 +25,39 @@
     if (v != null) el.textContent = v;
   });
 
+  /* ---- conversation counts ----
+     One parser and one formatter, so a count written on one screen and read on
+     another is the same number. parseCount reads the display strings this file
+     produces ("48.2 K", "4,212"); fmtCount writes them. */
+  function parseCount(v) {
+    var n = parseFloat(String(v).replace(/,/g, ""));
+    return /k/i.test(String(v)) ? Math.round(n * 1000) : n;
+  }
+  function fmtCount(n) {
+    return n >= 10000 ? (n / 1000).toFixed(1) + "K"
+                      : Math.round(n).toLocaleString("en-US");
+  }
+  function pct(part, whole) { return (part / whole * 100).toFixed(1) + "%"; }
+
+  /* The four funnel counts for a range. Only the middle two are stored; the
+     population and the affected cluster are the dashboard's own figures, so
+     the two screens cannot disagree about the same cohort. */
+  /* Escalated or abandoned, as a share of the conversations the cluster
+     affected — the same ratio the funnel's final drop describes. */
+  function funnelEsc(r) {
+    var c = funnelCounts(r);
+    return Math.round(c.failed / c.deflected * 100) + "%";
+  }
+
+  function funnelCounts(r) {
+    return {
+      opened:    parseCount(r.dashboard.total),
+      intent:    r.funnel.intentN,
+      deflected: parseCount(r.intents[0].count),
+      failed:    r.funnel.failedN
+    };
+  }
+
   /* ---- inline SVG line charts ----
      Series values map onto the 300-wide viewBox: x spaced 8..292, y scaled
      to the series' own min/max so each range's shape reads clearly. */
@@ -177,7 +210,9 @@
     selectedIntent = d.name;
     $("panelTitle").textContent = d.name;
     $("panelN").textContent = d.count;
-    $("panelEsc").textContent = d.esc;
+    /* The Dispute cluster's escalation share is the funnel's own arithmetic
+       rather than a second figure that can disagree with it. */
+    $("panelEsc").textContent = d.escFrom === "funnel" ? funnelEsc(activeRange()) : d.esc;
     $("ringPc").textContent = d.pct + "%";
     $("ring").setAttribute("stroke-dasharray", d.pct + " " + (100 - d.pct));
     $("causelist").innerHTML = d.causes.map(function (c) {
@@ -481,17 +516,55 @@
     renderReport(activeRange());
   }
 
-  /* ---- Screen 3 · funnel (month dataset until wired to the picker) ---- */
+  /* ---- Screen 3 · funnel (month dataset until wired to the picker) ----
+     Every number below is computed from the four counts, and two of those are
+     the dashboard's own. Nothing on this screen restates a figure that lives
+     somewhere else, which is what stops the two screens contradicting each
+     other about the same cohort. */
+  var FUNNEL_STEPS = [
+    { name: "Intent: dispute_transaction" },
+    { name: "Assistant deflected — no backend call", colour: "var(--amber)",
+      note: "Intent recognised, no matching tool call observed in the session record." },
+    { name: "Escalated or abandoned", colour: "var(--red)" }
+  ];
+  var FUNNEL_DROPS = ["received a usable answer", "resolved another way"];
+
   var funsteps = $("funsteps");
-  if (funsteps && D.funnel) {
-    funsteps.innerHTML = D.funnel.steps.map(function (s, i) {
-      var bar = '<div class="bar" style="width:' + s.width + "%" +
-        (s.colour ? ";background:" + s.colour : "") + '"></div>';
-      var drop = D.funnel.drops[i] ? '<div class="drop">' + D.funnel.drops[i] + "</div>" : "";
-      var note = s.note ? '<div class="step-note">' + s.note + "</div>" : "";
-      return '<div class="step"><div class="lab"><span class="n">' + s.n +
-        '</span><span class="nm">' + s.name + "</span></div>" + bar + note + "</div>" + drop;
+  if (funsteps && D.ranges) {
+    var fr = D.ranges.month;
+    var fc = funnelCounts(fr);
+    var order = [fc.intent, fc.deflected, fc.failed];
+
+    /* The population sits above the funnel as context rather than as its first
+       bar. At true scale a 48.2K first step renders the other three as stubs of
+       near-identical length, which hides the drop-offs the funnel exists to
+       show; scaling them to a 48.2K bar instead would need a broken axis. So
+       the funnel measures the intent journey and states the population in
+       words — no scale break, nothing for a reader to misjudge by length. */
+    $("funPopulation").innerHTML =
+      "<b>Assistant opened</b> — " + fmtCount(fc.opened) +
+      " conversations in this range. " + pct(fc.opened - fc.intent, fc.opened) +
+      " raised a different intent; this funnel follows the " + fmtCount(fc.intent) +
+      " that raised <b>dispute_transaction</b>.";
+
+    funsteps.innerHTML = FUNNEL_STEPS.map(function (st, i) {
+      var bar = '<div class="bar" style="width:' +
+        (order[i] / order[0] * 100).toFixed(1) + "%" +
+        (st.colour ? ";background:" + st.colour : "") + '"></div>';
+      var drop = i < FUNNEL_DROPS.length
+        ? '<div class="drop">↓ ' + pct(order[i] - order[i + 1], order[i]) + " " +
+          FUNNEL_DROPS[i] + "</div>"
+        : "";
+      var note = st.note ? '<div class="step-note">' + st.note + "</div>" : "";
+      return '<div class="step"><div class="lab"><span class="n">' + fmtCount(order[i]) +
+        '</span><span class="nm">' + st.name + "</span></div>" + bar + note + "</div>" + drop;
     }).join("");
+
+    /* Failure ratio is scoped to the people who raised this intent, so it is
+       also exactly the width of the last bar. */
+    $("funFailure").textContent = pct(fc.failed, fc.intent);
+    $("funEsc").textContent = funnelEsc(fr);
+    $("funAffected").textContent = fmtCount(fc.deflected);
   }
 
   var impact = $("impactlines");
